@@ -1,0 +1,37 @@
+{
+  "name": "practica03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ej1": "tsc-watch --onSuccess \"node dist/ejercicio01.js\"",
+    "ej2": "tsc-watch --onSuccess \"node dist/ejercicio02.js\"",
+    "ej3": "tsc-watch --onSuccess \"node dist/ejercicio03.js\"",
+    "ej4": "tsc-watch --onSuccess \"node dist/ejercicio04.js\"",
+    "ej5": "tsc-watch --onSuccess \"node dist/ejercicio05.js\"",
+    "ej6": "tsc-watch --onSuccess \"node dist/ejercicio06.js\"",
+    "ej7": "tsc-watch --onSuccess \"node dist/ejercicio07.js\"",
+    "ej8": "tsc-watch --onSuccess \"node dist/ejercicio08.js\"",
+    "ej9": "tsc-watch --onSuccess \"node dist/ejercicio09.js\"",
+    "ej10": "tsc-watch --onSuccess \"node dist/ejercicio10.js\"",
+    "doc": "typedoc",
+    "test": "mocha -r ts-node/register 'tests/**/*.ts'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.4",
+    "ts-node": "^10.9.1",
+    "tsc-watch": "^6.0.0",
+    "typedoc": "^0.23.25"
+  }
+}
