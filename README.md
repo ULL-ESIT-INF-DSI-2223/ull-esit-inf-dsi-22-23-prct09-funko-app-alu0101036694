@@ -559,6 +559,16 @@ completando siguiendo las agujas del reloj.
 
 #### Solución:
 
+Definimos una función getSpiralMatrix que recibe un número entero n como argumento y devuelve una matriz bidimensional de tamaño n x n que representa una matriz en espiral.
+
+Primero, se inicializa una matriz bidimensional vacía result de tamaño n x n utilizando la función Array.from() con una función de mapeo que devuelve una matriz vacía para cada fila de la matriz resultante.
+
+Luego, se inicializan varias variables para realizar un seguimiento del recorrido de la matriz en espiral. counter se utiliza para mantener el valor que se va a asignar en cada celda de la matriz, startRow y endRow se utilizan para realizar un seguimiento de las filas que quedan por recorrer, y startCol y endCol se utilizan para realizar un seguimiento de las columnas que quedan por recorrer.
+
+El bucle while se ejecuta mientras las columnas iniciales no superen a las columnas finales y las filas iniciales no superen a las filas finales.
+
+Para recorrer la matriz en espiral, se siguen cuatro pasos principales, cada uno de los cuales recorre una fila o columna en la dirección correspondiente y asigna el valor correspondiente en la celda de la matriz.
+
 ```typescript
 export function getSpiralMatrix(n: number): number[][] {
     const result: number[][] = Array.from({ length: n }, () => []);
@@ -599,7 +609,17 @@ export function getSpiralMatrix(n: number): number[][] {
   }
 ```
 
+El primer paso recorre la fila superior de la matriz de izquierda a derecha, asignando valores en cada celda.
+El segundo paso recorre la columna derecha de la matriz de arriba a abajo, asignando valores en cada celda.
+El tercer paso recorre la fila inferior de la matriz de derecha a izquierda, asignando valores en cada celda.
+El cuarto paso recorre la columna izquierda de la matriz de abajo hacia arriba, asignando valores en cada celda.
+Después de cada paso, se ajustan las variables de seguimiento de filas y columnas según corresponda.
+
+Finalmente, se devuelve la matriz resultante result.
+
 #### Tests:
+
+A continuación realizamos los tests correspondientes para nuestro código:
 
 ```typescript
 import { describe, it } from 'mocha';
@@ -642,7 +662,15 @@ describe('getSpiralMatrix function', () => {
 });
 
 ```
+Estos tests verifican el comportamiento de la función getSpiralMatrix(n: number): number[][], la cual debe generar una matriz en espiral de tamaño n x n con valores enteros consecutivos desde 1 hasta n*n.
 
+El primer test verifica si la función retorna la matriz espiral correcta para n=3. Se define la matriz esperada (expected) y se llama a la función con el valor de n correspondiente. Luego se utiliza la función deep.equal del módulo chai para verificar si el valor retornado por la función es igual al valor esperado.
+
+El segundo test es similar al primero, pero esta vez verifica si la función retorna la matriz espiral correcta para n=4.
+
+El tercer test también verifica si la función retorna la matriz espiral correcta, pero esta vez para n=5.
+
+En todos los casos se verifica si el valor retornado por la función (actual) es igual al valor esperado (expected) utilizando la función deep.equal del módulo chai.
 
 ### Ejercicio 6 - Compresión de números en rangos <a name="ejercicio-6"></a>
 > [Volver al índice](#índice)
@@ -665,6 +693,8 @@ argumento una cadena de caracteres representando una serie de rangos y devuelva 
 correspondiente.
 
 #### Solución:
+
+El siguiente código exporta tres funciones relacionadas con la conversión de arreglos de números a cadenas que representan rangos y viceversa:
 
 ```typescript
 export type Range = [number, number];
@@ -712,7 +742,15 @@ export function fromRangesToArray(ranges: string): number[] {
 }
 ```
 
+La primera función fromArrayToRanges toma un arreglo de números y lo convierte en una cadena que representa los rangos presentes en el arreglo. Por ejemplo, si se pasa un arreglo con [1,2,3,5,6,8,9] la función retornará la cadena "1_3, 5_6, 8_9". La función utiliza un bucle for que itera por el arreglo y verifica si el número actual es igual al anterior más uno. Si es así, se agrega el número actual al rango actual. De lo contrario, se empuja el rango actual a la matriz de resultados y se crea un nuevo rango con el número actual. Al final del bucle, el último rango creado se agrega a la matriz de resultados.
+
+La segunda función getRangeString toma un rango como argumento y retorna una cadena que representa el rango. Si el rango solo tiene un número, retorna ese número como una cadena. De lo contrario, retorna una cadena con el formato "inicio_fin".
+
+La tercera función fromRangesToArray toma una cadena de rangos y la convierte en un arreglo de números. Por ejemplo, si se pasa la cadena "1_3, 5_6, 8_9", la función retornará el arreglo [1,2,3,5,6,8,9]. La función separa los rangos por la coma y luego itera por cada rango. Si el rango solo tiene un número, se agrega ese número al resultado. De lo contrario, se itera desde el inicio hasta el fin del rango y se agrega cada número al resultado.
+
 #### Tests:
+
+Definimos los siguientes tests para comprobar el funcionamiento de nuestro código:
 
 ```typescript
 import { describe, it } from 'mocha';
@@ -770,6 +808,21 @@ describe("fromRangesToArray function", () => {
 });
 ```
 
+Los tests para fromArrayToRanges comprueban que la función maneje correctamente los siguientes casos:
+
+Un array vacío
+Un array con números positivos y negativos
+Un array con un solo número
+Un array con múltiples rangos
+
+Por otro lado, la función fromRangesToArray hace lo contrario: toma una cadena de rangos y la expande en un array de números. Cada rango está representado por dos números separados por un guión bajo, y los rangos se separan con una coma y un espacio. Si un número no está en un rango, se muestra individualmente separado por comas y espacios. Por ejemplo, "5_7, 9, 12_14" se expandiría en [5, 6, 7, 9, 12, 13, 14].
+
+Los tests para fromRangesToArray comprueban que la función maneje correctamente los siguientes casos:
+
+Una cadena vacía
+Una cadena con un solo número
+Una cadena con múltiples rangos
+
 ### Ejercicio 7 - Mensaje secreto <a name="ejercicio-7"></a>
 > [Volver al índice](#índice)
 
@@ -809,6 +862,8 @@ tercer color.
 
 #### Solución:
 
+Desarrollamos el siguiente código:
+
 ```typescript
 type ColorCode = { [color: string]: number };
 
@@ -833,7 +888,15 @@ export function decodeResistor(colors: string[]): number {
 }
 ```
 
+El código define un objeto colorCode que contiene los valores numéricos asociados con cada color de una resistencia, y una función decodeResistor que toma un array de strings con los colores de la resistencia y devuelve el valor de la resistencia calculado a partir de los valores numéricos de los colores de la resistencia.
+
+El algoritmo utilizado para calcular el valor de la resistencia a partir de los colores es multiplicar el valor del primer color por 10 y sumarle el valor del segundo color.
+
+Los tests verifican que la función decodeResistor calcule correctamente el valor de la resistencia para diferentes combinaciones de colores. En particular, se verifican casos en los que se omitió el tercer color, ya que este color se utiliza para indicar la potencia de la resistencia y no se utiliza para calcular su valor.
+
 #### Tests:
+
+Desarrollamos los tests de nuestro código para comprobar su funcionamiento:
 
 ```typescript
 import { describe, it } from 'mocha';
@@ -862,6 +925,10 @@ describe("decodeResistor", () => {
   });
 });
 ```
+
+Cada prueba en el bloque describe consiste en pasar diferentes combinaciones de colores de banda a la función y comprobar si devuelve el valor correcto. Por ejemplo, la primera prueba comprueba que si se pasan los colores "marrón" y "verde", la función devuelve el valor 15, que es el valor de resistencia para un resistor con esas bandas de colores.
+
+Se utiliza la librería mocha para definir y ejecutar las pruebas, y la librería chai para hacer las comprobaciones de igualdad (expect(result).to.equal(expected)).
 
 ### Ejercicio 8 - Wonder Woman <a name="ejercicio-8"></a>
 > [Volver al índice](#índice)
@@ -904,6 +971,8 @@ letras de la primera palabra no encadenan con las primeras letras de la segunda.
 
 #### Solución:
 
+El código que hemos desarrollado es el siguiente:
+
 ```typescript
 export function meshArray(words: string[]): string | "Error al encadenar" {
      
@@ -942,7 +1011,15 @@ export function meshArray(words: string[]): string | "Error al encadenar" {
   
 ```
 
+El código define una función meshArray que toma como entrada un array de palabras y devuelve un string que contiene todas las letras que se encuentran en común entre las palabras consecutivas del array. Si no hay letras en común entre dos palabras consecutivas, la función devuelve la cadena "Error al encadenar".
+
+Para lograr esto, la función meshArray itera a través de las palabras del array, comparando cada palabra con la anterior utilizando la función findCommonLetters. Si las palabras no tienen letras en común, la función devuelve "Error al encadenar", de lo contrario, la función agrega las letras comunes al string meshedLetters. Al final, la función devuelve meshedLetters.
+
+La función findCommonLetters es una función auxiliar que toma dos strings como entrada y devuelve una cadena que contiene las letras que están presentes en ambos strings en el mismo orden. Para hacer esto, la función compara los sufijos de la primera palabra con los prefijos de la segunda palabra hasta encontrar el sufijo y el prefijo que son iguales. En ese punto, devuelve el sufijo como la cadena de letras comunes.
+
 #### Tests:
+
+Realizamos las pruebas del código, que son las siguientes:
 
 ```typescript
 import { describe, it } from 'mocha';
@@ -972,3 +1049,10 @@ describe("meshArray", () => {
 });
 
 ```
+
+Estos tests comprueban que la función meshArray que recibe como argumento un array de strings words y devuelve una cadena de texto que contiene las letras que coinciden entre el final de un string y el comienzo del siguiente. Si no hay coincidencia entre dos strings consecutivos, la función devuelve "Error al encadenar".
+
+El primer test comprueba que si se le pasan los strings "allow", "lowering", "ringmaster" y "terror", la función devuelve la cadena "lowringter".
+El segundo test comprueba que si se le pasan los strings "kingdom", "dominator", "notorious", "usual" y "allegory", la función devuelve la cadena "Error al encadenar".
+El tercer test comprueba que si se le pasan los strings "ta" y "ta", la función devuelve la cadena "ta".
+El cuarto test comprueba que si se le pasan los strings "t" y "a", la función devuelve la cadena "Error al encadenar".
