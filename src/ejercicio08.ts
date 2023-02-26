@@ -1,58 +1,73 @@
-/* Ejercicio 8 - Wonder Woman
+/* Ejercicio 8 - Palabras encadenadas en un array
 
-La princesa Diana consiguió clavar su espada y cortar la cabeza de Cerberus (un lobo con muchas cabezas). Para su asombro, inmediatamente, 
-aparecieron nuevas cabezas, en realidad unas n cabezas. Atacó de nuevo y ahora donde estaba la segunda cabeza aparecieron 2 * n cabezas. 
-A la tercera aparecieron 2 * 3 * n nuevas cabezas, a la cuarta 2 * 3 * 4 * n cabezas, y así sucesivamente.
+Dado un array que contiene exclusivamente cadenas de texto, comprobar que las palabras del array están encadenadas. 
+Esto es, una o más letras del final de una cadena coinciden con el comienzo de la siguiente cadena del array.
 
-Ante este problema, Diana ha decidido pedir ayuda al resto de amazonas. Aunque las amazonas nunca rechazan una buena pelea, quieren saber 
-cuántas cabezas tiene ahora el Cerberus.
+Ejemplos de palabras encadenadas:
 
-La tarea que hay que realizar es el desarrollo de una función getNumberHeads que dado el número inicial de cabezas que tiene el Cerberus, 
-el valor de n (nuevas cabezas que aparecen al cortar una), así como la cantidad de ataques que Diana va a realizar, devuelva el número de 
-cabezas que el Cerberus tendrá al final de los ataques.
+“apply” and “plywood”
+“apple” and “each”
+“behemoth” and “mother”
 
-Ejemplo 1:
+Ejemplos de palabras no encadenadas:
 
-    cabezas_iniciales = 2
-    n = 1
-    ataques = 1
+“apply” and “playground”
+“apple” and “peggy”
+“behemoth” and “mathematics
 
-    resultado: 
-    1 cabeza aparece después del ataque 1: 2 - 1 + 1 = 2
-    Cerberus tiene 2 cabezas al final
+Para resolver este ejercicio, escriba una función meshArray que compruebe si las cadenas del array están 
+encadenadas o no. La función recibirá como parámetro un array de cadenas de texto y devolverá:
 
-Ejemplo 2:
+“Error al encadenar” si las cadenas del array no están encadenadas.
+Una cadena de texto que contenga las letras que encadenan las palabras del array. 
+A priori no sabe cuantas letras encadenadas tendrán en común, pero al menos será una.
 
-    cabezas_iniciales = 5
-    n = 10
-    ataques = 3
+Ejemplos de ejecución del programa:
 
-    resultado:
-    10 cabezas aparecen después del ataque 1: 5 - 1 + 10 = 14
-    20 cabezas aparecen después del ataque 2: 14 - 1 + 2 * 10 = 33
-    60 cabezas aparecen después del ataque 3: 33 - 1 + 2 * 3 * 10 = 92
-    Cerberus tiene 92 cabezas al final
+1: [“allow”, “lowering”, “ringmaster”, “terror”] –> “lowringter”
 
-Nota: Tenga en cuenta que, tras cada ataque, una cabeza es restada al total anterior. En el ejemplo 1, a las dos cabezas iniciales 
-se le resta una (la que se le cortó) y se le suma una. */
+Este array está encadenado porque:
 
-function aux_factorial(num_decimal: number) : number {
-    if (num_decimal == 1) return 1
-    if (num_decimal == 0) return 1
-    else return num_decimal * aux_factorial(num_decimal - 1)
-}
+Las letras “low” de la primera palabra encadenan con la palabra “lowering”.
+Las letras “ring” en la segunda y tercera palabras están encadenadas.
+Por último, las letras “ter” en las dos últimas palabras también están encadenadas.
+2: [“kingdom”, “dominator”, “notorious”, “usual”, “allegory”] –> “Error al encadenar”
 
-function wonderWoman(cabezas_iniciales: number, n: number,  ataques: number) : number {
-  let cabezas: number;
-  let cabezas_aux: number;
-  cabezas = cabezas_iniciales - ataques;
-  cabezas_aux = 0;
-  for (let i= 0; i < ataques; i++){
-      cabezas_aux = aux_factorial(i+1) * n;
-      cabezas = cabezas + cabezas_aux;
+En este caso, aunque las palabras “dominator” y “notorious” comparten letras en el mismo orden, las últimas 
+letras de la primera palabra no encadenan con las primeras letras de la segunda. */
+
+export function meshArray(words: string[]): string | "Error al encadenar" {
+     
+    let meshedLetters = "";
+  
+    for (let i = 1; i < words.length; i++) {
+      const currentWord = words[i];
+      const previousWord = words[i - 1];
+      const commonLetters = findCommonLetters(previousWord, currentWord);
+      
+      if (commonLetters === "") {
+        return "Error al encadenar";
+      }
+  
+      meshedLetters += commonLetters;
+    }
+  
+    return meshedLetters;
+  }  
+  
+  function findCommonLetters(str1: string, str2: string): string {
+    const maxLength = Math.min(str1.length, str2.length);
+    let commonLetters = "";
+  
+    for (let i = 1; i <= maxLength; i++) {
+      const suffix = str1.slice(str1.length - i);
+      const prefix = str2.slice(0, i);
+  
+      if (suffix === prefix) {
+        commonLetters = suffix;
+      }
+    }
+  
+    return commonLetters;
   }
-  return cabezas;
-}
-
-console.log("wonderWoman(2, 1, 1) = " + wonderWoman(2, 1, 1));
-console.log("wonderWoman(10, 5, 3) = " + wonderWoman(5, 10, 3));
+  

@@ -1,9 +1,10 @@
 {
-  "name": "practica03",
+  "name": "practica04",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "ej1": "tsc-watch --onSuccess \"node dist/ejercicio01.js\"",
     "ej2": "tsc-watch --onSuccess \"node dist/ejercicio02.js\"",
     "ej3": "tsc-watch --onSuccess \"node dist/ejercicio03.js\"",
@@ -12,16 +13,23 @@
     "ej6": "tsc-watch --onSuccess \"node dist/ejercicio06.js\"",
     "ej7": "tsc-watch --onSuccess \"node dist/ejercicio07.js\"",
     "ej8": "tsc-watch --onSuccess \"node dist/ejercicio08.js\"",
-    "ej9": "tsc-watch --onSuccess \"node dist/ejercicio09.js\"",
-    "ej10": "tsc-watch --onSuccess \"node dist/ejercicio10.js\"",
     "doc": "typedoc",
-    "test": "mocha -r ts-node/register 'tests/**/*.ts'"
+    "test": "mocha -r ts-node/register 'tests/**/*.ts'",
+    "test1": "mocha -r ts-node/register 'tests/ejercicio01.spec.ts'",
+    "test2": "mocha -r ts-node/register 'tests/ejercicio02.spec.ts'",
+    "test3": "mocha -r ts-node/register 'tests/ejercicio03.spec.ts'",
+    "test4": "mocha -r ts-node/register 'tests/ejercicio04.spec.ts'",
+    "test5": "mocha -r ts-node/register 'tests/ejercicio05.spec.ts'",
+    "test6": "mocha -r ts-node/register 'tests/ejercicio06.spec.ts'",
+    "test7": "mocha -r ts-node/register 'tests/ejercicio07.spec.ts'",
+    "test8": "mocha -r ts-node/register 'tests/ejercicio08.spec.ts'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.3.4",
+    "@types/jest": "^29.4.0",
     "@types/mocha": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",

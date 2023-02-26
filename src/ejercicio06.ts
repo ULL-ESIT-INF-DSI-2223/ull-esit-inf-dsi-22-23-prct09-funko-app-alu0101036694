@@ -1,64 +1,62 @@
-/* Ejercicio 6 - Conversor ISBN
+/* Ejercicio 6 - Compresión de números en rangos
 
-El proceso de verificación ISBN-10 se usa para validar la identificación de números. Normalmente contienen guiones y siguen un patrón como: 
-3-598-21508-8.
+Escriba una función fromArrayToRanges que reciba un array o lista de números enteros y los comprima en rangos, 
+es decir, que devuelva una cadena de caracteres con la compresión obtenida. Un rango, es decir, un conjunto de 
+números consecutivos se representará mediante una cadena de caracteres con el primer y último número del rango 
+separado por un guión bajo (_). Un rango de un único número será la cadena de caracteres que representa a ese 
+ùnico número. Luego, una serie de rangos vendrá separada por comas (,).
 
-El formato ISBN-10 está compuesto por 9 dígitos (0-9) y un caracter de comprobación que puede ser un dígito (0-9) o una X. 
-En caso de que el caracter de comprobación sea una X, se representa con el valor ‘10. Estos valores su pueden comunicar con o sin guiones, 
-y se puede comprobar su validez con la siguiente fórmula:
+Ejemplos:
 
-(x1 * 10 + x2 * 9 + x3 * 8 + x4 * 7 + x5 * 6 + x6 * 5 + x7 * 4 + x8 * 3 + x9 * 2 + x10 * 1) mod 11 == 0
+[5, 6, 7, 9, 12, 13, 14] => “5_7, 9, 12_14”
+[-3, -2, -1, 3, 5, 6, 7] => “-3_-1, 3, 5_7”
+[17] => “17”
+[3, 5, 6, 7, 9, 10] => “3, 5_7, 9_10”
 
-Si el resultado es 0, entonces el código ISBN-10 es válido. En cualquier otro caso, el código se considera no válido.
+Escriba una función fromRangesToArray que lleve a cabo la operación inversa, es decir, que reciba como 
+argumento una cadena de caracteres representando una serie de rangos y devuelva el array de números 
+correspondiente. */
 
-El código ISBN-10 3-598-21508-8 da como resultado 0 y por lo tanto es un código ISBN válido:
+export type Range = [number, number];
 
-(3 * 10 + 5 * 9 + 9 * 8 + 8 * 7 + 2 * 6 + 1 * 5 + 5 * 4 + 0 * 3 + 8 * 2 + 8 * 1) mod 11 == 0
+export function fromArrayToRanges(arr: number[]): string {
+  if (arr.length === 0) return "";
 
-Para resolver este ejercicio, defina una función isValidISBN que compruebe la validez de un código ISBN-10. La función recibirá como 
-argumento una cadena de caracteres compuesta por un posible código ISBN-10 separado o no por guiones. Como resultado, la función devolverá 
-verdadero o falso según corresponda con la validez del código ISBN-10. Tenga en cuenta que la cadena de entrada a la función puede ser del 
-tipo “3-598-21508-8” o “3598215088”. Para ambos casos el valor devuelto debe ser el mismo.
+  let result: string[] = [];
+  let currentRange: Range = [arr[0], arr[0]];
 
-Nota: Un ejemplo usando el caracter X sería “3-598-21507-X” o “359821507X”. Ambos casos representan un ISBN-10 válido. */
-
-function isValidISBN(isbn: string): boolean {
-    // Eliminar los guiones si los hay
-    isbn = isbn.replace(/-/g, '');
-  
-    // Verificar si la longitud de la cadena es válida
-    if (isbn.length !== 10) {
-      return false;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] === currentRange[1] + 1) {
+      currentRange[1] = arr[i];
+    } else {
+      result.push(getRangeString(currentRange));
+      currentRange = [arr[i], arr[i]];
     }
-  
-    // Verificar si los primeros 9 caracteres son dígitos
-    const first9Chars = isbn.slice(0, 9);
-    if (!/^\d+$/.test(first9Chars)) {
-      return false;
-    }
-  
-    // Calcular la suma de los productos de los dígitos
-    let sum = 0;
-    for (let i = 0; i < 9; i++) {
-      sum += parseInt(isbn[i]) * (10 - i);
-    }
-  
-    // Verificar si el último carácter es un dígito o una X
-    const lastChar = isbn[9];
-    if (!/^\d$/.test(lastChar) && lastChar !== 'X') {
-      return false;
-    }
-  
-    // Verificar si el dígito de comprobación es correcto
-    const expectedCheckDigit = sum % 11 === 0 ? 0 : 11 - (sum % 11);
-    const actualCheckDigit = lastChar === 'X' ? 10 : parseInt(lastChar);
-    return expectedCheckDigit === actualCheckDigit;
   }
+  result.push(getRangeString(currentRange));
 
-  console.log("isValidISBN('3-598-21508-8') = " + isValidISBN('3-598-21508-8')); // true
-  console.log("isValidISBN('3598215088') = " + isValidISBN('3598215088')); // true
-  console.log("isValidISBN('3-598-21507-X') = " + isValidISBN('3-598-21507-X')); // true
-  console.log("isValidISBN('359821507X') = " + isValidISBN('359821507X')); // true
-  console.log("isValidISBN('3-598-21507-9') = " + isValidISBN('3-598-21507-9')); // false
-  console.log("isValidISBN('1234567890') = " + isValidISBN('1234567890')); // false
-  console.log("isValidISBN('12345') = " + isValidISBN('12345')); // false
+  return result.join(", ");
+}
+
+export function getRangeString(range: Range): string {
+  return range[0] === range[1] ? range[0].toString() : `${range[0]}_${range[1]}`;
+}
+
+export function fromRangesToArray(ranges: string): number[] {
+  if (ranges.trim() === "") {
+    return [];
+  }
+  let result: number[] = [];
+  const rangeStrings = ranges.split(", ");
+  for (let rangeStr of rangeStrings) {
+    const range = rangeStr.split("_").map(Number);
+    if (range.length === 1) {
+      result.push(range[0]);
+    } else {
+      for (let i = range[0]; i <= range[1]; i++) {
+        result.push(i);
+      }
+    }
+  }
+  return result;
+}

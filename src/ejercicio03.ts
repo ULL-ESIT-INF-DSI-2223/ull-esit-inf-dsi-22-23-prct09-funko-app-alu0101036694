@@ -1,29 +1,100 @@
-/* Ejercicio 3 - Validador de mensajes
+/* Ejercicio 3 - No cabrees a la reina
 
-Supongamos que recibimos un mensaje en una cadena de texto que sigue un patrón “Xsubcadena1Ysubcadena2” dónde X e Y son números y
-subcadena1 y subcadena2 son cadenas de texto. Queremos comprobar la validez de un determinado mensaje en función de unas reglas preestablecidas. 
-Para decidir si el mensaje es válido, debemos dividir la cadena de texto en números y subcadenas. Posteriormente, debemos comprobar que para 
-cada número que encontramos, la longitud de la subcadena es igual al número anterior.
+Dadas las posiciones de dos reinas en un tablero de ajedrez, determine si ambas reinas podrían atacarse en caso 
+de cabrearse una con la otra. En el ajedrez, una reina puede atacar piezas ubicadas en la misma fila, columna o 
+diagonal.
 
-Por ejemplo:
+Un tablero de ajedrez puede representarse mediante un array bidimensional de 8 x 8 casillas. Por lo tanto, si la 
+reina negra está ubicada en la posición (1, 3), mientras que la reina blanca está ubicada en la posición (3, 5), 
+tendríamos una estructura de datos como la que sigue:
 
-“3hey5hello2hi” se debería dividir en 3, hey, 5, hello, 2, hi.
-Defina una función isValid que reciba como parámetro una cadena de texto compuesta por números y letras y determine si es válida según 
-las reglas anteriores. La función devolverá el resultado del cálculo mediante un valor de tipo booleano.
+[
+    [-, -, -, -, -, -, -, -]
+    [-, -, -, N, -, -, -, -]
+    [-, -, -, -, -, -, -, -]
+    [-, -, -, -, -, B, -, -]
+    [-, -, -, -, -, -, -, -]
+    [-, -, -, -, -, -, -, -]
+    [-, -, -, -, -, -, -, -]
+    [-, -, -, -, -, -, -, -]
+]
 
-Notas:
+Escriba una función checkAtack que, dada una estructura de datos como la anterior, devuelva un valor lógico 
+indicando si ambas reinas podrían atacarse dadas las posiciones de las mismas. Tenga en cuenta que solo puede 
+haber una reina blanca y una reina negra en el tablero. En caso de que lo anterior no suceda, la función deberá 
+devolver el valor undefined.
 
-Los mensajes solo tienen números y letras.
-Los números pueden tener varios dígitos. Por ejemplo, la cadena “4code10helloworld” es un mensaje válido.
-Cada número debe corresponder con la longitud de la subcadena que se encuentra a continuación, en cualquier otro caso el mensaje no será válido.
-La cadena vacía se considera un mensaje válido. */
+Por último, el tablero debe consistir en, exactamente, 8 filas y 8 columnas, donde cada casilla puede contener 
+alguno de los valores -, N o B, exclusivamente. Aunque la anterior comprobación podría llevarse a cabo a través 
+del código fuente incluido en la función (en tiempo de ejecución), defina un tipo de datos adecuado que impida, 
+desde el punto de vista del tipado (en tiempo de compilación), pasarle a la función checkAtack un tablero no válido, 
+esto es, con un número de filas/columnas diferente a 8 y/o celdas con valores no válidos). */
 
-function isAValidMessage(mensaje) {
-	const numero = mensaje.split(/[a-z]/i).filter(e => e !== '')
-	const palabra = mensaje.split(/[0-9]/).filter(e => e !== '')
-	const filtrado = palabra.map((x,i) => x.length == numero[i]).filter(e => e === true).length
-	return !mensaje.length || (filtrado === numero.length && palabra.length === numero.length && mensaje.slice(0, 1).match(/[0-9]/) && !mensaje.slice(-1).match(/[0-9]/)) ? true : false
 
+//export type ChessBoard = ['-' | 'B' | 'N'][][];
+export type ChessBoard = Array<Array<'-' | 'N' | 'B'>>;
+
+export function isValidChessBoard(board: unknown): board is ChessBoard {
+    if (!Array.isArray(board) || board.length !== 8) {
+      return false;
+    }
+  
+    let numBlack = 0;
+    let numWhite = 0;
+  
+    for (const row of board) {
+      if (!Array.isArray(row) || row.length !== 8) {
+        return false;
+      }
+  
+      for (const cell of row) {
+        if (!['-', 'N', 'B'].includes(cell)) {
+          return false;
+        }
+  
+        if (cell === 'N') {
+          numBlack++;
+        } else if (cell === 'B') {
+          numWhite++;
+        }
+      }
+    }
+  
+    if (numBlack !== 1 || numWhite !== 1) {
+      return false;
+    }
+  
+    return true;
+} 
+
+export function checkAttack(board: ChessBoard): boolean | undefined {
+  if (!isValidChessBoard(board)) {
+    return undefined;
+  }
+
+  const blackIndex = board.findIndex(row => row.includes('N'));
+  const whiteIndex = board.findIndex(row => row.includes('B'));
+
+  
+
+  if (blackIndex === -1 || whiteIndex === -1) {
+    // Si no se encuentra alguna de las reinas, el tablero es inválido
+    return undefined;
+  }
+
+  const blackRow = blackIndex;
+  const blackCol = board[blackIndex].indexOf('N');
+
+  const whiteRow = whiteIndex;
+  const whiteCol = board[whiteIndex].indexOf('B');
+
+  if (blackRow === whiteRow || blackCol === whiteCol) {
+    return true;
+  }
+
+  if (Math.abs(blackRow - whiteRow) === Math.abs(blackCol - whiteCol)) {
+    return true;
+  }
+
+  return false;
 }
-
-console.log("isAValidMessage('3hey5hello2hi') = " + isAValidMessage('3hey5hello2hi'));

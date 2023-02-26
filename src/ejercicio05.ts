@@ -1,49 +1,66 @@
-/* Ejercicio 5 - Un solo golpe
+/* Ejercicio 5 - Matrices espirales
 
-Chuck Norris es el tío más duro del mundo, una vez golpeó a un caballo en la barbilla y sus descendientes se conocen hoy en día como jirafas.
+Escriba una función getSpiralMatrix que, dado un entero positivo n representando el tamaño de una matriz cuadrada, 
+devuelva una matriz (array bidimensional) con todos los números enteros en el rango [1, n*n] y que estén dispuestos 
+en la matriz conformando una espiral. La espiral debe comenzar en la primera fila y columna de la matriz e irse 
+completando siguiendo las agujas del reloj.
 
-Como sus puñetazos, Chuck NUNCA necesita más de una línea de código. La tarea que debes realizar, para complacer a Chuck Norris, es crear una 
-única función que haga uso de cuatro métodos encadenados en una única línea de código. Puedes utilizar varias líneas, pero no querrás cabrear a 
-Chuck Norris.
+Ejemplos:
 
-Chuck espera como resultado una cadena de caracteres con sus cosas favoritas separadas, ordenadas, unidas de nuevo y, además, que se eliminen 
-todas las apariciones de las letras e y a. Si alguien se atreve a retar a Chuck Norris con una cadena vacía la función devuelve “Broken!”.
+getSpiralMatrix(3)  It should return [
+                                         [1, 2, 3],
+                                         [8, 9, 4],
+                                         [7, 6, 5]
+                                       ] 
+getSpiralMatrix(4)  It should return [
+    [ 1,  2,  3, 4],
+    [12, 13, 14, 5],
+    [11, 16, 15, 6],
+    [10,  9,  8 ,7]
+  ] 
+getSpiralMatrix(5)  It should return [
+    [ 1,   2,  3,  4, 5],
+    [ 16, 17, 18, 19, 6],
+    [ 15, 24, 25, 20, 7],
+    [ 14, 23, 22, 21, 8],
+    [ 13, 12, 11, 10, 9],
+  ] */
 
-Se espera un comportamiento como el siguiente:
-
-onePunch('Beard Jeans Hairbrush Knuckleduster Sand') deberá retornar 'Brd Hirbrush Jns Knuckldustr Snd'.
-onePunch('Sock Beard Vest Lady Sage') deberá retornar 'Brd Ldy Sg Sock Vst'.
-onePunch('Beard Sack Gun Parachute Face-Kicking-Shoes') deberá retornar 'Brd Fc-Kicking-Shos Gun Prchut Sck'.
-onePunch('Snot Snow Soda Tank Beard') deberá retornar 'Brd Snot Snow Sod Tnk'.
-onePunch('') deberá retornar 'Broken!'. */
-
-
-// Código en mas de una línea
-/* let salida = '';
-
-function onePunch(entrada: string) {
-  if(entrada === ' '){ 
-   salida = 'Broken!';
+  export function getSpiralMatrix(n: number): number[][] {
+    const result: number[][] = Array.from({ length: n }, () => []);
+    let counter = 1;
+    let startRow = 0;
+    let endRow = n - 1;
+    let startCol = 0;
+    let endCol = n - 1;
+  
+    while (startCol <= endCol && startRow <= endRow) {
+      
+      // Top row
+      for (let i = startCol; i <= endCol; i++) {
+        result[startRow][i] = counter++;
+      }
+      startRow++;
+  
+      // Right column
+      for (let i = startRow; i <= endRow; i++) {
+        result[i][endCol] = counter++;
+      }
+      endCol--;
+  
+      // Bottom row
+      for (let i = endCol; i >= startCol && startRow <= endRow; i--) {
+        result[endRow][i] = counter++;
+      }
+      endRow--;
+  
+      // Left column
+      for (let i = endRow; i >= startRow && startCol <= endCol; i--) {
+        result[i][startCol] = counter++;
+      }
+      startCol++;
+    }
+  
+    return result;
   }
-  else{
-   for(let i = 0; i < entrada.length; i++){
-    salida = entrada.replace('e', '');
-   }
-   for(let j = 0; j < salida.length; j++){
-    salida = salida.replace('a', '');
-   }
-  }
-  return salida;
-} */
-
-
-// Código en una sola línea
-function onePunch(cadena: string): string {
-    return cadena.split(' ').sort().join(' ').replace(/[ae\s]/g, '') || 'Broken!';
-  }
-
-console.log("onePunch(Beard Jeans Hairbrush Knuckleduster Sand) = " + onePunch("Beard Jeans Hairbrush Knuckleduster Sand"));
-console.log("onePunch('Sock Beard Vest Lady Sage') = " + onePunch("Sock Beard Vest Lady Sage"));
-console.log("onePunch('Beard Sack Gun Parachute Face-Kicking-Shoes') = " + onePunch("Beard Sack Gun Parachute Face-Kicking-Shoes"));
-console.log("onePunch('Snot Snow Soda Tank Beard') = " + onePunch("Snot Snow Soda Tank Beard"));
-console.log("onePunch(' ') = " + onePunch(" "));
+  

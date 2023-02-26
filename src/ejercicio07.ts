@@ -1,65 +1,57 @@
-/* Ejercicio 7 - Mensaje secreto
+/* Ejercicio 7 - Decodificar resistencias
 
-Cree una función encodeMessage que reciba como parámetro una cadena de caracteres que debe ser cifrada mediante un algoritmo de sustitución 
-en el que cada letra del alfabeto de entrada (abcdefghijklmnopqrstuvwxyz) sea sustituida por la letra correspondiente del mismo alfabeto pero 
-ordenado de manera inversa (zyxwvutsrqponmlkjihgfedcba). De este modo, por ejemplo, todas las apariciones de la letra ‘a’ en la cadena de 
-entrada se sustituirían por la letra ‘z’, las apariciones de la ‘b’ por ‘y’, y así sucesivamente.
+Si desea realizar algún proyecto usando una Raspberry Pi, probablemente necesitará usar resistencias. 
+Para este ejercicio necesita conocer dos cosas sobre las resistencias:
 
-El resultado de la invocación a la función debe ser la cadena codificada. Al mismo tiempo, la función deberá devolver undefined en el caso de 
-que hayan caracteres no permitidos en la cadena de entrada.
+Cada resistor o resistencia tiene un valor de resistencia en Ohmios asociado. Además, las resistencias son 
+tan pequeñas que si se les imprimiera el valor en ellas, sería muy difícil de leer. Para resolver este problema, 
+los fabricantes siguen un estándar de bandas codificadas de colores para indicar sus valores de resistencia. 
+Cada banda tiene una posición y un valor numérico.
 
-De un modo similar al anterior, también implemente la función decodeMessage, la cual lleva a cabo la operación de decodificación. */
+Las primeras dos bandas de una resistencia tienen un esquema de codificación muy simple: cada color se mapea a un 
+único número. Por ejemplo, si una resistencia tiene impresa una banda marrón (valor 1) seguida de una banda verde 
+(valor 5), el valor de la resistencia se traduciría al número 15.
 
-function encodeMessage(message: string): string | undefined {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const reversedAlphabet = alphabet.split('').reverse().join('');
-  let encodedMessage = '';
+El objetivo de este ejercicio es crear un programa que nos ayude a calcular el valor de una resistencia sin tener 
+que memorizar los valores de las bandas. Para ello, cree una función decodeResistor que recibe como parámetros 
+los nombres de los colores de una resistencia como entrada y devuelve un número de dos dígitos indicando el 
+valor de la resistencia. La función deberá devover un número de dos dígitos incluso si recibe más de dos colores 
+como parámetros.
 
-  for (let i = 0; i < message.length; i++) {
-    const char = message[i];
-    if (char === ' ') {
-      encodedMessage += ' ';
-    } else {
-      const index = alphabet.indexOf(char.toLowerCase());
-      if (index >= 0) {
-        const encodedChar = reversedAlphabet.charAt(index);
-        encodedMessage += char === char.toLowerCase() ? encodedChar : encodedChar.toUpperCase();
-      } else {
-        return undefined;
-      }
-    }
-  }
-  return encodedMessage;
+Las bandas de colores están codificadas de la siguiente manera:
+
+Negro: 0
+Marrón: 1
+Rojo: 2
+Naranja: 3
+Amarillo: 4
+Verde: 5
+Azul: 6
+Violeta: 7
+Gris: 8
+Blanco: 9
+
+De este modo, la combinación Marrón-Verde debería devolver 15 al igual que Marrón-Verde-Violeta ignorando el 
+tercer color. */
+
+type ColorCode = { [color: string]: number };
+
+const colorCode: ColorCode = {
+  "negro": 0,
+  "marrón": 1,
+  "rojo": 2,
+  "naranja": 3,
+  "amarillo": 4,
+  "verde": 5,
+  "azul": 6,
+  "violeta": 7,
+  "gris": 8,
+  "blanco": 9
+};
+
+export function decodeResistor(colors: string[]): number {
+  const firstBand = colors[0].toLowerCase();
+  const secondBand = colors[1].toLowerCase();
+  const resistanceValue = colorCode[firstBand] * 10 + colorCode[secondBand];
+  return resistanceValue;
 }
-
-function decodeMessage(message: string): string | undefined {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const reversedAlphabet = alphabet.split('').reverse().join('');
-  let decodedMessage = '';
-
-  for (let i = 0; i < message.length; i++) {
-    const char = message[i];
-    if (char === ' ') {
-      decodedMessage += ' ';
-    } else {
-      const index = reversedAlphabet.indexOf(char.toLowerCase());
-      if (index >= 0) {
-        const decodedChar = alphabet.charAt(index);
-        decodedMessage += char === char.toLowerCase() ? decodedChar : decodedChar.toUpperCase();
-      } else {
-        return undefined;
-      }
-    }
-  }
-  return decodedMessage;
-}
-
-console.log(encodeMessage("Este mensaje es secreto")); // "Vhfg nzmbnv vzh hxpivg"
-console.log(decodeMessage("Vhgv nvmhzqv vh hvxivgl")); // "Este mensaje es secreto"
-
-console.log(encodeMessage("La lluvia en Sevilla es una maravilla")); // "Oz ooferz vm Hverooz vh fmz nzizerooz"
-console.log(decodeMessage("Oz ooferz vm Hverooz vh fmz nzizerooz")); // "La lluvia en Sevilla es una maravilla"
-
-console.log(encodeMessage("¡Hola, mundo!")); // undefined
-console.log(decodeMessage("¡Hola, mundo!")); // undefined
- 

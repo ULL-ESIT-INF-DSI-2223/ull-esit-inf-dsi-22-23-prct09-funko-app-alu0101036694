@@ -1,20 +1,18 @@
-# [PRÁCTICA 3](github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-21-22-prct03-static-types-functions-CarlaOvalTorres). TIPOS DE DATOS ESTÁTICOS Y FUNCIONES
+# [PRÁCTICA 4](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git). 
 
 ## Carla Oval Torres
 
 ## Índice <a name="índice"></a>
 1. [Introducción](#introducción)
 2. [Ejercicios propuestos](#ejercicios-propuestos)
-    1. [Ejercicio 1 - Tipos de triángulos](#ejercicio-1---tipos-de-triángulos)
-    2. [Ejercicio 2 - Notación decimal y factorial](#ejercicio-2---notación-decimal-y-factorial)
-    3. [Ejercicio 3 - Validador de mensajes](#ejercicio-3---validador-de-mensajes)
-    4. [Ejercicio 4 - Concersor de estilo](#ejercicio-4---conversor-de-estilo)
-    5. [Ejercicio 5 - Un solo golpe](#ejercicio-5---un-solo-golpe)
-    6. [Ejercicio 6 - Conversor ISBN](#ejercicio-6---conversor-isbn)
-    7. [Ejercicio 7 - Mensaje secreto](#ejercicio-7---mensaje-secreto)
-    8. [Ejercicio 8 - Wonder Woman](#ejercicio-8---wonder-woman)
-    9. [Ejercicio 9 - La Conjetura de Collatz](#ejercicio-9---la-conjetura-de-collatz)
-    10. [Ejercicio 10 - Validador de nombre usuario](#ejercicio-10---validador-de-nombre-usuario)
+    1. [Ejercicio 1 - El alergólogo](#ejercicio-1)
+    2. [Ejercicio 2 - Números complejos](#ejercicio-2)
+    3. [Ejercicio 3 - No cabrees a la reina](#ejercicio-3)
+    4. [Ejercicio 4 - Reimplementando la función map](#ejercicio-4)
+    5. [Ejercicio 5 - Matrices espirales](#ejercicio-5)
+    6. [Ejercicio 6 - Compresión de números en rangos](#ejercicio-6)
+    7. [Ejercicio 7 - Decodificar resistencias](#ejercicio-7)
+    8. [Ejercicio 8 - Palabras encadenadas en un array](#ejercicio-8)
 
 ## Introducción <a name="introducción"></a>
 > [Volver al índice](#índice)
@@ -23,714 +21,954 @@ Lleve a cabo todos y cada uno de los ejercicios propuestos a continuación. El c
 independiente con nombre ejercicio-n.ts. Si utiliza estructura básica de proyecto que hemos visto en clase, por favor, incluya todos sus 
 ejercicios en el directorio ./src de dicho proyecto.
 
+Tenga en cuenta que seguir la metodología TDD o BDD implica confirmar el correcto funcionamiento del software, así como los casos en los que el software debería mostrar un error cuando la entrada no sea la correcta (errors should never pass silently). En consecuencia, desarrolle pruebas unitarias que comprueben el correcto funcionamiento del código y, además, incluya otras pruebas unitarias que verifiquen que el código es robusto ante entradas no válidas o inesperadas.
+
 ## Ejercicios propuestos <a name="ejercicios-propuestos"></a>
-### Ejercicio 1 - Tipos de triángulos <a name="ejercicio-1---tipos-de-triángulos"></a>
+### Ejercicio 1 - El alergólogo <a name="ejercicio-1"></a>
 > [Volver al índice](#índice)
 
-> Cree una función *getTypeTriangle* que determine si un triángulo es equilátero, isósceles o escaleno. Recuerde que un triángulo es equilátero 
-cuando sus tres lados tienen la misma longitud. Un triángulo isósceles tiene, al menos, dos lados de igual longitud. Por último, en un 
-triángulo escaleno todos los lados tienen diferente longitud.
->
-> En primer lugar, la función deberá comprobar que los tres lados del triángulo tienen una longitud mayor que cero. Además, la suma de las
-longitudes de cualesquiera dos lados debe ser mayor que la longitud del tercer lado. Lo anterior cumple con el principio de desigualdad 
-triangular.
->
-> La función recibirá tres argumentos numéricos y devolverá una cadena de caracteres indicando el tipo de triángulo correspondiente o undefined 
-en el caso de que los tres lados del triángulo no cumplan con el principio de desigualdad triangular.
->
-> Ejemplos:
->
-> La invocación a *getTypeTriangle(7, 7, 7)* deberá devolver la cadena "Equilátero".
-> La invocación a *getTypeTriangle(5, 5, 9.5)* deberá devolver la cadena "Isósceles".
-> La invocación a *getTypeTriangle(5, 6, 7)* deberá devolver la cadena "Escaleno".
-> La invocación a *getTypeTriangle(3, 1, 1)* deberá devolver el valor *undefined*.
+> Una prueba de alérgenos produce un valor numérico (entero positivo) único, el cual contiene información sobre las alergias de una persona. La lista de posibles alérgenos es la siguiente:
 
-El código realizado es el siguiente
+> - Huevo (1)
+>
+> - Cacahuete (2)
+>
+> - Marisco (4)
+>
+> - Fresa (8)
+>
+> - Tomate (16)
+>
+> - Chocolate (32)
+>
+> - Polen (64)
+>
+> - Gato (128)
+>
+> Por ejemplo, si alguien fuera alérgico a los gatos y al tomate, obtendría una puntuación igual a 128 + 16 = 144.
+>
+>Escriba una función getAllergens que reciba una puntuación de alérgenos de una persona y que devuelva una lista con los alérgenos a los que la persona es alérgica. Los diferentes alérgenos deberán modelarse mediante un enumerado.
+>
+>Por último, tenga en cuenta que la función podría recibir una puntuación que incluya alérgenos no contemplados en la lista, esto es, alérgenos cuya puntuación sea 256, 512, 1024, etc. Además, si el valor pasado como argumento no es entero y positivo, la función deberá retornar el valor undefined.
+>
+>Ejemplos:
+>
+>getAllergens(129) // It should return [Huevo, Gato]
+>
+>getAllergens(257) // It should return [Huevo]
+>
+>getAllergens(256) // It should return []
+>
+>getAllergens(515) // It should return [Huevo, Cacahuete]
+>
+>getAllergens(84)  // It should return [Marisco, Tomate, Polen]
+
+#### Solución:
+
+Tanto el enumerable como la función se exportan para poder luego ser utilizada en los tests.
+
+Primero se define un enumerado ```Allergen``` con cada uno de los alérgenos y su correspondiente valor numérico.
 
 ```typescript
-function getTypeTriangle(a: number, b: number, c: number): string | undefined {
-    // Check that all sides are greater than 0
-    if (a <= 0 || b <= 0 || c <= 0) {
-      return undefined;
+export enum Allergen {
+  Huevo = 1,
+  Cacahuete = 2,
+  Marisco = 4,
+  Fresa = 8,
+  Tomate = 16,
+  Chocolate = 32,
+  Polen = 64,
+  Gato = 128
+}
+```
+
+Luego definimos la función ```getAllergens```, que recibe una puntuación de alérgenos *score* y devuelve una lista de elérgenos a los que la persona es elérgica, representados como valores del enumerado ```Allergen```.
+
+```typescript
+
+export function getAllergens(score: number): Allergen[] | undefined {
+  if (!Number.isInteger(score) || score <= 0) {
+    return undefined;
+  }
+
+  const allergens: Allergen[] = [];
+  let remainingScore = score;
+
+  // Iterar sobre todos los alérgenos
+  for (const allergenValue of Object.values(Allergen)) {
+    // Si el valor es un número, y es una potencia de 2 (es decir, solo tiene un bit encendido en su representación binaria)
+    if (typeof allergenValue === 'number' && (allergenValue & (allergenValue - 1)) === 0) {
+      // Si la puntuación restante incluye el alérgeno
+      if ((remainingScore & allergenValue) === allergenValue) {
+        // Agregar el alérgeno a la lista y restar su valor de la puntuación restante
+        allergens.push(allergenValue);
+        remainingScore -= allergenValue;
+      }
     }
-    
-    // Check the triangle inequality
-    if (a + b <= c || b + c <= a || c + a <= b) {
-      return undefined;
+  }
+
+  return allergens;
+}
+```
+
+En ella se verifica si la puntuación es entera y positiva, de lo contrario se devuelve *undefined*.
+
+Se crea un array *allergens* para almacenar los alérgenos a los que la persona es alérgica.
+
+Luego, se crea una variable *remainingScore* que inicialmente tiene el valor de la puntuación recibida, y que se irá actualizando a medida que se agreguen alérgenos al array *allergens*.
+
+Se itera sobre todos los valores del enum *Allergen* utilizando *Object.values*.
+
+Verificamos si el valor es un número y si es una potencia de 2. Para verificar si es una potencia de 2, utilizamos la propiedad de que en la representación binaria de un número que es potencia de 2, solo hay un bit encendido (el bit de la posición que corresponde a la potencia de 2). Entonces, si restamos 1 al valor y hacemos una operación AND con el valor original, si obtenemos 0 significa que solo hay un bit encendido, por lo que es una potencia de 2.
+
+Si el valor es una potencia de 2, verificamos si la puntuación restante (*remainingScore*) incluye el alérgeno. Para esto, hacemos una operación AND entre la puntuación restante y el valor del alérgeno. Si el resultado es igual al valor del lérgeno, significa que la puntuación restante incluye el alérgeno y lo añadimos a la lista de alérgenos alérgicos (allergens), y restamos el valor del alérgeno a la puntuación restante (remainingScore) para evitar que se verifique en próximas iteraciones.
+
+Si el valor no es una potencia de 2, significa que no es un alérgeno contemplado en la lista y no es necesario hacer nada en este caso.
+
+Finalmente, devolvemos la lista de alérgenos alérgicos (allergens).
+
+#### Tests:
+
+En los tests se usa la función *expect* de la librería chai para verificar que el resultado de la función *getAllergens* sea el esperado. Se utilizan los métodos ```to.deep.equal``` para comparar arrays y ```to.be.undefined``` para verificar que el resultado sea *undefined*. En los casos en que se espera que la función retorne un array, se usa el método ```to.deep.equal``` para asegurarse de que los elementos del array sean iguales en orden y contenido. También se prueban los casos en que la función debería retornar *undefined* si se le pasa un valor no entero o no positivo.
+
+```typescript
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import {getAllergens, Allergen} from "../src/ejercicio01";
+
+describe("getAllergens", () => {
+  it("should return [Huevo, Gato] when given 129", () => {
+    const result = getAllergens(129);
+    expect(result).to.deep.equal([Allergen.Huevo, Allergen.Gato]);
+  });
+
+  it("should return [Huevo] when given 257", () => {
+    const result = getAllergens(257);
+    expect(result).to.deep.equal([Allergen.Huevo]);
+  });
+
+  it("should return [] when given 256", () => {
+    const result = getAllergens(256);
+    expect(result).to.deep.equal([]);
+  });
+
+  it("should return [Huevo, Cacahuete] when given 515", () => {
+    const result = getAllergens(515);
+    expect(result).to.deep.equal([Allergen.Huevo, Allergen.Cacahuete]);
+  });
+
+  it("should return [Marisco, Tomate, Polen] when given 84", () => {
+    const result = getAllergens(84);
+    expect(result).to.deep.equal([Allergen.Marisco, Allergen.Tomate, Allergen.Polen]);
+  });
+
+  it("should return undefined when given a non-positive integer value", () => {
+    const result = getAllergens(-1);
+    expect(result).to.be.undefined;
+  });
+
+  it("should return undefined when given a non-integer value", () => {
+    const result = getAllergens(3.14);
+    expect(result).to.be.undefined;
+  });
+});
+```
+
+### Ejercicio 2 - Números complejos <a name="ejercicio-2"></a>
+> [Volver al índice](#índice)
+
+> Con lo visto hasta ahora en la asignatura, defina un tipo de datos propio que permita representar un número complejo, esto es, pares de valores numéricos reales, donde la primera componente del par es la parte real del complejo, mientras que la segunda componente del par representa su parte imaginaria.
+>
+> A continuación, partiendo de dicha definición, escriba funciones que permitan calcular las siguientes operaciones sobre números complejos:
+>
+> Suma, resta, multiplicación y división (funciones add, sub, mult y div). Estas funciones reciben como argumentos dos complejos y devuelven un complejo.
+>
+> Producto escalar (función prod). Esta función recibe como argumentos un complejo y un número real, retornando un número complejo.
+>
+> Conjugado (función conj). Recibe como argumento un complejo y devuelve otro complejo.
+>
+> Módulo (función abs). La función recibe como argumento un complejo y retorna un valor real. 
+
+#### Solución:
+
+Para definir el tipo de datos para un número complejo, se puede utilizar una interfaz de TypeScript:
+
+```typescript
+export interface ComplexNumber {
+  real: number;
+  imaginary: number;
+}
+```
+
+A partir de esta interfaz, se pueden definir las funciones solicitadas:
+
+```typescript
+// Suma de dos números complejos
+export function add(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
+  return {
+    real: a.real + b.real,
+    imaginary: a.imaginary + b.imaginary,
+  };
+}
+
+// Resta de dos números complejos
+export function sub(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
+  return {
+    real: a.real - b.real,
+    imaginary: a.imaginary - b.imaginary,
+  };
+}
+
+// Multiplicación de dos números complejos
+export function mult(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
+  return {
+    real: a.real * b.real - a.imaginary * b.imaginary,
+    imaginary: a.real * b.imaginary + a.imaginary * b.real,
+  };
+}
+
+// División de dos números complejos
+export function div(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
+  const denominator = b.real ** 2 + b.imaginary ** 2;
+  const realPart = (a.real * b.real + a.imaginary * b.imaginary) / denominator;
+  const imaginaryPart = (a.imaginary * b.real - a.real * b.imaginary) / denominator;
+  return {
+    real: Math.round(realPart * 100) / 100,
+    imaginary: Math.round(imaginaryPart * 100) / 100,
+  };
+}
+
+// Producto escalar de un número complejo y un número real
+export function prod(a: ComplexNumber, b: number): ComplexNumber {
+  return {
+    real: a.real * b,
+    imaginary: a.imaginary * b,
+  };
+}
+
+// Conjugado de un número complejo
+export function conj(a: ComplexNumber): ComplexNumber {
+  return {
+    real: a.real,
+    imaginary: -a.imaginary,
+  };
+}
+
+// Módulo de un número complejo
+export function abs(a: ComplexNumber): number {
+  return Math.sqrt(a.real ** 2 + a.imaginary ** 2);
+}
+```
+
+En la división he usado *Math.round()* para redondear los valores reales e imaginarios devueltos a dos decimales. Así evito pequeñas diferencias de redondeo que podrían causar problemas en las pruebas.
+
+#### Tests
+
+En los tests simplemente se sigue la filosofía anteriormente indicada, comprobando los resultados de todas las funciones.
+
+```typescript
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import { ComplexNumber, add, sub, mult, div, prod, conj, abs } from '../src/ejercicio02';
+
+describe('add', () => {
+  it('should add two complex numbers', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const b: ComplexNumber = { real: 1, imaginary: 4 };
+    const expected: ComplexNumber = { real: 3, imaginary: 7 };
+    const result: ComplexNumber = add(a, b);
+    expect(result).to.deep.equal(expected);
+  });
+});
+
+describe('sub', () => {
+  it('should subtract two complex numbers', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const b: ComplexNumber = { real: 1, imaginary: 4 };
+    const expected: ComplexNumber = { real: 1, imaginary: -1 };
+    const result: ComplexNumber = sub(a, b);
+    expect(result).to.deep.equal(expected);
+  });
+});
+
+describe('mult', () => {
+  it('should multiply two complex numbers', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const b: ComplexNumber = { real: 1, imaginary: 4 };
+    const expected: ComplexNumber = { real: -10, imaginary: 11 };
+    const result: ComplexNumber = mult(a, b);
+    expect(result).to.deep.equal(expected);
+  });
+});
+
+describe('div', () => {
+  it('should divide two complex numbers', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const b: ComplexNumber = { real: 1, imaginary: 4 };
+    const expected: ComplexNumber = { real: 0.82, imaginary: -0.29 };
+    const result: ComplexNumber = div(a, b);
+    expect(result.real).to.be.closeTo(expected.real, 0.01);
+    expect(result.imaginary).to.be.closeTo(expected.imaginary, 0.01);
+  });
+});
+
+describe('prod', () => {
+  it('should multiply a complex number by a real number', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const b: number = 2;
+    const expected: ComplexNumber = { real: 4, imaginary: 6 };
+    const result: ComplexNumber = prod(a, b);
+    expect(result).to.deep.equal(expected);
+  });
+});
+
+describe('conj', () => {
+  it('should return the conjugate of a complex number', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const expected: ComplexNumber = { real: 2, imaginary: -3 };
+    const result: ComplexNumber = conj(a);
+    expect(result).to.deep.equal(expected);
+  });
+});
+
+describe('abs', () => {
+  it('should return the absolute value of a complex number', () => {
+    const a: ComplexNumber = { real: 2, imaginary: 3 };
+    const expected: number = 3.605;
+    const result: number = abs(a);
+    expect(result).to.be.closeTo(expected, 0.01);
+  });
+});
+```
+
+### Ejercicio 3 - No cabrees a la reina <a name="ejercicio-3"></a>
+> [Volver al índice](#índice)
+
+> Dadas las posiciones de dos reinas en un tablero de ajedrez, determine si ambas reinas podrían atacarse en caso de cabrearse una con la otra. En el ajedrez, una reina puede atacar piezas ubicadas en la misma fila, columna o diagonal.
+>
+> Un tablero de ajedrez puede representarse mediante un array bidimensional de 8 x 8 casillas. Por lo tanto, si la reina negra está ubicada en la posición (1, 3), mientras que la reina blanca está ubicada en la posición (3, 5), tendríamos una estructura de datos como la que sigue:
+>
+>[
+>    [-, -, -, -, -, -, -, -]
+>    [-, -, -, N, -, -, -, -]
+>    [-, -, -, -, -, -, -, -]
+>    [-, -, -, -, -, B, -, -]
+>    [-, -, -, -, -, -, -, -]
+>    [-, -, -, -, -, -, -, -]
+>    [-, -, -, -, -, -, -, -]
+>    [-, -, -, -, -, -, -, -]
+>]
+>
+>Escriba una función checkAtack que, dada una estructura de datos como la anterior, devuelva un valor lógico 
+indicando si ambas reinas podrían atacarse dadas las posiciones de las mismas. Tenga en cuenta que solo puede 
+haber una reina blanca y una reina negra en el tablero. En caso de que lo anterior no suceda, la función deberá devolver el valor undefined.
+>
+>Por último, el tablero debe consistir en, exactamente, 8 filas y 8 columnas, donde cada casilla puede contener alguno de los valores -, N o B, exclusivamente. Aunque la anterior comprobación podría llevarse a cabo a través del código fuente incluido en la función (en tiempo de ejecución), defina un tipo de datos adecuado que impida, desde el punto de vista del tipado (en tiempo de compilación), pasarle a la función checkAtack un tablero no válido, esto es, con un número de filas/columnas diferente a 8 y/o celdas con valores no válidos). 
+
+#### Solución:
+
+Primero se define el tipo ChessBoard como una matriz en la que cada celda puede contener un guion ('-'), una 'N' o una 'B'.
+
+```typescript
+export type ChessBoard = Array<Array<'-' | 'N' | 'B'>>;
+```
+
+La función ```isValidChessBoard``` comprueba si una estructura de datos es un tablero de ajedrez válido, es decir, si es una matriz de 8x8 en la que cada celda contiene un guion ('-'), una 'N' o una 'B'. La función recibe como argumento un valor de tipo *unknown* y devuelve un valor de tipo *board is ChessBoard*, que es una verificación de tipo que garantiza que el valor es de tipo *ChessBoard*.
+
+Para comprobar si la estructura de datos es un tablero de ajedrez válido, se realizan tres comprobaciones anidadas en un condicional if:
+
+1. Si el valor no es un array o si su longitud no es 8, en cuyo caso se devuelve false.
+2. Si cada fila del tablero no es un array o si su longitud no es 8, en cuyo caso también se devuelve false.
+3. Se comprueba si cada celda del tablero no es un guion, una 'N' o una 'B', en cuyo caso se devuelve false.
+
+Si se han superado todas las comprobaciones anteriores, se devuelve true.
+
+Además, se comprueba que en el tablero solo haya una reina de cada tipo.
+
+```typescript
+export function isValidChessBoard(board: unknown): board is ChessBoard {
+    if (!Array.isArray(board) || board.length !== 8) {
+      return false;
     }
   
-    if (a === b && b === c) {
-      return "Equilátero";
-    } else if (a === b || b === c || c === a) {
-      return "Isósceles";
-    } else {
-      return "Escaleno";
+    let numBlack = 0;
+    let numWhite = 0;
+  
+    for (const row of board) {
+      if (!Array.isArray(row) || row.length !== 8) {
+        return false;
+      }
+  
+      for (const cell of row) {
+        if (!['-', 'N', 'B'].includes(cell)) {
+          return false;
+        }
+  
+        if (cell === 'N') {
+          numBlack++;
+        } else if (cell === 'B') {
+          numWhite++;
+        }
+      }
     }
+  
+    if (numBlack !== 1 || numWhite !== 1) {
+      return false;
+    }
+  
+    return true;
+}
+```
+
+La función ```checkAttack``` comprueba si dos reinas en un tablero de ajedrez podrían atacarse. La función recibe como argumento el tablero de ajedrez y a partir de él obtiene las posiciones de ambas reinas. La función devuelve *true* si ambas reinas podrían atacarse, *false* si no podrían atacarse y *undefined* si el tablero de ajedrez no es válido.
+
+Para comprobar si el tablero de ajedrez es válido, se utiliza la función ```isValidChessBoard``` definida anteriormente. Si el tablero no es válido, se devuelve *undefined*.
+
+Si el tablero es válido, se extraen las filas y las columnas de las posiciones de las dos reinas. Si las dos reinas están en la misma fila o en la misma columna, se devuelve *true* ya que la reina negra puede atacar a la reina blanca. De lo contrario, se calcula la diferencia entre las filas y las columnas de las reinas y se verifica si son iguales, lo que significa que están en la misma diagonal, en cuyo caso también se devuelve *true*. Si ninguna de las condiciones anteriores se cumple, se devuelve *false*.
+
+```typescript
+export function checkAttack(board: ChessBoard): boolean | undefined {
+  if (!isValidChessBoard(board)) {
+    return undefined;
   }
 
-console.log("getTypeTriangle(7, 7, 7) = " + getTypeTriangle(7, 7, 7))
-console.log("getTypeTriangle(5, 5, 9.5) = " + getTypeTriangle(5, 5, 9.5))
-console.log("getTypeTriangle(5, 6, 7) = " + getTypeTriangle(5, 6, 7))
-console.log("getTypeTriangle(3, 1, 1) = " + getTypeTriangle(3, 1, 1))
-```
+  const blackIndex = board.findIndex(row => row.includes('N'));
+  const whiteIndex = board.findIndex(row => row.includes('B'));
 
-La definición de la función toma tres parámetros numéricos como entrada, que representan los lados del triángulo, y devuelve una cadena de texto que indica el tipo de triángulo o *undefined* si los parámetros no son válidos.
+  
 
-```typescript
-function getTypeTriangle(a: number, b: number, c: number): string | undefined {
-```
+  if (blackIndex === -1 || whiteIndex === -1) {
+    // Si no se encuentra alguna de las reinas, el tablero es inválido
+    return undefined;
+  }
 
-Luego se comprueba si alguno de los lados del triángulo es menor o igual a cero. Si es así, los parámetros no serán válidos.
+  const blackRow = blackIndex;
+  const blackCol = board[blackIndex].indexOf('N');
 
-```typescript
-if (a <= 0 || b <= 0 || c <= 0) {
-  return undefined;
+  const whiteRow = whiteIndex;
+  const whiteCol = board[whiteIndex].indexOf('B');
+
+  if (blackRow === whiteRow || blackCol === whiteCol) {
+    return true;
+  }
+
+  if (Math.abs(blackRow - whiteRow) === Math.abs(blackCol - whiteCol)) {
+    return true;
+  }
+
+  return false;
 }
+
 ```
 
-A continuación, se comprueba si se cumple la desigualdad triangular, que establece que la suma de dos lados de un triángulo siempre debe ser mayor que el tercer lado. Si la desigualdad no se cumple, la función devuelve *undefined*.
-
-```typescript
-if (a + b <= c || b + c <= a || c + a <= b) {
-  return undefined;
-}
-```
-
-Luego paso a definir los tres posibles resultados de la función. Si los tres lados son iguales, la función devuelve la cadena *"Equilátero"*. Si dos lados son iguales y el tercero es diferente, la función devuelve la cadena *"Isósceles"*. Si los tres lados son diferentes, la función devuelve la cadena *"Escaleno"*.
-
-```typescript
-if (a === b && b === c) {
-  return "Equilátero";
-} else if (a === b || b === c || c === a) {
-  return "Isósceles";
-} else {
-  return "Escaleno";
-}
-```
-
-Por último, con los *console.log* compruebo la ejecución del código.
-
-
-### Ejercicio 2 - Notación decimal y factorial <a name="ejercicio-2---notación-decimal-y-factorial"></a>
+### Ejercicio 4 - Reimplementando la función map <a name="ejercicio-4"></a>
 > [Volver al índice](#índice)
 
-> Codificar números decimales con factoriales es una forma de escribir números en un sistema base que depende de factoriales, en lugar de potencias. 
-En este sistema, el último dígito siempre es 0 y está en base 0!. El dígito anterior pueder ser 0 o 1 y está en base 1!. Del mismo modo, el 
-dígito anterior es 0, 1 o 2 y está en base 2!. De manera más general, el enésimo dígito respecto al último es siempre 0, 1, 2, ..., n y está 
-en base n!. Para más información consulte el Sistema Factorial.
+> Implemente una función que emule el comportamiento de la función map proporcionada por el lenguaje sin hacer 
+uso esta última. La función map actúa sobre una colección de elementos, modificando el valor de cada uno de 
+ellos en base a un callback que se le pasa como argumento.
 >
-> Para resolver este ejercicio, defina dos funciones decimalToFactorial y factorialToDecimal. La primera, recibirá un entero positivo y devolverá 
-como resultado una cadena de texto con la representación factorial del número recibido. Por el contrario, la función factorialToDecimal realizará 
-la operación opuesta. Esto es, recibirá como paŕametro una cadena de texto en notación factorial y devolverá el número entero que representa.
+> Teniendo en cuenta lo anterior, escriba una función myMap que reciba una colección (array) de valores numéricos 
+como primer argumento, además de un callback que permita modificar cada elemento de la colección como segundo 
+argumento. La función deberá devolver la colección modificada.
 >
-> Ejemplo:
+> Un ejemplo de invocación podría ser:
 >
-> El número 463 codificado en notación factorial sería: 341010 ya que:
-463 = 3 x 5! + 4 x 4! + 1 x 3! + 0 x 2! + 1 x 1! + 0 x 0!
+> myMap([0, 1, 2, 3, 4], (item) => item * item) // It should return [0, 1, 4, 9, 16]
 
-Solución:
+#### Solución:
+
+La función desarrollada myMap, que toma dos argumentos: una colección de números como un array y un callback que recibe un número y devuelve otro número.
+
+La función myMap itera sobre cada elemento de la colección y aplica el callback a cada uno de ellos. El valor devuelto por el callback se agrega al array result. La función devuelve el array result con los valores modificados.
 
 ```typescript
-function factorial(num_decimal: number) : number {
-    if (num_decimal === 0 || num_decimal === 1) {
-        return 1;
-    } else {
-        return num_decimal * factorial(num_decimal - 1);
-    }
-}
-
-function decimaltofactorial(num_decimal: number): string {
-    let aux: number = 0;
-    let num: number = num_decimal;
-    // Calculate the highest factorial that is less than or equal to num
-    while (num > factorial(aux)) {
-        aux++;
-    }
-    // Subtract as many multiples of that factorial as possible and store the digits
-    let greater: number = aux - 1;
-    let counter: number = 0;
-    let control: any = greater;
-    let result: string = "";
-    while (control >= 0) {
-        let fact = factorial(control);
-        while (num >= fact) {
-            num -= fact;
-            counter++;
-        }
-        result += counter.toString();
-        counter = 0;
-        control--;
+export function myMap(collection: number[], callback: (num: number) => number): number[] {
+    const result: number[] = [];
+    for (let i = 0; i < collection.length; i++) {
+      result.push(callback(collection[i]));
     }
     return result;
-}
-
-function factorialToDecimal(num_factorial: string): number {
-    let num_decimal = 0;
-    let factorials = num_factorial.split(' + ');
-    for (let i = 0; i < factorials.length; i++) {
-      let aux_factorial = factorials[i].split(' x ');
-      let term = parseInt(aux_factorial[0]);
-      let factor = parseInt(aux_factorial[1]);
-      num_decimal += term * factorial(factor);
-    }
-    return num_decimal;
   }
-
-console.log("decimaltofactorial(463) = " + decimaltofactorial(463)); // 341010
-console.log("factorialToDecimal('3 x 5! + 4 x 4! + 1 x 3! + 0 x 2! + 1 x 1! + 0 x 0!') = " + factorialToDecimal('3 x 5! + 4 x 4! + 1 x 3! + 0 x 2! + 1 x 1! + 0 x 0!')); // 463
-
 ```
+En resumen, la función myMap permite modificar cada elemento de una colección de números utilizando una función de callback y devuelve la colección modificada. Esta función emula el comportamiento de la función nativa map.
 
-Primero defino una función que calcula el factorial de un número entero positivo dado como argumento. Para ello empleo recursividad.
+#### Tests:
+
+En cuanto a los tests unitarios para la función myMap, que verifican su comportamiento, testeamos diferentes casos:
 
 ```typescript
-function factorial(num_decimal: number) : number {
-    if (num_decimal === 0 || num_decimal === 1) {
-        return 1;
-    } else {
-        return num_decimal * factorial(num_decimal - 1);
-    }
-}
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import { myMap } from '../src/ejercicio04';
+
+describe("myMap", () => {
+    it("should return an empty array when given an empty array", () => {
+      const result = myMap([], (num) => num * num);
+      expect(result).to.deep.equal([]);
+    });
+  
+    it("should return a new array with the values squared", () => {
+      const arr = [0, 1, 2, 3, 4];
+      const result = myMap(arr, (num) => num * num);
+      expect(result).to.deep.equal([0, 1, 4, 9, 16]);
+      expect(arr).to.deep.equal([0, 1, 2, 3, 4]); // Ensure the original array is not modified
+    });
+  
+    it("should return a new array with the values doubled", () => {
+      const arr = [1, 2, 3];
+      const result = myMap(arr, (num) => num * 2);
+      expect(result).to.deep.equal([2, 4, 6]);
+      expect(arr).to.deep.equal([1, 2, 3]); // Ensure the original array is not modified
+    });
+  });
 ```
 
-La función *decimaltofactorial* es una función que convierte un número decimal a una cadena de dígitos que representa su valor en factorial.
+El primer test verifica que cuando se llama a myMap con una matriz vacía, el resultado debe ser una matriz vacía, el segundo test verifica que cuando se llama a myMap con una matriz de valores numéricos y una función de devolución de llamada que eleva al cuadrado cada valor, donde el resultado debe ser una nueva matriz con cada valor elevado al cuadrado. Además, el test también verifica que la matriz original no se modifica.
 
-La función utiliza un algoritmo que trabaja dividiendo el número decimal en factores factoriales de forma recursiva. La variable *aux* se inicializa en 0, y se utiliza para calcular el factorial más alto que sea menor o igual que *num_decimal*. Esto se logra utilizando un bucle while que itera hasta que *num* sea menor o igual que el factorial de *aux*. En cada iteración, se incrementa el valor de *aux* en 1.
+El tercer y último test verifica que cuando se llama a myMap con una matriz de valores numéricos y una función de devolución de llamada que duplica cada valor, el resultado debe ser una nueva matriz con cada valor duplicado. Además, el test también verifica que la matriz original no se modifica.
 
-Una vez que se ha encontrado el factorial más alto que sea menor o igual que *num_decimal*, se utiliza un segundo bucle while para calcular los dígitos en la representación factorial del número. La variable *greater* se inicializa como *aux - 1*, y se utiliza para almacenar el factorial más alto que se está procesando en cada iteración del bucle. La variable control se inicializa con el valor de greater, y se utiliza para controlar cuántos dígitos se deben calcular.
+### Ejercicio 5 - Matrices espirales <a name="ejercicio-5"></a>
+> [Volver al índice](#índice)
 
-En cada iteración del bucle, se calcula el factorial del valor de *control* y se compara con *num*. Si el factorial es menor o igual a *num*, se divide *num* por el factorial y se redondea hacia abajo para obtener el número de veces que el factorial entra en *num*. Este valor se almacena en la variable counter, y se agrega a la cadena de resultados *result*. A continuación, *num *se actualiza restando el producto del factorial y el número de veces que el factorial entró en *num*.
+> Escriba una función getSpiralMatrix que, dado un entero positivo n representando el tamaño de una matriz cuadrada, 
+devuelva una matriz (array bidimensional) con todos los números enteros en el rango [1, n*n] y que estén dispuestos 
+en la matriz conformando una espiral. La espiral debe comenzar en la primera fila y columna de la matriz e irse 
+completando siguiendo las agujas del reloj.
+> 
+> Ejemplos:
+> 
+> getSpiralMatrix(3)  It should return [
+>                                          [1, 2, 3],
+>                                          [8, 9, 4],
+>                                          [7, 6, 5]
+>                                        ] 
+> getSpiralMatrix(4)  It should return [
+>     [ 1,  2,  3, 4],
+>     [12, 13, 14, 5],
+>     [11, 16, 15, 6],
+>     [10,  9,  8 ,7]
+>   ] 
+> getSpiralMatrix(5)  It should return [
+>     [ 1,   2,  3,  4, 5],
+>     [ 16, 17, 18, 19, 6],
+>     [ 15, 24, 25, 20, 7],
+>     [ 14, 23, 22, 21, 8],
+>     [ 13, 12, 11, 10, 9],
+>   ]
 
-Una vez que se han calculado todos los dígitos, se devuelve la cadena resultante.
+#### Solución:
 
 ```typescript
-function decimaltofactorial(num_decimal: number): string {
-    let aux: number = 0;
-    let num: number = num_decimal;
-    // Calculate the highest factorial that is less than or equal to num
-    while (num > factorial(aux)) {
-        aux++;
+export function getSpiralMatrix(n: number): number[][] {
+    const result: number[][] = Array.from({ length: n }, () => []);
+    let counter = 1;
+    let startRow = 0;
+    let endRow = n - 1;
+    let startCol = 0;
+    let endCol = n - 1;
+  
+    while (startCol <= endCol && startRow <= endRow) {
+      
+      // Top row
+      for (let i = startCol; i <= endCol; i++) {
+        result[startRow][i] = counter++;
+      }
+      startRow++;
+  
+      // Right column
+      for (let i = startRow; i <= endRow; i++) {
+        result[i][endCol] = counter++;
+      }
+      endCol--;
+  
+      // Bottom row
+      for (let i = endCol; i >= startCol && startRow <= endRow; i--) {
+        result[endRow][i] = counter++;
+      }
+      endRow--;
+  
+      // Left column
+      for (let i = endRow; i >= startRow && startCol <= endCol; i--) {
+        result[i][startCol] = counter++;
+      }
+      startCol++;
     }
-    // Subtract as many multiples of that factorial as possible and store the digits
-    let greater: number = aux - 1;
-    let counter: number = 0;
-    let control: any = greater;
-    let result: string = "";
-    while (control >= 0) {
-        let fact = factorial(control);
-        while (num >= fact) {
-            num -= fact;
-            counter++;
-        }
-        result += counter.toString();
-        counter = 0;
-        control--;
-    }
+  
     return result;
-}
-```
-
-La siguiente función, *factorialToDecimal*, recibe como argumento una cadena de caracteres *num_factorial* que representa un número en su forma factorial y devuelve el número decimal equivalente.
-
-La función comienza dividiendo la cadena *num_factorial* en términos individuales separados por el carácter "+". Luego, cada término se divide en dos partes: el coeficiente y el factor, separados por el carácter "x". Por ejemplo, "4 x 3!" se dividiría en "4" y "3".
-
-A continuación, la función calcula el valor decimal de cada término multiplicando el coeficiente por el factorial del número correspondiente, utilizando la función *factorial* implementada previamente. El resultado de cada término se suma al número decimal total.
-
-Finalmente, la función devuelve el número decimal resultante.
-
-```typescript
-function factorialToDecimal(num_factorial: string): number {
-    let num_decimal = 0;
-    let factorials = num_factorial.split(' + ');
-    for (let i = 0; i < factorials.length; i++) {
-      let aux_factorial = factorials[i].split(' x ');
-      let term = parseInt(aux_factorial[0]);
-      let factor = parseInt(aux_factorial[1]);
-      num_decimal += term * factorial(factor);
-    }
-    return num_decimal;
   }
 ```
 
-### Ejercicio 3 - Validador de mensajes <a name="ejercicio-3---validador-de-mensajes"></a>
-> [Volver al índice](#índice)
-
-> Supongamos que recibimos un mensaje en una cadena de texto que sigue un patrón “Xsubcadena1Ysubcadena2” dónde X e Y son números y
-subcadena1 y subcadena2 son cadenas de texto. Queremos comprobar la validez de un determinado mensaje en función de unas reglas preestablecidas. 
-> Para decidir si el mensaje es válido, debemos dividir la cadena de texto en números y subcadenas. Posteriormente, debemos comprobar que para cada número que encontramos, la longitud de la subcadena es igual al número anterior.
->
-> Por ejemplo:
->
-> “3hey5hello2hi” se debería dividir en 3, hey, 5, hello, 2, hi.
-> Defina una función isValid que reciba como parámetro una cadena de texto compuesta por números y letras y determine si es válida según 
-las reglas anteriores. La función devolverá el resultado del cálculo mediante un valor de tipo booleano.
->
-> Notas:
->
-> Los mensajes solo tienen números y letras.
-Los números pueden tener varios dígitos. Por ejemplo, la cadena “4code10helloworld” es un mensaje válido.
-> Cada número debe corresponder con la longitud de la subcadena que se encuentra a continuación, en cualquier otro caso el mensaje no será válido.
-La cadena vacía se considera un mensaje válido.
-
-Solución:
+#### Tests:
 
 ```typescript
-function isAValidMessage(mensaje) {
-	const numero = mensaje.split(/[a-z]/i).filter(e => e !== '')
-	const palabra = mensaje.split(/[0-9]/).filter(e => e !== '')
-	const filtrado = palabra.map((x,i) => x.length == numero[i]).filter(e => e === true).length
-	return !mensaje.length || (filtrado === numero.length && palabra.length === numero.length && mensaje.slice(0, 1).match(/[0-9]/) && !mensaje.slice(-1).match(/[0-9]/)) ? true : false
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import { getSpiralMatrix } from '../src/ejercicio05';
 
-}
+describe('getSpiralMatrix function', () => {
+  it('should return the correct spiral matrix for n=3', () => {
+    const expected = [
+      [1, 2, 3],
+      [8, 9, 4],
+      [7, 6, 5]
+    ];
+    const actual = getSpiralMatrix(3);
+    expect(actual).to.deep.equal(expected);
+  });
 
-console.log("isAValidMessage('3hey5hello2hi') = " + isAValidMessage('3hey5hello2hi'));
+  it('should return the correct spiral matrix for n=4', () => {
+    const expected = [
+      [ 1,  2,  3, 4],
+      [12, 13, 14, 5],
+      [11, 16, 15, 6],
+      [10,  9,  8 ,7]
+    ];
+    const actual = getSpiralMatrix(4);
+    expect(actual).to.deep.equal(expected);
+  });
+
+  it('should return the correct spiral matrix for n=5', () => {
+    const expected = [
+      [ 1,   2,  3,  4, 5],
+      [16, 17, 18, 19, 6],
+      [15, 24, 25, 20, 7],
+      [14, 23, 22, 21, 8],
+      [13, 12, 11, 10, 9],
+    ];
+    const actual = getSpiralMatrix(5);
+    expect(actual).to.deep.equal(expected);
+  });
+});
+
 ```
 
-La función *isAValidMessage* toma como parámetro una cadena de texto *mensaje* y verifica si cumple con ciertas condiciones para considerarse como un mensaje válido.
 
-El código divide la cadena en dos partes: una lista de números y otra de palabras. Para hacer esto se utiliza el método *split*, que recibe como argumento una expresión regular que indica el separador a utilizar. En este caso, la expresión regular es ```/[a-z]/i y /[0-9]/``` para dividir la cadena en una lista de palabras y una lista de números, respectivamente.
-
-Luego se verifica que la longitud de cada palabra coincida con el número correspondiente de la lista de números. Esto se realiza utilizando el método *map* y filtrando aquellos elementos que cumplen con la condición utilizando el método *filter*. Si la cantidad de elementos filtrados es igual a la cantidad de elementos en la lista de números, significa que todas las palabras tienen una longitud válida y se considera que el mensaje es válido.
-
-Finalmente, se verifica que el primer carácter de la cadena sea un número, que el último carácter no sea un número y que la cadena no esté vacía. Si todas estas condiciones se cumplen, la función devuelve *true*. De lo contrario, devuelve *false*.
-
-### Ejercicio 4 - Conversor de estilo <a name="ejercicio-4---conversor-de-estilo"></a>
+### Ejercicio 6 - Compresión de números en rangos <a name="ejercicio-6"></a>
 > [Volver al índice](#índice)
 
-> A la hora de desarrollar código, hay diversas maneras de nombrar las variables, funciones, clases y otros elementos que componen el código. 
-> Un patrón muy usado en lenguajes de programación como Python es el Snake Case. Este patrón consiste en dividir los nombres de las variables y 
-funciones usando guiones bajos entre palabras. Por ejemplo: sample_string o the_stealth_warrior.
->
-> Por el contrario, en lenguajes de programación como Java, C# y C/C++, predomina el denominado Camel Case. En este caso, los nombres de variables,
-clases y funciones se separan escribiendo con mayúscula la primera letra de la siguiente palabra. Siguiendo los ejemplos anteriores: 
-sampleString o theStealthWarrior.
->
-> Desarrolle dos funciones fromSnakeToCamelCase y fromCamelToSnakeCase que conviertan una cadena de texto de un formato a otro. Ambas funciones 
-recibirán como parámetro una cadena de texto y devolverán otra cadena con el nuevo formato. La primera función recibirá una cadena de texto en 
-formato Snake Case y la convertirá a formato Camel Case. La segunda función realizará la operación contraria.
->
-> Nota: Recuerde que las cadenas resultantes deben comenzar con minúscula.
+> Escriba una función fromArrayToRanges que reciba un array o lista de números enteros y los comprima en rangos, 
+es decir, que devuelva una cadena de caracteres con la compresión obtenida. Un rango, es decir, un conjunto de 
+números consecutivos se representará mediante una cadena de caracteres con el primer y último número del rango 
+separado por un guión bajo (_). Un rango de un único número será la cadena de caracteres que representa a ese 
+ùnico número. Luego, una serie de rangos vendrá separada por comas (,).
+> 
+> Ejemplos:
+> 
+> [5, 6, 7, 9, 12, 13, 14] => “5_7, 9, 12_14”
+> [-3, -2, -1, 3, 5, 6, 7] => “-3_-1, 3, 5_7”
+> [17] => “17”
+> [3, 5, 6, 7, 9, 10] => “3, 5_7, 9_10”
+> 
+> Escriba una función fromRangesToArray que lleve a cabo la operación inversa, es decir, que reciba como 
+argumento una cadena de caracteres representando una serie de rangos y devuelva el array de números 
+correspondiente.
 
-Solcución:
+#### Solución:
 
 ```typescript
-let cadena_convertida = '';
+export type Range = [number, number];
 
-function fromSnakeToCamelCase(entrada: string) {
-  const entrada_dividida = entrada.split('_');
-  let x = 0;
-  for (const elemento of entrada_dividida) {
-    if (x === 0) {
-      cadena_convertida = elemento.toLowerCase();
+export function fromArrayToRanges(arr: number[]): string {
+  if (arr.length === 0) return "";
+
+  let result: string[] = [];
+  let currentRange: Range = [arr[0], arr[0]];
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] === currentRange[1] + 1) {
+      currentRange[1] = arr[i];
     } else {
-      cadena_convertida += elemento.substr(0, 1).toUpperCase() + elemento.substr(1).toLowerCase();
+      result.push(getRangeString(currentRange));
+      currentRange = [arr[i], arr[i]];
     }
-    x++;
-  } 
-  return cadena_convertida;
+  }
+  result.push(getRangeString(currentRange));
+
+  return result.join(", ");
 }
 
-function fromCamelToSnakeCase(entrada: string) {
-  var result = entrada.replace(/([A-Z]+)/g, "_$1").replace(/^,/, "");
-  result.split(",");
-  result = result.toString();
-// result = result.substr(1, result.lenght);
-  result = result.toLowerCase();
+export function getRangeString(range: Range): string {
+  return range[0] === range[1] ? range[0].toString() : `${range[0]}_${range[1]}`;
+}
+
+export function fromRangesToArray(ranges: string): number[] {
+  if (ranges.trim() === "") {
+    return [];
+  }
+  let result: number[] = [];
+  const rangeStrings = ranges.split(", ");
+  for (let rangeStr of rangeStrings) {
+    const range = rangeStr.split("_").map(Number);
+    if (range.length === 1) {
+      result.push(range[0]);
+    } else {
+      for (let i = range[0]; i <= range[1]; i++) {
+        result.push(i);
+      }
+    }
+  }
   return result;
 }
-
-console.log("fromSnakeToCamelCase(the_stealth_warrior) = " + fromSnakeToCamelCase("the_stealth_warrior"));
-console.log("fromCamelToSnakeCase(theStealthWarrior) = " + fromCamelToSnakeCase("theStealthWarrior"));
 ```
 
-La función *fromSnakeToCamelCase* recibe una cadena de texto como entrada, la cual es una cadena de texto en formato *snake_case* (palabras separadas por guiones bajos). Primero, se divide la entrada en un arreglo de palabras, utilizando el método *split()* y especificando el carácter "_" como delimitador. Luego, se itera sobre este arreglo de palabras, concatenando cada palabra convertida a *camelCase* en la variable *cadena_convertida*. En la primera palabra, se convierte la palabra completa a minúsculas, y en las siguientes palabras se convierte la primera letra a mayúsculas y el resto a minúsculas. Finalmente, se retorna la cadena convertida.
+#### Tests:
 
-La función *fromCamelToSnakeCase* recibe una cadena de texto como entrada, la cual es una cadena de texto en formato *camelCase*. Se utiliza una expresión regular para buscar todas las mayúsculas en la cadena y agregarles un guión bajo delante. Luego, se convierte la cadena resultante a minúsculas y se retorna el resultado.
+```typescript
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import { fromArrayToRanges, fromRangesToArray } from "../src/ejercicio06";
 
-Finalmente, se realizan algunas pruebas de ambas funciones para verificar su funcionamiento.
+describe("fromArrayToRanges function", () => {
+    it("should return an empty string for an empty array", () => {
+      const arr: number[] = [];
+      const result = fromArrayToRanges(arr);
+      expect(result).to.equal("");
+    });
+  
+    it("should compress the array into a string of ranges", () => {
+      const arr = [5, 6, 7, 9, 12, 13, 14];
+      const expected = "5_7, 9, 12_14";
+      const result = fromArrayToRanges(arr);
+      expect(result).to.equal(expected);
+    });
+  
+    it("should handle negative numbers", () => {
+      const arr = [-3, -2, -1, 3, 5, 6, 7];
+      const expected = "-3_-1, 3, 5_7";
+      const result = fromArrayToRanges(arr);
+      expect(result).to.equal(expected);
+    });
+  
+    it("should handle a single number", () => {
+      const arr = [17];
+      const expected = "17";
+      const result = fromArrayToRanges(arr);
+      expect(result).to.equal(expected);
+    });
+  
+    it("should compress the array with multiple ranges", () => {
+      const arr = [3, 5, 6, 7, 9, 10];
+      const expected = "3, 5_7, 9_10";
+      const result = fromArrayToRanges(arr);
+      expect(result).to.equal(expected);
+    });
+  });
+  
+describe("fromRangesToArray function", () => {
+    it("should return an empty array for an empty string", () => {
+      const ranges = "";
+      const result = fromRangesToArray(ranges);
+      expect(result).to.deep.equal([]);
+    });
+  
+    it("should expand a string of ranges into an array", () => {
+      const ranges = "5_7, 9, 12_14";
+      const expected = [5, 6, 7, 9, 12, 13, 14];
+      const result = fromRangesToArray(ranges);
+    });
+});
+```
 
-### Ejercicio 5 - Un solo golpe <a name="ejercicio-5---un-solo-golpe"></a>
+### Ejercicio 7 - Mensaje secreto <a name="ejercicio-7"></a>
 > [Volver al índice](#índice)
 
-> Chuck Norris es el tío más duro del mundo, una vez golpeó a un caballo en la barbilla y sus descendientes se conocen hoy en día como jirafas.
->
-> Como sus puñetazos, Chuck NUNCA necesita más de una línea de código. La tarea que debes realizar, para complacer a Chuck Norris, es crear una única función que haga uso de cuatro métodos encadenados en una única línea de código. Puedes utilizar varias líneas, pero no querrás cabrear a Chuck Norris.
+> Si desea realizar algún proyecto usando una Raspberry Pi, probablemente necesitará usar resistencias. 
+> Para este ejercicio necesita conocer dos cosas sobre las resistencias:
 > 
-> Chuck espera como resultado una cadena de caracteres con sus cosas favoritas separadas, ordenadas, unidas de nuevo y, además, que se eliminen todas las apariciones de las letras e y a. Si alguien se atreve a retar a Chuck Norris con una cadena vacía la función devuelve “Broken!”.
->
-> Se espera un comportamiento como el siguiente:
->
->onePunch('Beard Jeans Hairbrush Knuckleduster Sand') deberá retornar 'Brd Hirbrush Jns Knuckldustr Snd'.
-onePunch('Sock Beard Vest Lady Sage') deberá retornar 'Brd Ldy Sg Sock Vst'.
-onePunch('Beard Sack Gun Parachute Face-Kicking-Shoes') deberá retornar 'Brd Fc-Kicking-Shos Gun Prchut Sck'.
-onePunch('Snot Snow Soda Tank Beard') deberá retornar 'Brd Snot Snow Sod Tnk'.
-onePunch('') deberá retornar 'Broken!'.
+> Cada resistor o resistencia tiene un valor de resistencia en Ohmios asociado. Además, las resistencias son 
+> tan pequeñas que si se les imprimiera el valor en ellas, sería muy difícil de leer. Para resolver este problema, 
+> los fabricantes siguen un estándar de bandas codificadas de colores para indicar sus valores de resistencia. 
+> Cada banda tiene una posición y un valor numérico.
 
-Solución:
+> Las primeras dos bandas de una resistencia tienen un esquema de codificación muy simple: cada color se mapea a un 
+> único número. Por ejemplo, si una resistencia tiene impresa una banda marrón (valor 1) seguida de una banda verde 
+> (valor 5), el valor de la resistencia se traduciría al número 15.
 
-```typescript
-function onePunch(cadena: string): string {
-        return cadena.split(' ').sort().join(' ').replace(/[ae\s]/g, '') || 'Broken!';
-      }
-```
+> El objetivo de este ejercicio es crear un programa que nos ayude a calcular el valor de una resistencia sin tener 
+> que memorizar los valores de las bandas. Para ello, cree una función decodeResistor que recibe como parámetros 
+> los nombres de los colores de una resistencia como entrada y devuelve un número de dos dígitos indicando el 
+> valor de la resistencia. La función deberá devover un número de dos dígitos incluso si recibe más de dos colores 
+> como parámetros.
+> 
+> Las bandas de colores están codificadas de la siguiente manera:
+> 
+> Negro: 0
+> Marrón: 1
+> Rojo: 2
+> Naranja: 3
+> Amarillo: 4
+> Verde: 5
+> Azul: 6
+> Violeta: 7
+> Gris: 8
+> Blanco: 9
 
-Primero, la función dividirá la cadena de entrada en palabras utilizando el método *split* con el espacio en blanco como delimitador. Luego, las palabras se ordenan alfabéticamente utilizando el método *sort*. A continuación, se vuelven a unir en una única cadena de texto utilizando el método *join* con el espacio en blanco como separador.
+> De este modo, la combinación Marrón-Verde debería devolver 15 al igual que Marrón-Verde-Violeta ignorando el 
+tercer color.
 
-La expresión regular ```[ae\s]``` en el método *replace* elimina los caracteres "a" y "e" junto con cualquier espacio en blanco que se encuentre en la cadena. La letra "e" también se elimina debido a que aparece en la expresión regular. Esto se logra utilizando la opción "g" (*global*) para que se busquen y reemplacen todas las coincidencias en la cadena.
-
-Si la cadena resultante es una cadena vacía, la función devuelve la cadena *"Broken!"*. De lo contrario, devuelve la cadena de texto resultante.
-
-Probamos el código con las sentencias siguientes:
-
-```typescript
-console.log(onePunch("Beard Jeans Hairbrush Knuckleduster Sand"));
-console.log(onePunch("Sock Beard Vest Lady Sage"));
-console.log(onePunch("Beard Sack Gun Parachute Face-Kicking-Shoes"));
-console.log(onePunch("Snot Snow Soda Tank Beard"));
-console.log(onePunch(" "));
-```
-
-### Ejercicio 6 - Conversor ISBN <a name="ejercicio-6---conversor-isbn"></a>
-> [Volver al índice](#índice)
-
-> El proceso de verificación ISBN-10 se usa para validar la identificación de números. Normalmente contienen guiones y siguen un patrón como: 
-3-598-21508-8.
->
->El formato ISBN-10 está compuesto por 9 dígitos (0-9) y un caracter de comprobación que puede ser un dígito (0-9) o una X. 
-En caso de que el caracter de comprobación sea una X, se representa con el valor ‘10. Estos valores su pueden comunicar con o sin guiones, 
-y se puede comprobar su validez con la siguiente fórmula:
->
->(x1 * 10 + x2 * 9 + x3 * 8 + x4 * 7 + x5 * 6 + x6 * 5 + x7 * 4 + x8 * 3 + x9 * 2 + x10 * 1) mod 11 == 0
->
->Si el resultado es 0, entonces el código ISBN-10 es válido. En cualquier otro caso, el código se considera no válido.
->
->El código ISBN-10 3-598-21508-8 da como resultado 0 y por lo tanto es un código ISBN válido:
->
->(3 * 10 + 5 * 9 + 9 * 8 + 8 * 7 + 2 * 6 + 1 * 5 + 5 * 4 + 0 * 3 + 8 * 2 + 8 * 1) mod 11 == 0
->
->Para resolver este ejercicio, defina una función isValidISBN que compruebe la validez de un código ISBN-10. La función recibirá como 
-argumento una cadena de caracteres compuesta por un posible código ISBN-10 separado o no por guiones. Como resultado, la función devolverá 
-verdadero o falso según corresponda con la validez del código ISBN-10. Tenga en cuenta que la cadena de entrada a la función puede ser del 
-tipo “3-598-21508-8” o “3598215088”. Para ambos casos el valor devuelto debe ser el mismo.
->
->Nota: Un ejemplo usando el caracter X sería “3-598-21507-X” o “359821507X”. Ambos casos representan un ISBN-10 válido.
-
-El código que hemos desarrollado es el siguiente:
+#### Solución:
 
 ```typescript
-function isValidISBN(isbn: string): boolean {
-    // Eliminar los guiones si los hay
-    isbn = isbn.replace(/-/g, '');
-  
-    // Verificar si la longitud de la cadena es válida
-    if (isbn.length !== 10) {
-      return false;
-    }
-  
-    // Verificar si los primeros 9 caracteres son dígitos
-    const first9Chars = isbn.slice(0, 9);
-    if (!/^\d+$/.test(first9Chars)) {
-      return false;
-    }
-  
-    // Calcular la suma de los productos de los dígitos
-    let sum = 0;
-    for (let i = 0; i < 9; i++) {
-      sum += parseInt(isbn[i]) * (10 - i);
-    }
-  
-    // Verificar si el último carácter es un dígito o una X
-    const lastChar = isbn[9];
-    if (!/^\d$/.test(lastChar) && lastChar !== 'X') {
-      return false;
-    }
-  
-    // Verificar si el dígito de comprobación es correcto
-    const expectedCheckDigit = sum % 11 === 0 ? 0 : 11 - (sum % 11);
-    const actualCheckDigit = lastChar === 'X' ? 10 : parseInt(lastChar);
-    return expectedCheckDigit === actualCheckDigit;
-  }
-```
+type ColorCode = { [color: string]: number };
 
-El código toma como entrada una cadena de caracteres que representa el ISBN. En primer lugar, elimina los guiones si los hay con la función *replace()*. Luego, verifica si la longitud de la cadena es válida, lo que significa que debe tener exactamente 10 caracteres. Si no es así, la función devuelve false.
+const colorCode: ColorCode = {
+  "negro": 0,
+  "marrón": 1,
+  "rojo": 2,
+  "naranja": 3,
+  "amarillo": 4,
+  "verde": 5,
+  "azul": 6,
+  "violeta": 7,
+  "gris": 8,
+  "blanco": 9
+};
 
-A continuación, el código verifica si los primeros 9 caracteres son dígitos. Para hacer esto, se utiliza una expresión regular que coincide con cualquier cadena que consista solo de dígitos ```(/^\d+$/)```. Si los primeros 9 caracteres no son dígitos, la función devuelve false.
-
-Luego, el código calcula la suma de los productos de los dígitos. Para hacer esto, utiliza un bucle for para recorrer los primeros 9 caracteres del ISBN y multiplicar cada dígito por un peso determinado. El primer dígito se multiplica por 10, el segundo por 9, y así sucesivamente hasta el noveno dígito, que se multiplica por 2. La suma de estos productos se almacena en la variable *sum*.
-
-Después, el código verifica si el último carácter es un dígito o una X. Si el último carácter no es un dígito ni una X, la función devuelve *false*.
-
-Finalmente, el código verifica si el dígito de comprobación es correcto. El dígito de comprobación es el último dígito del ISBN y se utiliza para verificar que el ISBN esté escrito correctamente. Para calcular el dígito de comprobación esperado, se calcula el residuo de la división de la suma de los productos de los dígitos por 11. Si el residuo es 0, el dígito de comprobación esperado es 0; de lo contrario, se resta el residuo de 11. El dígito de comprobación real es el último carácter del ISBN, a menos que sea una X, en cuyo caso se interpreta como 10. Si el dígito de comprobación esperado y el dígito de comprobación real son iguales, la función devuelve true; de lo contrario, devuelve false.
-
-Comprobamos su funcionamiento:
-
-```typescript
-console.log("isValidISBN('3-598-21508-8') = " + isValidISBN('3-598-21508-8')); // true
-console.log("isValidISBN('3598215088') = " + isValidISBN('3598215088')); // true
-console.log("isValidISBN('3-598-21507-X') = " + isValidISBN('3-598-21507-X')); // true
-console.log("isValidISBN('359821507X') = " + isValidISBN('359821507X')); // true
-console.log("isValidISBN('3-598-21507-9') = " + isValidISBN('3-598-21507-9')); // false
-console.log("isValidISBN('1234567890') = " + isValidISBN('1234567890')); // false
-console.log("isValidISBN('12345') = " + isValidISBN('12345')); // false
-```
-
-### Ejercicio 7 - Mensaje secreto <a name="ejercicio-7---mensaje-secreto"></a>
-> [Volver al índice](#índice)
-
->Cree una función encodeMessage que reciba como parámetro una cadena de caracteres que debe ser cifrada mediante un algoritmo de sustitución 
-en el que cada letra del alfabeto de entrada (abcdefghijklmnopqrstuvwxyz) sea sustituida por la letra correspondiente del mismo alfabeto pero ordenado de manera inversa (zyxwvutsrqponmlkjihgfedcba). De este modo, por ejemplo, todas las apariciones de la letra ‘a’ en la cadena de 
-entrada se sustituirían por la letra ‘z’, las apariciones de la ‘b’ por ‘y’, y así sucesivamente.
->
->El resultado de la invocación a la función debe ser la cadena codificada. Al mismo tiempo, la función deberá devolver undefined en el caso de que hayan caracteres no permitidos en la cadena de entrada.
->
->De un modo similar al anterior, también implemente la función decodeMessage, la cual lleva a cabo la operación de decodificación.
-
-Hemos definido dos funciones. La función *encodeMessage* recibe un mensaje como argumento y devuelve una cadena de caracteres que representa el mensaje codificado. Primero se define el alfabeto como una cadena de caracteres, y se obtiene el alfabeto inverso invirtiendo el orden de los caracteres del alfabeto. Luego se itera por cada carácter del mensaje y se verifica si es un espacio o una letra del alfabeto. Si es un espacio, se agrega un espacio a la cadena codificada. Si es una letra del alfabeto, se busca la posición de esa letra en el alfabeto original y se reemplaza por la letra en la misma posición en el alfabeto inverso. Luego se agrega el carácter codificado a la cadena, respetando si el carácter original era mayúscula o minúscula. Si se encuentra un carácter que no está en el alfabeto, la función devuelve undefined.
-
-```typescript
-function encodeMessage(message: string): string | undefined {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const reversedAlphabet = alphabet.split('').reverse().join('');
-  let encodedMessage = '';
-
-  for (let i = 0; i < message.length; i++) {
-    const char = message[i];
-    if (char === ' ') {
-      encodedMessage += ' ';
-    } else {
-      const index = alphabet.indexOf(char.toLowerCase());
-      if (index >= 0) {
-        const encodedChar = reversedAlphabet.charAt(index);
-        encodedMessage += char === char.toLowerCase() ? encodedChar : encodedChar.toUpperCase();
-      } else {
-        return undefined;
-      }
-    }
-  }
-  return encodedMessage;
+export function decodeResistor(colors: string[]): number {
+  const firstBand = colors[0].toLowerCase();
+  const secondBand = colors[1].toLowerCase();
+  const resistanceValue = colorCode[firstBand] * 10 + colorCode[secondBand];
+  return resistanceValue;
 }
 ```
 
-La función *decodeMessage* recibe una cadena codificada y devuelve el mensaje original decodificado. La implementación es similar a la función *encodeMessage*, pero en este caso se busca la letra codificada en el alfabeto inverso y se reemplaza por la letra original en la misma posición del alfabeto original. También se verifica si el carácter original era mayúscula o minúscula para respetar eso al decodificar. Si se encuentra un carácter que no está en el alfabeto inverso, la función devuelve *undefined*.
+#### Tests:
 
 ```typescript
-function decodeMessage(message: string): string | undefined {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const reversedAlphabet = alphabet.split('').reverse().join('');
-  let decodedMessage = '';
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import { decodeResistor } from "../src/ejercicio07";
 
-  for (let i = 0; i < message.length; i++) {
-    const char = message[i];
-    if (char === ' ') {
-      decodedMessage += ' ';
-    } else {
-      const index = reversedAlphabet.indexOf(char.toLowerCase());
-      if (index >= 0) {
-        const decodedChar = alphabet.charAt(index);
-        decodedMessage += char === char.toLowerCase() ? decodedChar : decodedChar.toUpperCase();
-      } else {
-        return undefined;
+describe("decodeResistor", () => {
+  it("should return 15 when given ['marrón', 'verde']", () => {
+    const result = decodeResistor(["marrón", "verde"]);
+    expect(result).to.equal(15);
+  });
+
+  it("should return 15 when given ['marrón', 'verde', 'violeta']", () => {
+    const result = decodeResistor(["marrón", "verde", "violeta"]);
+    expect(result).to.equal(15);
+  });
+
+  it("should return 29 when given ['rojo', 'blanco']", () => {
+    const result = decodeResistor(["rojo", "blanco"]);
+    expect(result).to.equal(29);
+  });
+
+  it("should return 36 when given ['naranja', 'azul']", () => {
+    const result = decodeResistor(["naranja", "azul"]);
+    expect(result).to.equal(36);
+  });
+});
+```
+
+### Ejercicio 8 - Wonder Woman <a name="ejercicio-8"></a>
+> [Volver al índice](#índice)
+
+> Dado un array que contiene exclusivamente cadenas de texto, comprobar que las palabras del array están encadenadas. 
+> Esto es, una o más letras del final de una cadena coinciden con el comienzo de la siguiente cadena del array.
+> 
+> Ejemplos de palabras encadenadas:
+> 
+> “apply” and “plywood”
+> “apple” and “each”
+> “behemoth” and “mother”
+> 
+> Ejemplos de palabras no encadenadas:
+> 
+> “apply” and “playground”
+> “apple” and “peggy”
+> “behemoth” and “mathematics
+> 
+> Para resolver este ejercicio, escriba una función meshArray que compruebe si las cadenas del array están 
+encadenadas o no. La función recibirá como parámetro un array de cadenas de texto y devolverá:
+> 
+> “Error al encadenar” si las cadenas del array no están encadenadas.
+> Una cadena de texto que contenga las letras que encadenan las palabras del array. 
+> A priori no sabe cuantas letras encadenadas tendrán en común, pero al menos será una.
+> 
+> Ejemplos de ejecución del programa:
+> 
+> 1: [“allow”, “lowering”, “ringmaster”, “terror”] –> “lowringter”
+> 
+> Este array está encadenado porque:
+>
+> Las letras “low” de la primera palabra encadenan con la palabra “lowering”.
+> Las letras “ring” en la segunda y tercera palabras están encadenadas.
+> Por último, las letras “ter” en las dos últimas palabras también están encadenadas.
+> 2: [“kingdom”, “dominator”, “notorious”, “usual”, “allegory”] –> “Error al encadenar”
+
+> En este caso, aunque las palabras “dominator” y “notorious” comparten letras en el mismo orden, las últimas 
+letras de la primera palabra no encadenan con las primeras letras de la segunda.
+
+#### Solución:
+
+```typescript
+export function meshArray(words: string[]): string | "Error al encadenar" {
+     
+    let meshedLetters = "";
+  
+    for (let i = 1; i < words.length; i++) {
+      const currentWord = words[i];
+      const previousWord = words[i - 1];
+      const commonLetters = findCommonLetters(previousWord, currentWord);
+      
+      if (commonLetters === "") {
+        return "Error al encadenar";
+      }
+  
+      meshedLetters += commonLetters;
+    }
+  
+    return meshedLetters;
+  }  
+  
+  function findCommonLetters(str1: string, str2: string): string {
+    const maxLength = Math.min(str1.length, str2.length);
+    let commonLetters = "";
+  
+    for (let i = 1; i <= maxLength; i++) {
+      const suffix = str1.slice(str1.length - i);
+      const prefix = str2.slice(0, i);
+  
+      if (suffix === prefix) {
+        commonLetters = suffix;
       }
     }
-  }
-  return decodedMessage;
-}
-
-```
-Realizamos las comprobaciones con las siguientes sentencias: 
-
-```typescript
-console.log(encodeMessage("Este mensaje es secreto")); // "Vhfg nzmbnv vzh hxpivg"
-console.log(decodeMessage("Vhgv nvmhzqv vh hvxivgl")); // "Este mensaje es secreto"
-
-console.log(encodeMessage("La lluvia en Sevilla es una maravilla")); // "Oz ooferz vm Hverooz vh fmz nzizerooz"
-console.log(decodeMessage("Oz ooferz vm Hverooz vh fmz nzizerooz")); // "La lluvia en Sevilla es una maravilla"
-
-console.log(encodeMessage("¡Hola, mundo!")); // undefined
-console.log(decodeMessage("¡Hola, mundo!")); // undefined
-```
-
-### Ejercicio 8 - Wonder Woman <a name="ejercicio-8---wonder-woman"></a>
-> [Volver al índice](#índice)
-
->La princesa Diana consiguió clavar su espada y cortar la cabeza de Cerberus (un lobo con muchas cabezas). Para su asombro, inmediatamente, aparecieron nuevas cabezas, en realidad unas n cabezas. Atacó de nuevo y ahora donde estaba la segunda cabeza aparecieron 2 * n cabezas. 
-A la tercera aparecieron 2 * 3 * n nuevas cabezas, a la cuarta 2 * 3 * 4 * n cabezas, y así sucesivamente.
->
->Ante este problema, Diana ha decidido pedir ayuda al resto de amazonas. Aunque las amazonas nunca rechazan una buena pelea, quieren saber 
-cuántas cabezas tiene ahora el Cerberus.
->
->La tarea que hay que realizar es el desarrollo de una función getNumberHeads que dado el número inicial de cabezas que tiene el Cerberus, el valor de n (nuevas cabezas que aparecen al cortar una), así como la cantidad de ataques que Diana va a realizar, devuelva el número de cabezas que el Cerberus tendrá al final de los ataques.
->
->Ejemplo 1:
->
->```
->    cabezas_iniciales = 2
->    n = 1
->    ataques = 1
->
->    resultado: 
->    1 cabeza aparece después del ataque 1: 2 - 1 + 1 = 2
->    Cerberus tiene 2 cabezas al final
->```
->Ejemplo 2:
->```
->    cabezas_iniciales = 5
->    n = 10
->    ataques = 3
->
->    resultado:
->    10 cabezas aparecen después del ataque 1: 5 - 1 + 10 = 14
->    20 cabezas aparecen después del ataque 2: 14 - 1 + 2 * 10 = 33
->    60 cabezas aparecen después del ataque 3: 33 - 1 + 2 * 3 * 10 = 92
->    Cerberus tiene 92 cabezas al final
->```
->Nota: Tenga en cuenta que, tras cada ataque, una cabeza es restada al total anterior. En el ejemplo 1, a las dos cabezas iniciales se le resta una (la que se le cortó) y se le suma una.
-
-El código desarrollado es el siguiente:
-
-```typescript
-function aux_factorial(num_decimal: number) : number {
-    if (num_decimal == 1) return 1
-    if (num_decimal == 0) return 1
-    else return num_decimal * aux_factorial(num_decimal - 1)
-}
-
-function wonderWoman(cabezas_iniciales: number, n: number,  ataques: number) : number {
-  let cabezas: number;
-  let cabezas_aux: number;
-  cabezas = cabezas_iniciales - ataques;
-  cabezas_aux = 0;
-  for (let i= 0; i < ataques; i++){
-      cabezas_aux = aux_factorial(i+1) * n;
-      cabezas = cabezas + cabezas_aux;
-  }
-  return cabezas;
-}
-```
-
-La función *aux_factorial* es una función auxiliar que utiliza la recursividad para calcular el factorial de un número. Toma un número num_decimal como entrada y devuelve el factorial de ese número. Si el número es 1 o 0, devuelve 1.
-
-La función wonderWoman toma tres argumentos: cabezas_iniciales, n, y ataques. Estos valores representan el número de cabezas iniciales que tiene la hidra, el número de cabezas que se generan con cada ataque de Wonder Woman, y el número de ataques que realiza Wonder Woman, respectivamente.
-
-Primero, la función resta el número de ataques de las cabezas iniciales para obtener el número de cabezas restantes después de los ataques.
-
-Luego, la función utiliza un bucle para iterar a través de cada ataque que realiza Wonder Woman. En cada iteración, se utiliza la función aux_factorial para calcular el número de cabezas que se generan en ese ataque, multiplicando n por el factorial de i+1. Luego, este número se agrega al número total de cabezas restantes.
-
-Finalmente, la función devuelve el número total de cabezas restantes después de todos los ataques.
-
-Comprobamos el código con los ejemplos que nos proporcionó el enunciado:
-
-```typescript
-console.log("wonderWoman(2, 1, 1) = " + wonderWoman(2, 1, 1));
-console.log("wonderWoman(10, 5, 3) = " + wonderWoman(5, 10, 3));
-```
-
-### Ejercicio 9 - La Conjetura de Collatz <a name="ejercicio-9---la-conjetura-de-collatz"></a>
-> [Volver al índice](#índice)
-
->La Conjetura de Collatz o el problema 3n + 1 parte de la definición de un entero positivo n. Si n es par, hay que calcular n / 2 y hacer que 
-el valor resultante sea el nuevo n. Si n es impar, hay que calcular 3n + 1 y hacer que el valor resultante sea el nuevo n. El anterior proceso se repite de manera indefinida. La Conjetura de Collatz establece que no importa el valor que tome n inicialmente, dado que siempre se llegará 
-al valor 1.
->
->Escriba una función collatz que reciba como argumento un número entero positivo y que cuente el número de repeticiones del proceso indicado más arriba hasta llegar a n = 1. La función deberá retornar dicho número de repeticiones:
->
->Ejemplo:
->
->Suponga la siguiente invocación a la función: collatz(10).
->
->Empezando con n = 10, tendriamos las siguientes iteraciones:
->```
->n = 10 (par)
->n = 5 (impar)
->n = 16 (par)
->n = 8 (par)
->n = 4 (par)
->n = 2 (par)
->n = 1 (fin)
->```
->Por lo tanto, collatz(10) debería devolver el valor numérico 6 (no se cuenta la iteración inicial donde n = 10).
-
-El código desarrollado es el siguiente:
-
-```typescript
-function collatz(n: number): number {
-    let count = 0;
-    while (n !== 1) {
-      if (n % 2 === 0) {
-        n = n / 2;
-      } else {
-        n = 3 * n + 1;
-      }
-      count++;
-    }
-    return count;
-  }
-
-  console.log(collatz(10)); // 6
-```
-
-La función collatz toma un número n como argumento y comienza a iterar siguiendo las reglas de la conjetura de Collatz. Cada vez que se realiza una operación (ya sea dividir por 2 o multiplicar por 3 y sumar 1), se aumenta un contador count. La función sigue iterando hasta que n alcanza el valor de 1. Finalmente, la función devuelve el número de veces que se tuvo que iterar para llegar a 1.
-
-En el ejemplo dado, se llama a la función collatz con el argumento 10. La salida impresa es 6, lo que significa que tomó 6 iteraciones para que el número 10 llegue a 1 siguiendo las reglas de la conjetura de Collatz.
-
-
-### Ejercicio 10 - Validador de nombre usuario <a name="ejercicio-10---validador-de-nombre-usuario"></a>
-> [Volver al índice](#índice)
-
->Cree una función isValidUsername que compruebe la validez de un nombre de usuario. La función recibirá como parámetro una cadena con un 
-nombre de usuario y devolverá verdadero o falso según las siguientes condiciones:
->
->El nombre de usuario tiene que tener al menos 4 caracteres y no más de 30.
-El nombre de usuario no puede empezar ni terminar con un guión bajo.
-El nombre de usuario tiene que contener al menos una letra mayúscula, una letra minúscula, un número y algún símbolo especial ($,-,_).
-No se permite la repetición de un mismo tipo de caracter más de dos veces seguidas.
-Por ejemplo, el nombre de usuario "u__hello$122__" no sería válida ya que aparecen cinco letras seguidas y tres números seguidos. 
->Además, termina por _ y no contiene ninguna letra mayúscula.
-
-
-```typescript
-
-function isValidUsername(username) {
-  // Comprobar longitud del nombre de usuario
-  if (username.length < 4 || username.length > 30) {
-    return false;
+  
+    return commonLetters;
   }
   
-  // Comprobar si el nombre de usuario empieza o termina con un guión bajo
-  if (username.startsWith('_') || username.endsWith('_')) {
-    return false;
-  }
-  
-  // Comprobar si el nombre de usuario contiene al menos una letra mayúscula, una letra minúscula, un número y algún símbolo especial
-  if (!/[A-Z]/.test(username) || !/[a-z]/.test(username) || !/\d/.test(username) || !/[$\-_#]/.test(username)) {
-    return false;
-  }
-  
-  // Comprobar si el nombre de usuario contiene repetición de un mismo tipo de caracter más de dos veces seguidas
-  if (/([a-zA-Z]{3,}|[\d]{3,}|[$\-_#]{3,})/.test(username)) {
-    return false;
-  }
-  return true;
-}
 ```
-La función *isValidUsername* recibe un parámetro username que se supone es una cadena de texto que representa un nombre de usuario y retorna un valor booleano que indica si el nombre de usuario es válido según ciertas reglas implementadas mediante expresiones regulares.
 
-La función utiliza expresiones regulares para verificar mediante ´test´ si el nombre de usuario cumple con las reglas establecidas. Si alguna de las condiciones no se cumple, la función retorna false. Si todas las condiciones se cumplen, la función retorna true.
-
-Comprobamos que nuestro código funciona correctamente mediante las siguientes llamadas:
+#### Tests:
 
 ```typescript
-console.log("j0hN_D03: True", isValidUsername("j0hN_D03")) // true
-console.log("$u$p3r_u$eR: True", isValidUsername("$u$p3r_u$eR")) // true
-console.log("uS3er#Te3St: True", isValidUsername("uS3er#Te3St")); // true
+import { describe, it } from 'mocha';
+import { expect } from "chai";
+import {meshArray} from "../src/ejercicio08";
 
-console.log("UsEr_12$3: False", isValidUsername("UsEr_12$3")); // false porque contiene letras seguidas
-console.log("_user123$: False", isValidUsername("_usr123$")); // false porque empieza por _
-console.log("User_1234: False", isValidUsername("Usr_12")) // false porque contiene 3 letras seguidas
-console.log("user123456: False", isValidUsername("usr123456")); // false
-console.log("user__Test: False", isValidUsername("usr__Test")); // false
-console.log("us&e2r_: False", isValidUsername("us&e2r_")); // false porque termina por _
-console.log("_us&e2r: False", isValidUsername("_us&e2r")); // false porque empieza por _
-console.log("u2A: False", isValidUsername("u2A")); // false porque la longitud es menor de 4
-console.log("u2Aaaaaaaaaaaaaaaaaaaaaaaaaaaaa$: False", isValidUsername("u2Aaaaaaaaaaaaaaaaaaaaaaaaaaaaa$")); // false porque la longitud es mayor de 30
+describe("meshArray", () => {
+  it("should return 'lowringter' when given ['allow', 'lowering', 'ringmaster', 'terror']", () => {
+    const result = meshArray(["allow", "lowering", "ringmaster", "terror"]);
+    expect(result).to.equal("lowringter");
+  });
+
+  it("should return 'Error al encadenar' when given ['kingdom', 'dominator', 'notorious', 'usual', 'allegory']", () => {
+    const result = meshArray(["kingdom", "dominator", "notorious", "usual", "allegory"]);
+    expect(result).to.equal("Error al encadenar");
+  });
+
+  it("should return 'ta' when given ['ta', 'ta']", () => {
+    const result = meshArray(["ta", "ta"]);
+    expect(result).to.equal("ta");
+  });
+
+  it("should return '' when given ['t', 'a']", () => {
+    const result = meshArray(["t", "a"]);
+    expect(result).to.equal("Error al encadenar");
+  });
+});
+
 ```
