@@ -1,4 +1,4 @@
-# [PRÁCTICA 4](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git). 
+# [PRÁCTICA 4. ARRAYS, TUPLAS Y ENUMERADOS](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git). 
 
 ## Carla Oval Torres
 
