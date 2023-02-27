@@ -8,8 +8,6 @@
       "./src/ejercicio06.ts",
       "./src/ejercicio07.ts",
       "./src/ejercicio08.ts",
-      "./src/ejercicio09.ts",
-      "./src/ejercicio10.ts"
     ],
     "out": "./tdocs"
   }
