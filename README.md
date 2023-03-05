@@ -1,1058 +1,1004 @@
-# [PRÁCTICA 4. ARRAYS, TUPLAS Y ENUMERADOS](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git). 
+# [PRÁCTICA 5. OBJETOS, CLASES E INTERFACES](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git). 
 
 ## Carla Oval Torres
 
 ## Índice <a name="índice"></a>
 1. [Introducción](#introducción)
 2. [Ejercicios propuestos](#ejercicios-propuestos)
-    1. [Ejercicio 1 - El alergólogo](#ejercicio-1)
-    2. [Ejercicio 2 - Números complejos](#ejercicio-2)
-    3. [Ejercicio 3 - No cabrees a la reina](#ejercicio-3)
-    4. [Ejercicio 4 - Reimplementando la función map](#ejercicio-4)
-    5. [Ejercicio 5 - Matrices espirales](#ejercicio-5)
-    6. [Ejercicio 6 - Compresión de números en rangos](#ejercicio-6)
-    7. [Ejercicio 7 - Decodificar resistencias](#ejercicio-7)
-    8. [Ejercicio 8 - Palabras encadenadas en un array](#ejercicio-8)
+    1. [Ejercicio 1 - Biblioteca musical](#ejercicio-1)
+    2. [Ejercicio 2 - Conecta 4](#ejercicio-2)
+    3. [Conclusiones](#conclusiones)
+    4. [Referencias](#referencias)
 
 ## Introducción <a name="introducción"></a>
 > [Volver al índice](#índice)
 
-Lleve a cabo todos y cada uno de los ejercicios propuestos a continuación. El código fuente de cada ejercicio debe estar alojado en un fichero 
-independiente con nombre ejercicio-n.ts. Si utiliza estructura básica de proyecto que hemos visto en clase, por favor, incluya todos sus 
-ejercicios en el directorio ./src de dicho proyecto.
+Lleve a cabo todos y cada uno de los ejercicios propuestos a continuación. Dado que vamos a trabajar con clases y que, probablemente, cada ejercicio implique el desarrollo de diferentes clases, el código fuente de cada ejercicio deberá estar alojado en un directorio independiente con nombre ejercicio-n/ dentro del directorio src/ de su proyecto. Dentro del directorio correspondiente a cada ejercicio, esto es, dentro del directorio ejercicio-n, incluya cada clase desarrollada en un fichero independiente.
 
-Tenga en cuenta que seguir la metodología TDD o BDD implica confirmar el correcto funcionamiento del software, así como los casos en los que el software debería mostrar un error cuando la entrada no sea la correcta (errors should never pass silently). En consecuencia, desarrolle pruebas unitarias que comprueben el correcto funcionamiento del código y, además, incluya otras pruebas unitarias que verifiquen que el código es robusto ante entradas no válidas o inesperadas.
+Incluya la documentación de sus clases mediante el uso de TypeDoc y adopte una metodología de desarrollo dirigido por pruebas/comportamiento. Tenga en cuenta que seguir la metodología TDD o BDD implica confirmar el correcto funcionamiento del código desarrollado, así como los casos en los que dicho código debería informar de un error cuando la entrada no sea la correcta (errors should never pass silently). En consecuencia, desarrolle pruebas unitarias que comprueben el correcto funcionamiento del código y, además, incluya otras pruebas unitarias que verifiquen que el software es robusto ante entradas no válidas o inesperadas.
+
+Por último, recuerde argumentar en el informe de la práctica todas las decisiones de diseño tomadas para cada ejercicio.
+
+```typescript
+  import * as Prompt from 'prompt-sync';
+
+  const prompt = Prompt();
+  const myNumber = parseInt(prompt('Introduce a number: '));
+  console.log(myNumber)
+```
 
 ## Ejercicios propuestos <a name="ejercicios-propuestos"></a>
-### Ejercicio 1 - El alergólogo <a name="ejercicio-1"></a>
+### Ejercicio 1 - Biblioteca musical <a name="ejercicio-1"></a>
 > [Volver al índice](#índice)
 
-> Una prueba de alérgenos produce un valor numérico (entero positivo) único, el cual contiene información sobre las alergias de una persona. La lista de posibles alérgenos es la siguiente:
+> Diseñe el conjunto de clases e interfaces necesarias para almacenar una biblioteca musical. El desarrollo realizado debe cumplir los siguientes requisitos funcionales:
+> 
+> La información de un artista, ya sea un grupo o un solista, será la siguiente:
+> - Nombre
+> - Número de oyentes mensuales
+> - Discografía
+> 
+> La discografía de un artista consistirá en una colección de discos, donde la información de un disco será:
+> - Nombre
+> - Año de publicación
+> - Canciones
+> 
+> Por cada canción perteneciente a un disco, la información será la siguiente:
+> - Nombre
+> - Duración en segundos
+> - Géneros
+> - Single (determina si la canción fue lanzada como un single o no)
+> - Número de reproducciones
+> 
+> La biblioteca musical deberá permitir:
+> - Almacenar la información de diferentes artistas, su discografía y las canciones pertenecientes a cada disco o álbum.
+> - Mostrar por la consola la información de la biblioteca en formato tabla (console.table).
+> - Permitir llevar a cabo búsquedas de artistas, discos y canciones y mostrar los resultados de la búsqueda en formato de tabla.
+> - Permitir calcular el número de canciones incluidas en un disco concreto.
+> - Permitir calcular la duración de un disco, a partir de la duración de todas y cada una de las canciones que lo conforman.
+> - Permitir calcular el número de reproducciones de un disco, a partir del número de reproducciones de todas y cada una de las canciones incluidas en el mismo.
 
-> - Huevo (1)
->
-> - Cacahuete (2)
->
-> - Marisco (4)
->
-> - Fresa (8)
->
-> - Tomate (16)
->
-> - Chocolate (32)
->
-> - Polen (64)
->
-> - Gato (128)
->
-> Por ejemplo, si alguien fuera alérgico a los gatos y al tomate, obtendría una puntuación igual a 128 + 16 = 144.
->
->Escriba una función getAllergens que reciba una puntuación de alérgenos de una persona y que devuelva una lista con los alérgenos a los que la persona es alérgica. Los diferentes alérgenos deberán modelarse mediante un enumerado.
->
->Por último, tenga en cuenta que la función podría recibir una puntuación que incluya alérgenos no contemplados en la lista, esto es, alérgenos cuya puntuación sea 256, 512, 1024, etc. Además, si el valor pasado como argumento no es entero y positivo, la función deberá retornar el valor undefined.
->
->Ejemplos:
->
->getAllergens(129) // It should return [Huevo, Gato]
->
->getAllergens(257) // It should return [Huevo]
->
->getAllergens(256) // It should return []
->
->getAllergens(515) // It should return [Huevo, Cacahuete]
->
->getAllergens(84)  // It should return [Marisco, Tomate, Polen]
 
 #### Solución:
 
-Tanto el enumerable como la función se exportan para poder luego ser utilizada en los tests.
+**Interfaz `Artist`**
 
-Primero se define un enumerado ```Allergen``` con cada uno de los alérgenos y su correspondiente valor numérico.
+Artist es una interfaz, no una clase en sí misma. En TypeScript, una interfaz es una estructura que describe la forma de un objeto, es decir, qué propiedades y métodos tiene el objeto, pero no implementa ninguna funcionalidad en sí misma.
+
+La interfaz "Artist" define un objeto que tiene tres propiedades:
+
+- "name": una cadena de texto que representa el nombre del artista.
+- "monthlyListeners": un número entero que representa el número de oyentes mensuales del artista.
+- "discography": un array de objetos "Album" que representa la discografía del artista.
 
 ```typescript
-export enum Allergen {
-  Huevo = 1,
-  Cacahuete = 2,
-  Marisco = 4,
-  Fresa = 8,
-  Tomate = 16,
-  Chocolate = 32,
-  Polen = 64,
-  Gato = 128
+interface Artist {
+  name: string;
+  monthlyListeners: number;
+  discography: Album[];
 }
 ```
 
-Luego definimos la función ```getAllergens```, que recibe una puntuación de alérgenos *score* y devuelve una lista de elérgenos a los que la persona es elérgica, representados como valores del enumerado ```Allergen```.
+**Clase `Album`**
+
+La clase Album es una representación de un álbum musical. Tiene tres propiedades: name, que es el nombre del álbum, year, que es el año en que se lanzó el álbum, y songs, que es un array de objetos Song que representan las canciones en el álbum.
+
+El constructor de la clase Album toma tres argumentos y los utiliza para inicializar las propiedades name, year y songs.
+
+La clase también tiene tres métodos:
+
+- getNumSongs(): este método devuelve el número de canciones en el álbum. Esto se hace simplemente devolviendo la longitud del array songs.
+
+- getDuration(): este método devuelve la duración total del álbum en segundos. Esto se hace iterando sobre el array songs y sumando las duraciones de cada canción.
+
+- getNumReproductions(): este método devuelve el número total de reproducciones del álbum. Esto se hace iterando sobre el array songs y sumando el número de reproducciones de cada canción.
 
 ```typescript
+class Album {
+  constructor(public name: string, public year: number, public songs: Song[]) {}
 
-export function getAllergens(score: number): Allergen[] | undefined {
-  if (!Number.isInteger(score) || score <= 0) {
-    return undefined;
+  getNumSongs(): number {
+    return this.songs.length;
   }
 
-  const allergens: Allergen[] = [];
-  let remainingScore = score;
+  getDuration(): number {
+    let duration = 0;
+    for (const song of this.songs) {
+      duration += song.duration;
+    }
+    return duration;
+  }
 
-  // Iterar sobre todos los alérgenos
-  for (const allergenValue of Object.values(Allergen)) {
-    // Si el valor es un número, y es una potencia de 2 (es decir, solo tiene un bit encendido en su representación binaria)
-    if (typeof allergenValue === 'number' && (allergenValue & (allergenValue - 1)) === 0) {
-      // Si la puntuación restante incluye el alérgeno
-      if ((remainingScore & allergenValue) === allergenValue) {
-        // Agregar el alérgeno a la lista y restar su valor de la puntuación restante
-        allergens.push(allergenValue);
-        remainingScore -= allergenValue;
+  getNumReproductions(): number {
+    let numReproductions = 0;
+    for (const song of this.songs) {
+      numReproductions += song.numReproductions;
+    }
+    return numReproductions;
+  }
+}
+```
+
+**Clase `Song`**
+
+La clase Song representa una canción en un álbum de música. Tiene cinco propiedades:
+
+- name: una cadena que representa el nombre de la canción.
+- duration: un número que representa la duración de la canción en segundos.
+- genres: un vector de cadenas que representa los géneros de la canción.
+- isSingle: un valor booleano que indica si la canción es un sencillo (es decir, una canción independiente que no forma parte de un álbum).
+- numReproductions: un número que indica la cantidad de veces que la canción ha sido reproducida.
+
+La clase también tiene un constructor que acepta valores para todas las propiedades y los asigna a las propiedades correspondientes de la instancia.
+
+```typescript
+class Song {
+  constructor(public name: string, public duration: number, public genres: string[], public isSingle: boolean, public numReproductions: number) {}
+}
+```
+No hay métodos adicionales en la clase Song, pero se pueden utilizar las propiedades públicas de la clase en conjunto con otras clases para realizar diversas operaciones relacionadas con la música. Por ejemplo, la propiedad duration de la clase Song se utiliza en el método getDuration() de la clase Album para calcular la duración total de un álbum.
+
+**Clase `MusicLibrary`**
+
+El código presentado es una implementación de una biblioteca musical en TypeScript. Comienza importando las clases Album, Song y Artist desde los archivos './album', './song' y './artist', respectivamente. Luego, importa la biblioteca 'prompt-sync' y establece tres constantes de color para su uso posterior en la consola.
+
+```typescript
+import { Album } from './album';
+import { Song } from './song';
+import { Artist } from './artist';
+
+import * as Prompt from 'prompt-sync';
+
+const RESET = "\u001b[0m";
+const BOLD = "\u001b[1m";
+const GREEN = "\u001b[32m";
+const prompt = Prompt();
+
+// Biblioteca musical
+export class MusicLibrary {
+  private artists: Artist[];
+
+  constructor() {
+    this.artists = [];
+  }
+
+  public addArtist(artist: Artist): void {
+    this.artists.push(artist);
+  }
+
+  public displayLibrary(): void {
+    console.table(
+      this.artists.flatMap((artist) =>
+        artist.discography.flatMap((album) =>
+          album.songs.map((song) => ({
+            artist: artist.name,
+            "Monthly Listeners": artist.monthlyListeners,
+            Album: album.name,
+            Year: album.year,
+            Name: song.name,
+            Duration: song.duration,
+            Genres: song.genres,
+            Single: song.isSingle,
+            Reproductions: song.numReproductions,
+          }))
+        )
+      )
+    );
+  }
+  
+  public search(query: string): void {
+    const artistResults: { artist: Artist, albums: string[] }[] = [];
+    const albumResults: Album[] = [];
+    const songResults: Song[] = [];
+  
+    for (const artist of this.artists) {
+      if (artist.name.toLowerCase().includes(query.toLowerCase())) {
+        artistResults.push({
+          artist,
+          albums: artist.discography.map(album => album.name)
+        });
+      } else {
+        for (const album of artist.discography) {
+          if (album.name.toLowerCase().includes(query.toLowerCase())) {
+            albumResults.push(album);
+          } else {
+            for (const song of album.songs) {
+              if (song.name.toLowerCase().includes(query.toLowerCase())) {
+                songResults.push(song);
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    if (artistResults.length > 0) {
+      console.log("Artists:");
+      console.table(
+        artistResults.flatMap(({ artist, albums }) => {
+          return albums.map(album => ({
+            Artist: artist.name,
+            Album: album,
+            "Monthly Listeners": artist.monthlyListeners
+          }));
+        })
+      );
+    }
+    if (albumResults.length > 0) {
+      console.log("Albums:");
+      console.table(albumResults);
+    }
+    if (songResults.length > 0) {
+      console.log("Songs:");
+      console.table(songResults);
+    }
+  }
+  
+  public countSongs(albumName: string): number {
+    for (const artist of this.artists) {
+      for (const album of artist.discography) {
+        if (album.name.toLowerCase() === albumName.toLowerCase()) {
+          return album.songs.length;
+        }
+      }
+    }
+    return 0;
+  }
+
+  public calculateDuration(albumName: string): number {
+    for (const artist of this.artists) {
+      for (const album of artist.discography) {
+        if (album.name.toLowerCase() === albumName.toLowerCase()) {
+          let duration = 0;
+          for (const song of album.songs) {
+            duration += song.duration;
+          }
+          return duration;
+        }
+      }
+    }
+    return 0;
+  }
+
+  public calculateReproductions(albumName: string): number {
+    for (const artist of this.artists) {
+      for (const album of artist.discography) {
+        if (album.name.toLowerCase() === albumName.toLowerCase()) {
+          let reproductions = 0;
+          for (const song of album.songs) {
+            reproductions += song.numReproductions;
+          }
+          return reproductions;
+        }
+      }
+    }
+    return 0;
+  }
+
+  public printMenu(): void {
+    console.log("==== Music Library ====");
+    console.log("1. Add artist");
+    console.log("2. Display library");
+    console.log("3. Search");
+    console.log("4. Count songs in an album");
+    console.log("5. Calculate duration of an album");
+    console.log("6. Calculate number of reproductions of an album");
+    console.log("0. Exit");
+  }
+
+  public run(): void {
+    let exit = false;
+    let the_query, the_album;
+    while (!exit) {
+      this.printMenu();
+      const option = prompt("Select an option (0-6): ");
+      switch (option) {
+        case "0":
+          exit = true;
+          break;
+        case "1":
+          const song1 = new Song('Song A', 180, ['Rock'], true, 100);
+          const song2 = new Song('Song B', 240, ['Pop', 'R&B'], false, 50);
+          const song3 = new Song('Song C', 230, ['Disco', 'R&B'], false, 50);
+          const album1 = new Album('Album A', 2022, [song1, song2]);
+          const album2 = new Album('Album A', 2021, [song2, song3]);
+          const artista_ej: Artist = { name: 'Artist A', monthlyListeners: 10000, discography: [album1] };
+          const artist_otro: Artist = { name: 'Artist B', monthlyListeners: 5000, discography: [album1, album2] };
+          this.addArtist(artista_ej);
+          break;
+        case "2":
+          this.displayLibrary();
+          break;
+        case "3":
+          // Pedir un query
+          do {
+            the_query = prompt(`Enter a query: `);
+          } while (typeof(the_query) !== 'string');
+          this.search(the_query);
+          break;
+        case "4":
+          // Pedir el nombre del album
+          do {
+            the_album = prompt(`Enter an album name: `);
+          } while (typeof(the_album) !== 'string');
+          console.log(`${BOLD}${GREEN}Number of songs in ${the_album}: ${this.countSongs(the_album)}${RESET}`);
+          break;
+        case "5":
+          // Pedir el nombre del album
+          do {
+            the_album = prompt(`Enter an album name: `);
+          } while (typeof(the_album) !== 'string');
+          console.log(`${BOLD}${GREEN}Duration of ${the_album}: ${this.calculateDuration(the_album)}${RESET}`);
+          break;
+        case "6":
+          // Pedir el nombre del album
+          do {
+            the_album = prompt(`Enter an album name: `);
+          } while (typeof(the_album) !== 'string');
+          console.log(`${BOLD}${GREEN}Reproductions of ${the_album}: ${this.calculateReproductions(the_album)}${RESET}`);
+          break;
+        default:
+          console.log("Invalid option. Try again.");
+          break;
       }
     }
   }
-
-  return allergens;
 }
 ```
 
-En ella se verifica si la puntuación es entera y positiva, de lo contrario se devuelve *undefined*.
+La clase MusicLibrary es la base de la biblioteca musical y contiene un array privado de artistas en su constructor. Los métodos públicos de esta clase incluyen:
 
-Se crea un array *allergens* para almacenar los alérgenos a los que la persona es alérgica.
+- addArtist(artist: Artist): añade un objeto de artista al array de artistas.
+- displayLibrary(): muestra una tabla en la consola que enumera todos los artistas, álbumes y canciones en la biblioteca.
+- search(query: string): busca en la biblioteca los artistas, álbumes y canciones que contengan la cadena de consulta pasada como parámetro. Si se encuentra un artista, se muestra el nombre del artista, el nombre del álbum y el número mensual de oyentes. Si se encuentra un álbum, se muestra el nombre del álbum, el nombre del artista y el año de lanzamiento. Si se encuentra una canción, se muestra el nombre de la canción, el nombre del álbum, el nombre del artista, el número de oyentes mensuales, la duración de la canción, los géneros, si es una canción individual y el número de reproducciones.
+- countSongs(albumName: string): devuelve el número de canciones en un álbum dado.
+- calculateDuration(albumName: string): devuelve la duración total de todas las canciones en un álbum dado.
+- calculateReproductions(albumName: string): devuelve el número total de reproducciones de todas las canciones en un álbum dado.
+- printMenu(): muestra un menú de opciones disponibles para el usuario.
+- run(): comienza un bucle que muestra el menú al usuario y procesa las opciones seleccionadas hasta que el usuario elige salir (seleccionando 0).
 
-Luego, se crea una variable *remainingScore* que inicialmente tiene el valor de la puntuación recibida, y que se irá actualizando a medida que se agreguen alérgenos al array *allergens*.
+En el método run(), se realiza una serie de acciones basadas en la opción seleccionada por el usuario en el menú, que se lee utilizando el objeto prompt. La opción 1 agrega un ejemplo de artista con un álbum y dos canciones. La opción 2 muestra una tabla que enumera todos los artistas, álbumes y canciones en la biblioteca. La opción 3 solicita una cadena de consulta al usuario y luego enumera los artistas, álbumes y canciones que contienen la cadena de consulta. Las opciones 4 a 6 solicitan al usuario el nombre de un álbum y luego muestran el número de canciones, la duración total y el número total de reproducciones de ese álbum. La opción 0 termina la ejecución del programa.
 
-Se itera sobre todos los valores del enum *Allergen* utilizando *Object.values*.
+**Clase `Library`**
 
-Verificamos si el valor es un número y si es una potencia de 2. Para verificar si es una potencia de 2, utilizamos la propiedad de que en la representación binaria de un número que es potencia de 2, solo hay un bit encendido (el bit de la posición que corresponde a la potencia de 2). Entonces, si restamos 1 al valor y hacemos una operación AND con el valor original, si obtenemos 0 significa que solo hay un bit encendido, por lo que es una potencia de 2.
+La clase Library tiene una propiedad musicLibrary que es una instancia de la clase MusicLibrary. La clase MusicLibrary tiene una propiedad artists que es una matriz de objetos de la clase Artist.
 
-Si el valor es una potencia de 2, verificamos si la puntuación restante (*remainingScore*) incluye el alérgeno. Para esto, hacemos una operación AND entre la puntuación restante y el valor del alérgeno. Si el resultado es igual al valor del lérgeno, significa que la puntuación restante incluye el alérgeno y lo añadimos a la lista de alérgenos alérgicos (allergens), y restamos el valor del alérgeno a la puntuación restante (remainingScore) para evitar que se verifique en próximas iteraciones.
+El constructor de la clase Library crea cuatro álbumes de muestra y los agrega a la biblioteca musical. Cada álbum contiene varias canciones de muestra. Las canciones tienen información sobre su nombre, duración, géneros, si son un single y el número de reproducciones.
 
-Si el valor no es una potencia de 2, significa que no es un alérgeno contemplado en la lista y no es necesario hacer nada en este caso.
+El código también importa cuatro módulos que definen las clases utilizadas en la biblioteca (Album, Song, Artist, MusicLibrary) y el módulo Prompt-sync que permite leer la entrada del usuario desde la consola. Finalmente, la clase Library se exporta para que pueda ser utilizada por otros módulos.
 
-Finalmente, devolvemos la lista de alérgenos alérgicos (allergens).
+```typescript
+import * as Prompt from "prompt-sync";
+
+import { Album } from "./album";
+import { Song } from "./song";
+import { Artist } from "./artist";
+import { MusicLibrary } from "./library";
+
+/**
+ * Clase que representa una biblioteca musical.
+ * @class Library
+ * @property {MusicLibrary} musicLibrary - Biblioteca musical.
+ */
+export class Library {
+  private musicLibrary: MusicLibrary;
+
+  constructor() {
+    // Añado un par de albumes de muestra
+    // Creamos un array de canciones para el primer album
+    const songs1: Song[] = [
+      new Song("Canción 1_1", 200, ["Rock"], true, 100),
+      new Song("Canción 1_2", 180, ["Pop"], true, 50),
+      new Song("Canción 1_3", 240, ["Jazz"], false, 20),
+    ];
+
+    // Creamos el primer album
+    const album1 = new Album("Album 1", 2022, songs1);
+    // Creamos un array de canciones para el segundo album
+    const songs2: Song[] = [
+      new Song("Canción 2_1", 180, ["Pop"], true, 50),
+      new Song("Canción 2_2", 220, ["Rock"], true, 80),
+      new Song("Canción 2_3", 240, ["Jazz"], false, 20),
+      new Song("Canción 2_4", 190, ["Hip Hop"], true, 120),
+    ];
+
+    // Creamos el segundo album
+    const album2 = new Album("Album 2", 2021, songs2);
+    // Creamos un array de canciones para el tercer album
+    const songs3: Song[] = [
+      new Song("Canción 3_1", 190, ["Pop"], true, 70),
+      new Song("Canción 3_2", 210, ["Rock"], true, 60),
+      new Song("Canción 3_3", 230, ["Jazz"], false, 10),
+      new Song("Canción 3_4", 200, ["Hip Hop"], true, 100),
+      new Song("Canción 3_5", 170, ["Electronic"], false, 30),
+    ];
+
+    // Creamos el tercer album
+    const album3 = new Album("Album 3", 2023, songs3);
+    // Creamos un array de canciones para el cuarto album
+    const songs4: Song[] = [
+      new Song("Canción 4_1", 210, ["Rock"], true, 90),
+      new Song("Canción 4_2", 190, ["Pop"], true, 60),
+      new Song("Canción 4_3", 230, ["Jazz"], false, 20),
+      new Song("Canción 4_4", 200, ["Hip Hop"], true, 110),
+      new Song("Canción 4_5", 180, ["Electronic"], false, 40),
+      new Song("Canción 4_6", 220, ["Funk"], false, 15),
+    ];
+
+    // Creamos el cuarto album
+    const album4 = new Album("Album 4", 2020, songs4);
+
+    // Creamos un array de canciones para el quinto album
+    const songs5: Song[] = [
+      new Song("Canción 5_1", 220, ["Rock"], true, 120),
+      new Song("Canción 5_2", 180, ["Pop"], true, 40),
+      new Song("Canción 5_3", 230, ["Jazz"], false, 15),
+      new Song("Canción 5_4", 210, ["Hip Hop"], true, 90),
+      new Song("Canción 5_5", 190, ["Electronic"], false, 50),
+      new Song("Canción 5_6", 240, ["Funk"], false, 30),
+    ];
+
+    // Creamos el quinto album
+    const album5 = new Album("Album 5", 1995, songs5);
+
+    // Añado un par de artistas de muestra
+    const artista_1: Artist = {
+      name: "Artist 1",
+      monthlyListeners: 10000,
+      discography: [album1, album2],
+    };
+    const artista_2: Artist = {
+      name: "Artist 2",
+      monthlyListeners: 12340,
+      discography: [album3],
+    };
+    const artista_3: Artist = {
+      name: "Artist 3",
+      monthlyListeners: 88968,
+      discography: [album4, album5],
+    };
+
+    this.musicLibrary = new MusicLibrary();
+    this.musicLibrary.addArtist(artista_1);
+    this.musicLibrary.addArtist(artista_2);
+    this.musicLibrary.addArtist(artista_3);
+
+    this.musicLibrary.run();
+  }
+}
+
+const the_library = new Library();
+
+```
 
 #### Tests:
 
-En los tests se usa la función *expect* de la librería chai para verificar que el resultado de la función *getAllergens* sea el esperado. Se utilizan los métodos ```to.deep.equal``` para comparar arrays y ```to.be.undefined``` para verificar que el resultado sea *undefined*. En los casos en que se espera que la función retorne un array, se usa el método ```to.deep.equal``` para asegurarse de que los elementos del array sean iguales en orden y contenido. También se prueban los casos en que la función debería retornar *undefined* si se le pasa un valor no entero o no positivo.
+Los tests que hemos realizado para comprobar el correcto funcionamiento de la biblioteca son los siguientes:
 
 ```typescript
 import { describe, it } from 'mocha';
 import { expect } from "chai";
-import {getAllergens, Allergen} from "../src/ejercicio01";
+import * as Prompt from 'prompt-sync';
+import { Song } from '../src/ejercicio01/song';
+import { Album } from '../src/ejercicio01/album';
+import { Artist } from '../src/ejercicio01/artist';
+import { MusicLibrary } from '../src/ejercicio01/library';
 
-describe("getAllergens", () => {
-  it("should return [Huevo, Gato] when given 129", () => {
-    const result = getAllergens(129);
-    expect(result).to.deep.equal([Allergen.Huevo, Allergen.Gato]);
-  });
+describe('MusicLibrary', () => {
+    describe('addArtist', () => {
+        it('should add an artist to the library', () => {
+            const library = new MusicLibrary();
+            const artist: Artist = {name:'Queen', monthlyListeners:1000000, discography:[
+                new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+                ]),
+            ]};
+            library.addArtist(artist);
+            expect(library.artists).to.deep.equal([artist]);
+        });
+    });
 
-  it("should return [Huevo] when given 257", () => {
-    const result = getAllergens(257);
-    expect(result).to.deep.equal([Allergen.Huevo]);
-  });
+    describe('countSongs', () => {
+        it('should count the number of songs in an album', () => {
+          const library = new MusicLibrary();
+          const artist: Artist = {
+            name: 'Queen',
+            monthlyListeners: 1000000,
+            discography: [
+              new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+              ]),
+            ],
+          };
+          library.addArtist(artist);
+          library.countSongs('A Night at the Opera');
+          const expectedCount = 3;
+          const actualCount = artist.discography[0].songs.length;
+          expect(actualCount).to.equal(expectedCount);
+        });
+      });
 
-  it("should return [] when given 256", () => {
-    const result = getAllergens(256);
-    expect(result).to.deep.equal([]);
-  });
+      describe('calculateDuration', () => {
+        it('should count the duration of the album', () => {
+          const library = new MusicLibrary();
+          const artist: Artist = {
+            name: 'Queen',
+            monthlyListeners: 1000000,
+            discography: [
+              new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+              ]),
+            ],
+          };
+          library.addArtist(artist);
+          let actualCount = 0;
+          const expectedCount = 11.98;
+          actualCount = library.calculateDuration('A Night at the Opera');
+          expect(actualCount).to.equal(expectedCount);
+        });
+      });
 
-  it("should return [Huevo, Cacahuete] when given 515", () => {
-    const result = getAllergens(515);
-    expect(result).to.deep.equal([Allergen.Huevo, Allergen.Cacahuete]);
-  });
+      describe('calculateReproductions', () => {
+        it('should count the reproductions of the album', () => {
+          const library = new MusicLibrary();
+          const artist: Artist = {
+            name: 'Queen',
+            monthlyListeners: 1000000,
+            discography: [
+              new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+              ]),
+            ],
+          };
+          library.addArtist(artist);
+          let actualCount = 0;
+          const expectedCount = 2250000;
+          actualCount = library.calculateReproductions('A Night at the Opera');
+          expect(actualCount).to.equal(expectedCount);
+        });
+      });
 
-  it("should return [Marisco, Tomate, Polen] when given 84", () => {
-    const result = getAllergens(84);
-    expect(result).to.deep.equal([Allergen.Marisco, Allergen.Tomate, Allergen.Polen]);
-  });
 
-  it("should return undefined when given a non-positive integer value", () => {
-    const result = getAllergens(-1);
-    expect(result).to.be.undefined;
-  });
-
-  it("should return undefined when given a non-integer value", () => {
-    const result = getAllergens(3.14);
-    expect(result).to.be.undefined;
-  });
 });
 ```
 
-### Ejercicio 2 - Números complejos <a name="ejercicio-2"></a>
+Donde se prueban los siguientes métodos:
+
+1. addArtist(): se prueba si se puede agregar un artista a la biblioteca y se espera que la lista de artistas de la biblioteca sea igual al artista que se acaba de agregar.
+
+2. countSongs(): se prueba si se puede contar el número de canciones en un álbum específico y se espera que el recuento sea el mismo que el número real de canciones en el álbum.
+
+3. calculateDuration(): se prueba si se puede calcular la duración de un álbum específico y se espera que la duración calculada sea la misma que la duración real del álbum.
+
+4. calculateReproductions(): se prueba si se puede calcular el número total de reproducciones de un álbum específico y se espera que el número de reproducciones calculado sea el mismo que el número real de reproducciones del álbum.
+
+### Ejercicio 2 - Conecta 4 <a name="ejercicio-2"></a>
 > [Volver al índice](#índice)
 
-> Con lo visto hasta ahora en la asignatura, defina un tipo de datos propio que permita representar un número complejo, esto es, pares de valores numéricos reales, donde la primera componente del par es la parte real del complejo, mientras que la segunda componente del par representa su parte imaginaria.
->
-> A continuación, partiendo de dicha definición, escriba funciones que permitan calcular las siguientes operaciones sobre números complejos:
->
-> Suma, resta, multiplicación y división (funciones add, sub, mult y div). Estas funciones reciben como argumentos dos complejos y devuelven un complejo.
->
-> Producto escalar (función prod). Esta función recibe como argumentos un complejo y un número real, retornando un número complejo.
->
-> Conjugado (función conj). Recibe como argumento un complejo y devuelve otro complejo.
->
-> Módulo (función abs). La función recibe como argumento un complejo y retorna un valor real. 
+> Todos (o casi todos) hemos jugado alguna vez al Conecta 4.
+> 
+> En una rejilla de 6 filas y 7 columnas, dos jugadores se turnan para ir colocando un conjunto de fichas dejándolas caer por alguna de las siete columnas de la rejilla. Cada jugador dispone de un total de 21 fichas de un color diferente.
+> 
+> En cada turno, una ficha tomará la primera posición libre de la columna seleccionada por el jugador que corresponda. Si la columna está completa, esto es, ya cuenta con seis fichas, dicha columna no podrá ser seleccionada por ninguno de los dos jugadores para dejar caer otra ficha.
+> 
+> El objetivo del jugador es colocar cuatro fichas consecutivas ya sea en una misma fila, una misma columna o en diagonal.
+> 
+> Cree la jerarquía de clases e interfaces necesarias para implementar el juego Conecta 4, teniendo en cuenta la siguiente funcionalidad:
+> 
+> El juego comienza con el Jugador 1 colocando la primera ficha y, en turnos sucesivos, debe ir alternándose con el Jugador 2. Se deberá mostrar por consola a qué jugador le toca colocar una ficha.
+> 
+> Si un jugador intenta colocar una ficha en una columna completa, se mostrará un mensaje informando de que la columna está completa y se le permitirá seleccionar otra columna para colocar la ficha. Lo anterior debe repetirse hasta que el jugador coloque su ficha.
+> 
+> Una vez que el jugador correspondiente haya colocado una ficha, debe mostrarse por la consola el estado del tablero.
+> Cuando alguno de los dos jugadores gane, se debe informar de lo anterior en la consola y terminar el juego.
+
 
 #### Solución:
 
-Para definir el tipo de datos para un número complejo, se puede utilizar una interfaz de TypeScript:
+**Interfaz `Player`**
+
+Se utiliza para representar a los jugadores del juego Connect4.
+
+La interfaz tiene dos propiedades, `name` y `color`, ambas de tipo *string*. `name` representa el nombre del jugador y `color` representa el símbolo de la ficha del jugador junto con el color del jugador en formato de escape ANSI.
+
+> El formato de escape ANSI se utiliza para definir colores y otros efectos visuales en la consola de texto. En este caso, el color del jugador se define en este formato para que el juego pueda imprimir los colores de los jugadores en la consola de texto.
 
 ```typescript
-export interface ComplexNumber {
-  real: number;
-  imaginary: number;
+export interface Player {
+  name: string;
+  color: string;
 }
 ```
 
-A partir de esta interfaz, se pueden definir las funciones solicitadas:
+**Clase `Conect4`**
+
+
+En la clase Conect4, en la primera línea, importamos la biblioteca prompt-sync y le damos el alias de Prompt. Esta biblioteca se utiliza para solicitar entrada del usuario de forma síncrona en la consola.
+
+En la segunda línea, se importa la clase Player que definimos con anterioridad desde el archivo Player.ts.
+
+Luego, se define la clase Connect4, que tiene varias propiedades y métodos:
+
+- ROWS y COLS son constantes que indican el número de filas y columnas en el tablero del juego, respectivamente.
+players es una lista de los jugadores del juego.
+- currentPlayerIndex es un número que indica el índice del jugador actual en la lista de jugadores.
+board es una matriz que representa el tablero del juego, con cada elemento de la matriz representando un espacio en el tablero.
+- El constructor de la clase toma una lista de jugadores como parámetro y utiliza esto para inicializar las propiedades players y board. El tablero se inicializa como una matriz vacía del tamaño especificado por ROWS y COLS.
 
 ```typescript
-// Suma de dos números complejos
-export function add(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
-  return {
-    real: a.real + b.real,
-    imaginary: a.imaginary + b.imaginary,
-  };
-}
+import * as Prompt from 'prompt-sync';
+import {Player} from './Player';
 
-// Resta de dos números complejos
-export function sub(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
-  return {
-    real: a.real - b.real,
-    imaginary: a.imaginary - b.imaginary,
-  };
-}
+/**
+ * Representa un juego Connect 4.
+ */
+export class Connect4 {
+  /** Número de filas en el tablero */
+  private readonly ROWS: number = 6;
+  /** Número de columnas en el tablero */
+  private readonly COLS: number = 7;
+  /** Lista de jugadores */
+  private readonly players: Player[];
+  /** Índice del jugador actual en la lista de jugadores */
+  private currentPlayerIndex: number = 0;
+  /** El tablero del juego */
+  private readonly board: string[][];
 
-// Multiplicación de dos números complejos
-export function mult(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
-  return {
-    real: a.real * b.real - a.imaginary * b.imaginary,
-    imaginary: a.real * b.imaginary + a.imaginary * b.real,
-  };
-}
+   /**
+   * @constructor
+   * Crea una instancia del juego Connect4 con los jugadores especificados.
+   * @param players La lista de jugadores.
+   */
+  constructor(players: Player[]) {
+    this.players = players;
+    this.board = [];
+    for (let i = 0; i < this.ROWS; i++) {
+      this.board.push(Array(this.COLS).fill(' '));
+    }
+  }
+```
 
-// División de dos números complejos
-export function div(a: ComplexNumber, b: ComplexNumber): ComplexNumber {
-  const denominator = b.real ** 2 + b.imaginary ** 2;
-  const realPart = (a.real * b.real + a.imaginary * b.imaginary) / denominator;
-  const imaginaryPart = (a.imaginary * b.real - a.real * b.imaginary) / denominator;
-  return {
-    real: Math.round(realPart * 100) / 100,
-    imaginary: Math.round(imaginaryPart * 100) / 100,
-  };
-}
+El método play es el método principal del juego. Se ejecuta en un bucle hasta que se determina un ganador o un empate. Dentro del bucle, se muestra el tablero del juego, se solicita al usuario que seleccione una columna en la que colocar una ficha, se coloca la ficha en la posición correspondiente en el tablero y se verifica si el jugador actual ha ganado el juego o si el juego ha terminado en empate. Si no se ha determinado un ganador o un empate, se cambia el turno al siguiente jugador.
 
-// Producto escalar de un número complejo y un número real
-export function prod(a: ComplexNumber, b: number): ComplexNumber {
-  return {
-    real: a.real * b,
-    imaginary: a.imaginary * b,
-  };
-}
+```typescript
+  /**
+   * Comienza el juego y continúa hasta que se determina un ganador o un empate.
+   */
+  public play() {
+    let gameOver = false;
+    let winner: Player | null = null;
+    while (!gameOver) {
+      console.clear();
+      console.log(`It's ${this.players[this.currentPlayerIndex].name}'s (${this.players[this.currentPlayerIndex].color}) turn!`);
+      this.printBoard();
 
-// Conjugado de un número complejo
-export function conj(a: ComplexNumber): ComplexNumber {
-  return {
-    real: a.real,
-    imaginary: -a.imaginary,
-  };
-}
+      const column = this.getColumnChoice();
+      const row = this.getNextOpenRow(column);
 
-// Módulo de un número complejo
-export function abs(a: ComplexNumber): number {
-  return Math.sqrt(a.real ** 2 + a.imaginary ** 2);
+      this.board[row][column] = this.players[this.currentPlayerIndex].color;
+      if (this.checkWin(row, column)) {
+        gameOver = true;
+        winner = this.players[this.currentPlayerIndex];
+      } else if (this.checkDraw()) {
+        gameOver = true;
+      } else {
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % 2;
+      }
+    }
+
+    console.clear();
+    this.printBoard();
+    if (winner) {
+      console.log(`Congratulations ${winner.name}! You won!`);
+    } else {
+      console.log("It's a draw!");
+    }
+  }
+```
+
+El método getColumnChoice solicita al usuario que seleccione una columna en la que colocar una ficha y devuelve el índice de la columna seleccionada. Se verifica que la selección del usuario sea válida y se continúa solicitando una selección hasta que se proporcione una selección válida.
+
+```typescript
+  /**
+   * Solicita al usuario que elija una columna en la que colocar una ficha y devuelve el índice de la columna seleccionada.
+   * @returns El índice de la columna seleccionada.
+   */
+  private getColumnChoice(): number {
+    const prompt = Prompt();
+    while (true) {
+      const columnStr = parseInt(prompt(`Enter column (1-${this.COLS}): `));
+      if (columnStr === null) {
+        return -1;
+      }
+      const column = columnStr - 1;
+      const row = this.getNextOpenRow(column);
+      if (isNaN(column) || column < 0 || column >= this.COLS) {
+        console.log('Invalid column choice. Please try again.');
+      } else if (row === -1) {
+        console.log('Column is full. Please choose again.');
+        continue;
+      } else {
+        return column;
+      }
+    }
+  }
+```
+
+El método getNextOpenRow devuelve el índice de la siguiente fila abierta en una columna determinada del tablero. Si la columna está llena, devuelve -1.
+
+```typescript
+  /**
+   * Obtiene la siguiente fila abierta en una columna determinada.
+   * @param column El índice de la columna.
+   * @returns El índice de la fila, o -1 si la columna está llena.
+   */
+  private getNextOpenRow(column: number): number {
+    for (let row = this.ROWS - 1; row >= 0; row--) {
+      if (this.board[row][column] === ' ') {
+        return row;
+      }
+    }
+    return -1;
+  }
+```
+
+El método checkWin verifica si el jugador actual ha ganado el juego, buscando en las cuatro posibles direcciones: horizontal, vertical y las dos diagonales. El método toma como argumentos la fila y la columna en la que se ha insertado la última ficha.
+
+Primero, se almacena el color del jugador actual en la variable color.
+
+Luego, se realiza un bucle para verificar si hay cuatro fichas del mismo color de manera horizontal, en la fila indicada por row. El conteo de fichas se realiza con la variable count, que se restablece a cero cada vez que se encuentra una ficha de un color diferente. Si se encuentran cuatro fichas del mismo color, el método devuelve true.
+
+Luego, se realiza otro bucle para verificar si hay cuatro fichas del mismo color de manera vertical, en la columna indicada por column. El conteo de fichas se realiza de manera similar al caso anterior. Si se encuentran cuatro fichas del mismo color, el método devuelve true.
+
+Después, se realizan dos bucles para verificar las dos diagonales. En cada diagonal, se comienza en la posición correspondiente a la esquina superior izquierda o superior derecha de la ficha recién insertada y se avanza hacia la esquina inferior opuesta, contando las fichas del mismo color. Si se encuentran cuatro fichas del mismo color en cualquiera de las dos diagonales, el método devuelve true.
+
+Si ninguna de las cuatro verificaciones anteriores encuentra cuatro fichas del mismo color consecutivas, el método devuelve false.
+
+```typescript
+  private checkWin(row: number, column: number): boolean {
+    const color = this.players[this.currentPlayerIndex].color;
+
+    // Check horizontal
+    let count = 0;
+    for (let i = 0; i < this.COLS; i++) {
+      if (this.board[row][i] === color) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+    }
+
+    // Check vertical
+    count = 0;
+    for (let i = 0; i < this.ROWS; i++) {
+      if (this.board[i][column] === color) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+    }
+
+    // Check diagonal (top-left to bottom-right)
+    count = 0;
+    const topLeftRow = row - Math.min(row, column);
+    const topLeftCol = column - Math.min(row, column);
+    for (let i = topLeftRow, j = topLeftCol; i < this.ROWS && j < this.COLS; i++, j++) {
+      if (this.board[i][j] === color) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+    }
+
+    // Check diagonal (top-right to bottom-left)
+    count = 0;
+    const topRightRow = row - Math.min(row, this.COLS - 1 - column);
+    const topRightCol = column + Math.min(row, this.COLS - 1 - column);
+    for (let i = topRightRow, j = topRightCol; i < this.ROWS && j >= 0; i++, j--) {
+      if (this.board[i][j] === color) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+    }
+
+    // No winner
+   return false;
+  }
+```
+
+El método checkDraw(): boolean verifica si el tablero está lleno y no hay ganador. Si hay al menos una posición vacía en la fila superior del tablero, el método devuelve false. De lo contrario, el método devuelve true.
+
+```typescript
+  private checkDraw(): boolean {
+    for (let i = 0; i < this.COLS; i++) {
+      if (this.board[0][i] === ' ') {
+        return false;
+      }
+    }
+    return true;
+  }
+```
+
+El método printBoard() se encarga de imprimir el tablero actual del juego en la consola.
+
+Primero, el método define una variable llamada columnNumbers que se utiliza para almacenar los números de columna que se imprimirán en la parte superior del tablero. A continuación, se utiliza un bucle for para agregar cada número de columna a la cadena columnNumbers.
+
+Luego, el método utiliza un bucle for anidado para recorrer cada fila y columna del tablero. Para cada celda del tablero, se agrega el valor de la celda a una cadena llamada rowString. Se utiliza el formato de cadena para asegurarse de que cada celda esté rodeada por bordes verticales y espacios.
+
+Una vez que se ha terminado de construir la cadena rowString para una fila completa, se la imprime en la consola. Esto se repite para cada fila en el tablero, lo que resulta en la impresión del tablero completo en la consola.
+
+```typescript
+  private printBoard(): void {
+    // Print column numbers
+    let columnNumbers = '';
+    for (let i = 1; i <= this.COLS; i++) {
+      columnNumbers += `  ${i} `;
+    }
+    console.log(columnNumbers);
+  
+    // Print board
+    for (let i = 0; i < this.ROWS; i++) {
+      let rowString = '|';
+      for (let j = 0; j < this.COLS; j++) {
+        rowString += ` ${this.board[i][j]} |`;
+      }
+      console.log(rowString);
+    }
+  }
 }
 ```
 
-En la división he usado *Math.round()* para redondear los valores reales e imaginarios devueltos a dos decimales. Así evito pequeñas diferencias de redondeo que podrían causar problemas en las pruebas.
+**Clase `Game`**
+
+La clase Game se utiliza para inicializar el juego y configurar los jugadores, mientras que la clase Connect4 que vimos anteriormente se encarga de manejar la lógica del juego y la interacción con el usuario.
+
+
+```typescript
+export class Game {
+private readonly players: Player[];
+
+constructor() {
+this.players = [
+{ name: 'Player 1', color: ${BOLD}${RED}X${RESET} },
+{ name: 'Player 2', color: ${BOLD}${GREEN}O${RESET} },
+];
+}
+
+public start(): void {
+const connect4 = new Connect4(this.players);
+connect4.play();
+}
+}
+```
+
+El código define una clase Game que tiene dos propiedades: players y un constructor que establece los nombres de los jugadores y los colores que representarán a cada uno. La propiedad players es un arreglo de objetos que tienen dos propiedades: name (nombre del jugador) y color (color que se utilizará para representar las fichas del jugador en el juego).
+
+La clase Game también tiene un método start que crea una nueva instancia de la clase Connect4 y llama al método play para comenzar el juego.
+
 
 #### Tests
 
-En los tests simplemente se sigue la filosofía anteriormente indicada, comprobando los resultados de todas las funciones.
+Las pruebas del código que desarrollamos son las siguientes:
 
 ```typescript
 import { describe, it } from 'mocha';
 import { expect } from "chai";
-import { ComplexNumber, add, sub, mult, div, prod, conj, abs } from '../src/ejercicio02';
+import { Game } from '../src/ejercicio02/Game';
+import { Player } from '../src/ejercicio02/Player';
+import { Connect4 } from '../src/ejercicio02/Connect4';
 
-describe('add', () => {
-  it('should add two complex numbers', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const b: ComplexNumber = { real: 1, imaginary: 4 };
-    const expected: ComplexNumber = { real: 3, imaginary: 7 };
-    const result: ComplexNumber = add(a, b);
-    expect(result).to.deep.equal(expected);
+describe('Player interface', () => {
+  it('should have a name property of type string', () => {
+    const player: Player = { name: 'John', color: '\x1b[31m' };
+    expect(typeof player.name).equal('string');
+  });
+
+  it('should have a color property of type string', () => {
+    const player: Player = { name: 'John', color: '\x1b[31m' };
+    expect(typeof player.color).equal('string');
   });
 });
 
-describe('sub', () => {
-  it('should subtract two complex numbers', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const b: ComplexNumber = { real: 1, imaginary: 4 };
-    const expected: ComplexNumber = { real: 1, imaginary: -1 };
-    const result: ComplexNumber = sub(a, b);
-    expect(result).to.deep.equal(expected);
+describe('Connect4', () => {
+  let player1: Player = { name: 'Player 1', color: `X` };
+  let player2: Player = { name: 'Player 2', color: `O` };
+  let connect4: Connect4;
+
+  beforeEach(() => {
+    const players = [player1, player2]
+    connect4 = new Connect4(players);
   });
-});
 
-describe('mult', () => {
-  it('should multiply two complex numbers', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const b: ComplexNumber = { real: 1, imaginary: 4 };
-    const expected: ComplexNumber = { real: -10, imaginary: 11 };
-    const result: ComplexNumber = mult(a, b);
-    expect(result).to.deep.equal(expected);
-  });
-});
-
-describe('div', () => {
-  it('should divide two complex numbers', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const b: ComplexNumber = { real: 1, imaginary: 4 };
-    const expected: ComplexNumber = { real: 0.82, imaginary: -0.29 };
-    const result: ComplexNumber = div(a, b);
-    expect(result.real).to.be.closeTo(expected.real, 0.01);
-    expect(result.imaginary).to.be.closeTo(expected.imaginary, 0.01);
-  });
-});
-
-describe('prod', () => {
-  it('should multiply a complex number by a real number', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const b: number = 2;
-    const expected: ComplexNumber = { real: 4, imaginary: 6 };
-    const result: ComplexNumber = prod(a, b);
-    expect(result).to.deep.equal(expected);
-  });
-});
-
-describe('conj', () => {
-  it('should return the conjugate of a complex number', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const expected: ComplexNumber = { real: 2, imaginary: -3 };
-    const result: ComplexNumber = conj(a);
-    expect(result).to.deep.equal(expected);
-  });
-});
-
-describe('abs', () => {
-  it('should return the absolute value of a complex number', () => {
-    const a: ComplexNumber = { real: 2, imaginary: 3 };
-    const expected: number = 3.605;
-    const result: number = abs(a);
-    expect(result).to.be.closeTo(expected, 0.01);
-  });
-});
-```
-
-### Ejercicio 3 - No cabrees a la reina <a name="ejercicio-3"></a>
-> [Volver al índice](#índice)
-
-> Dadas las posiciones de dos reinas en un tablero de ajedrez, determine si ambas reinas podrían atacarse en caso de cabrearse una con la otra. En el ajedrez, una reina puede atacar piezas ubicadas en la misma fila, columna o diagonal.
->
-> Un tablero de ajedrez puede representarse mediante un array bidimensional de 8 x 8 casillas. Por lo tanto, si la reina negra está ubicada en la posición (1, 3), mientras que la reina blanca está ubicada en la posición (3, 5), tendríamos una estructura de datos como la que sigue:
->
->[
->    [-, -, -, -, -, -, -, -]
->    [-, -, -, N, -, -, -, -]
->    [-, -, -, -, -, -, -, -]
->    [-, -, -, -, -, B, -, -]
->    [-, -, -, -, -, -, -, -]
->    [-, -, -, -, -, -, -, -]
->    [-, -, -, -, -, -, -, -]
->    [-, -, -, -, -, -, -, -]
->]
->
->Escriba una función checkAtack que, dada una estructura de datos como la anterior, devuelva un valor lógico 
-indicando si ambas reinas podrían atacarse dadas las posiciones de las mismas. Tenga en cuenta que solo puede 
-haber una reina blanca y una reina negra en el tablero. En caso de que lo anterior no suceda, la función deberá devolver el valor undefined.
->
->Por último, el tablero debe consistir en, exactamente, 8 filas y 8 columnas, donde cada casilla puede contener alguno de los valores -, N o B, exclusivamente. Aunque la anterior comprobación podría llevarse a cabo a través del código fuente incluido en la función (en tiempo de ejecución), defina un tipo de datos adecuado que impida, desde el punto de vista del tipado (en tiempo de compilación), pasarle a la función checkAtack un tablero no válido, esto es, con un número de filas/columnas diferente a 8 y/o celdas con valores no válidos). 
-
-#### Solución:
-
-Primero se define el tipo ChessBoard como una matriz en la que cada celda puede contener un guion ('-'), una 'N' o una 'B'.
-
-```typescript
-export type ChessBoard = Array<Array<'-' | 'N' | 'B'>>;
-```
-
-La función ```isValidChessBoard``` comprueba si una estructura de datos es un tablero de ajedrez válido, es decir, si es una matriz de 8x8 en la que cada celda contiene un guion ('-'), una 'N' o una 'B'. La función recibe como argumento un valor de tipo *unknown* y devuelve un valor de tipo *board is ChessBoard*, que es una verificación de tipo que garantiza que el valor es de tipo *ChessBoard*.
-
-Para comprobar si la estructura de datos es un tablero de ajedrez válido, se realizan tres comprobaciones anidadas en un condicional if:
-
-1. Si el valor no es un array o si su longitud no es 8, en cuyo caso se devuelve false.
-2. Si cada fila del tablero no es un array o si su longitud no es 8, en cuyo caso también se devuelve false.
-3. Se comprueba si cada celda del tablero no es un guion, una 'N' o una 'B', en cuyo caso se devuelve false.
-
-Si se han superado todas las comprobaciones anteriores, se devuelve true.
-
-Además, se comprueba que en el tablero solo haya una reina de cada tipo.
-
-```typescript
-export function isValidChessBoard(board: unknown): board is ChessBoard {
-    if (!Array.isArray(board) || board.length !== 8) {
-      return false;
-    }
-  
-    let numBlack = 0;
-    let numWhite = 0;
-  
-    for (const row of board) {
-      if (!Array.isArray(row) || row.length !== 8) {
-        return false;
-      }
-  
-      for (const cell of row) {
-        if (!['-', 'N', 'B'].includes(cell)) {
-          return false;
-        }
-  
-        if (cell === 'N') {
-          numBlack++;
-        } else if (cell === 'B') {
-          numWhite++;
-        }
-      }
-    }
-  
-    if (numBlack !== 1 || numWhite !== 1) {
-      return false;
-    }
-  
-    return true;
-}
-```
-
-La función ```checkAttack``` comprueba si dos reinas en un tablero de ajedrez podrían atacarse. La función recibe como argumento el tablero de ajedrez y a partir de él obtiene las posiciones de ambas reinas. La función devuelve *true* si ambas reinas podrían atacarse, *false* si no podrían atacarse y *undefined* si el tablero de ajedrez no es válido.
-
-Para comprobar si el tablero de ajedrez es válido, se utiliza la función ```isValidChessBoard``` definida anteriormente. Si el tablero no es válido, se devuelve *undefined*.
-
-Si el tablero es válido, se extraen las filas y las columnas de las posiciones de las dos reinas. Si las dos reinas están en la misma fila o en la misma columna, se devuelve *true* ya que la reina negra puede atacar a la reina blanca. De lo contrario, se calcula la diferencia entre las filas y las columnas de las reinas y se verifica si son iguales, lo que significa que están en la misma diagonal, en cuyo caso también se devuelve *true*. Si ninguna de las condiciones anteriores se cumple, se devuelve *false*.
-
-```typescript
-export function checkAttack(board: ChessBoard): boolean | undefined {
-  if (!isValidChessBoard(board)) {
-    return undefined;
-  }
-
-  const blackIndex = board.findIndex(row => row.includes('N'));
-  const whiteIndex = board.findIndex(row => row.includes('B'));
-
-  
-
-  if (blackIndex === -1 || whiteIndex === -1) {
-    // Si no se encuentra alguna de las reinas, el tablero es inválido
-    return undefined;
-  }
-
-  const blackRow = blackIndex;
-  const blackCol = board[blackIndex].indexOf('N');
-
-  const whiteRow = whiteIndex;
-  const whiteCol = board[whiteIndex].indexOf('B');
-
-  if (blackRow === whiteRow || blackCol === whiteCol) {
-    return true;
-  }
-
-  if (Math.abs(blackRow - whiteRow) === Math.abs(blackCol - whiteCol)) {
-    return true;
-  }
-
-  return false;
-}
-
-```
-
-### Ejercicio 4 - Reimplementando la función map <a name="ejercicio-4"></a>
-> [Volver al índice](#índice)
-
-> Implemente una función que emule el comportamiento de la función map proporcionada por el lenguaje sin hacer 
-uso esta última. La función map actúa sobre una colección de elementos, modificando el valor de cada uno de 
-ellos en base a un callback que se le pasa como argumento.
->
-> Teniendo en cuenta lo anterior, escriba una función myMap que reciba una colección (array) de valores numéricos 
-como primer argumento, además de un callback que permita modificar cada elemento de la colección como segundo 
-argumento. La función deberá devolver la colección modificada.
->
-> Un ejemplo de invocación podría ser:
->
-> myMap([0, 1, 2, 3, 4], (item) => item * item) // It should return [0, 1, 4, 9, 16]
-
-#### Solución:
-
-La función desarrollada myMap, que toma dos argumentos: una colección de números como un array y un callback que recibe un número y devuelve otro número.
-
-La función myMap itera sobre cada elemento de la colección y aplica el callback a cada uno de ellos. El valor devuelto por el callback se agrega al array result. La función devuelve el array result con los valores modificados.
-
-```typescript
-export function myMap(collection: number[], callback: (num: number) => number): number[] {
-    const result: number[] = [];
-    for (let i = 0; i < collection.length; i++) {
-      result.push(callback(collection[i]));
-    }
-    return result;
-  }
-```
-En resumen, la función myMap permite modificar cada elemento de una colección de números utilizando una función de callback y devuelve la colección modificada. Esta función emula el comportamiento de la función nativa map.
-
-#### Tests:
-
-En cuanto a los tests unitarios para la función myMap, que verifican su comportamiento, testeamos diferentes casos:
-
-```typescript
-import { describe, it } from 'mocha';
-import { expect } from "chai";
-import { myMap } from '../src/ejercicio04';
-
-describe("myMap", () => {
-    it("should return an empty array when given an empty array", () => {
-      const result = myMap([], (num) => num * num);
-      expect(result).to.deep.equal([]);
-    });
-  
-    it("should return a new array with the values squared", () => {
-      const arr = [0, 1, 2, 3, 4];
-      const result = myMap(arr, (num) => num * num);
-      expect(result).to.deep.equal([0, 1, 4, 9, 16]);
-      expect(arr).to.deep.equal([0, 1, 2, 3, 4]); // Ensure the original array is not modified
-    });
-  
-    it("should return a new array with the values doubled", () => {
-      const arr = [1, 2, 3];
-      const result = myMap(arr, (num) => num * 2);
-      expect(result).to.deep.equal([2, 4, 6]);
-      expect(arr).to.deep.equal([1, 2, 3]); // Ensure the original array is not modified
-    });
-  });
-```
-
-El primer test verifica que cuando se llama a myMap con una matriz vacía, el resultado debe ser una matriz vacía, el segundo test verifica que cuando se llama a myMap con una matriz de valores numéricos y una función de devolución de llamada que eleva al cuadrado cada valor, donde el resultado debe ser una nueva matriz con cada valor elevado al cuadrado. Además, el test también verifica que la matriz original no se modifica.
-
-El tercer y último test verifica que cuando se llama a myMap con una matriz de valores numéricos y una función de devolución de llamada que duplica cada valor, el resultado debe ser una nueva matriz con cada valor duplicado. Además, el test también verifica que la matriz original no se modifica.
-
-### Ejercicio 5 - Matrices espirales <a name="ejercicio-5"></a>
-> [Volver al índice](#índice)
-
-> Escriba una función getSpiralMatrix que, dado un entero positivo n representando el tamaño de una matriz cuadrada, 
-devuelva una matriz (array bidimensional) con todos los números enteros en el rango [1, n*n] y que estén dispuestos 
-en la matriz conformando una espiral. La espiral debe comenzar en la primera fila y columna de la matriz e irse 
-completando siguiendo las agujas del reloj.
-> 
-> Ejemplos:
-> 
-> getSpiralMatrix(3)  It should return [
->                                          [1, 2, 3],
->                                          [8, 9, 4],
->                                          [7, 6, 5]
->                                        ] 
-> getSpiralMatrix(4)  It should return [
->     [ 1,  2,  3, 4],
->     [12, 13, 14, 5],
->     [11, 16, 15, 6],
->     [10,  9,  8 ,7]
->   ] 
-> getSpiralMatrix(5)  It should return [
->     [ 1,   2,  3,  4, 5],
->     [ 16, 17, 18, 19, 6],
->     [ 15, 24, 25, 20, 7],
->     [ 14, 23, 22, 21, 8],
->     [ 13, 12, 11, 10, 9],
->   ]
-
-#### Solución:
-
-Definimos una función getSpiralMatrix que recibe un número entero n como argumento y devuelve una matriz bidimensional de tamaño n x n que representa una matriz en espiral.
-
-Primero, se inicializa una matriz bidimensional vacía result de tamaño n x n utilizando la función Array.from() con una función de mapeo que devuelve una matriz vacía para cada fila de la matriz resultante.
-
-Luego, se inicializan varias variables para realizar un seguimiento del recorrido de la matriz en espiral. counter se utiliza para mantener el valor que se va a asignar en cada celda de la matriz, startRow y endRow se utilizan para realizar un seguimiento de las filas que quedan por recorrer, y startCol y endCol se utilizan para realizar un seguimiento de las columnas que quedan por recorrer.
-
-El bucle while se ejecuta mientras las columnas iniciales no superen a las columnas finales y las filas iniciales no superen a las filas finales.
-
-Para recorrer la matriz en espiral, se siguen cuatro pasos principales, cada uno de los cuales recorre una fila o columna en la dirección correspondiente y asigna el valor correspondiente en la celda de la matriz.
-
-```typescript
-export function getSpiralMatrix(n: number): number[][] {
-    const result: number[][] = Array.from({ length: n }, () => []);
-    let counter = 1;
-    let startRow = 0;
-    let endRow = n - 1;
-    let startCol = 0;
-    let endCol = n - 1;
-  
-    while (startCol <= endCol && startRow <= endRow) {
-      
-      // Top row
-      for (let i = startCol; i <= endCol; i++) {
-        result[startRow][i] = counter++;
-      }
-      startRow++;
-  
-      // Right column
-      for (let i = startRow; i <= endRow; i++) {
-        result[i][endCol] = counter++;
-      }
-      endCol--;
-  
-      // Bottom row
-      for (let i = endCol; i >= startCol && startRow <= endRow; i--) {
-        result[endRow][i] = counter++;
-      }
-      endRow--;
-  
-      // Left column
-      for (let i = endRow; i >= startRow && startCol <= endCol; i--) {
-        result[i][startCol] = counter++;
-      }
-      startCol++;
-    }
-  
-    return result;
-  }
-```
-
-El primer paso recorre la fila superior de la matriz de izquierda a derecha, asignando valores en cada celda.
-El segundo paso recorre la columna derecha de la matriz de arriba a abajo, asignando valores en cada celda.
-El tercer paso recorre la fila inferior de la matriz de derecha a izquierda, asignando valores en cada celda.
-El cuarto paso recorre la columna izquierda de la matriz de abajo hacia arriba, asignando valores en cada celda.
-Después de cada paso, se ajustan las variables de seguimiento de filas y columnas según corresponda.
-
-Finalmente, se devuelve la matriz resultante result.
-
-#### Tests:
-
-A continuación realizamos los tests correspondientes para nuestro código:
-
-```typescript
-import { describe, it } from 'mocha';
-import { expect } from "chai";
-import { getSpiralMatrix } from '../src/ejercicio05';
-
-describe('getSpiralMatrix function', () => {
-  it('should return the correct spiral matrix for n=3', () => {
-    const expected = [
-      [1, 2, 3],
-      [8, 9, 4],
-      [7, 6, 5]
+  it('should start with an empty board', () => {
+    const expectedBoard = [
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
     ];
-    const actual = getSpiralMatrix(3);
-    expect(actual).to.deep.equal(expected);
+    expect(connect4['board']).to.deep.equal(expectedBoard);
   });
 
-  it('should return the correct spiral matrix for n=4', () => {
-    const expected = [
-      [ 1,  2,  3, 4],
-      [12, 13, 14, 5],
-      [11, 16, 15, 6],
-      [10,  9,  8 ,7]
-    ];
-    const actual = getSpiralMatrix(4);
-    expect(actual).to.deep.equal(expected);
+  describe('constructor', () => {
+    it('should create a new Connect4 game with the correct properties', () => {
+      expect(connect4.currentPlayerIndex).equal(0);
+      expect(connect4.players).to.deep.equal([player1, player2]);
+      expect(connect4.board.length).equal(6);
+      expect(connect4.board[0].length).equal(7);
+      expect(connect4.checkDraw()).eq(false);
+    });
   });
 
-  it('should return the correct spiral matrix for n=5', () => {
-    const expected = [
-      [ 1,   2,  3,  4, 5],
-      [16, 17, 18, 19, 6],
-      [15, 24, 25, 20, 7],
-      [14, 23, 22, 21, 8],
-      [13, 12, 11, 10, 9],
-    ];
-    const actual = getSpiralMatrix(5);
-    expect(actual).to.deep.equal(expected);
+  describe('Estado del juego', () => {
+    it('No está en tablas', () => {
+      expect(connect4.checkDraw()).eq(false);
+    });
+    it('No hay ganador', () => {
+      expect(connect4.checkWin(0, 0)).eq(false);
+    });
+  });
+
+  describe('Se inserta una ficha', () => {
+    it('En la columna 1 (presionar el uno 1)', () => {
+      expect(connect4.getColumnChoice()).to.deep.eq(0);
+    });
+  });
+
+  describe('Siguiente fila abierta en una columna determinada', () => {
+    it('Ya hay una ficha', () => {
+      expect(connect4.getNextOpenRow(0)).to.equal(5);
+    });
+    it('No hay una ficha', () => {
+      expect(connect4.getNextOpenRow(1)).to.equal(5);
+    });
   });
 });
 
 ```
-Estos tests verifican el comportamiento de la función getSpiralMatrix(n: number): number[][], la cual debe generar una matriz en espiral de tamaño n x n con valores enteros consecutivos desde 1 hasta n*n.
 
-El primer test verifica si la función retorna la matriz espiral correcta para n=3. Se define la matriz esperada (expected) y se llama a la función con el valor de n correspondiente. Luego se utiliza la función deep.equal del módulo chai para verificar si el valor retornado por la función es igual al valor esperado.
+En la primera sección de pruebas, se prueba la interfaz del jugador. Se espera que un objeto jugador tenga una propiedad "name" de tipo string y una propiedad "color" de tipo string.
 
-El segundo test es similar al primero, pero esta vez verifica si la función retorna la matriz espiral correcta para n=4.
+En la segunda sección de pruebas, se prueba la funcionalidad del juego Connect4. Primero se comprueba que el juego comienza con un tablero vacío. Luego, se prueban las propiedades del juego al momento de su creación.
 
-El tercer test también verifica si la función retorna la matriz espiral correcta, pero esta vez para n=5.
+En la tercera sección de pruebas, se prueba el estado del juego. Primero se comprueba que no está en tablas (checkDraw() retorna false). Luego, se comprueba que no hay ganador aún.
 
-En todos los casos se verifica si el valor retornado por la función (actual) es igual al valor esperado (expected) utilizando la función deep.equal del módulo chai.
+En la cuarta sección de pruebas, se prueba la inserción de una ficha en el tablero en una columna determinada. Se espera que la columna elegida sea la correcta.
 
-### Ejercicio 6 - Compresión de números en rangos <a name="ejercicio-6"></a>
+En la quinta sección de pruebas, se prueba la funcionalidad para encontrar la siguiente fila disponible en una columna determinada. Se espera que la función getNextOpenRow() retorne el número correcto de fila.
+
+
+### Conclusiones <a name="conclusiones"></a>
 > [Volver al índice](#índice)
 
-> Escriba una función fromArrayToRanges que reciba un array o lista de números enteros y los comprima en rangos, 
-es decir, que devuelva una cadena de caracteres con la compresión obtenida. Un rango, es decir, un conjunto de 
-números consecutivos se representará mediante una cadena de caracteres con el primer y último número del rango 
-separado por un guión bajo (_). Un rango de un único número será la cadena de caracteres que representa a ese 
-ùnico número. Luego, una serie de rangos vendrá separada por comas (,).
-> 
-> Ejemplos:
-> 
-> [5, 6, 7, 9, 12, 13, 14] => “5_7, 9, 12_14”
-> [-3, -2, -1, 3, 5, 6, 7] => “-3_-1, 3, 5_7”
-> [17] => “17”
-> [3, 5, 6, 7, 9, 10] => “3, 5_7, 9_10”
-> 
-> Escriba una función fromRangesToArray que lleve a cabo la operación inversa, es decir, que reciba como 
-argumento una cadena de caracteres representando una serie de rangos y devuelva el array de números 
-correspondiente.
+La función table puede ser muy útil para depurar objetos complejos y visualizarlos de una manera más estructurada y legible. Es especialmente útil cuando se está tratando con datos tabulares o cuando se necesita comparar varias instancias de un mismo objeto.
 
-#### Solución:
+Por otro lado el uso de clases e interfaces nos posibilita la creación de objetos con propiedades y métodos que nos permiten modelar el comportamiento de los mismos. Esto nos permite crear objetos que se comporten de una manera determinada y que nos permitan realizar operaciones sobre ellos de una manera más sencilla y ordenada, incluso si son objetos complejos.
 
-El siguiente código exporta tres funciones relacionadas con la conversión de arreglos de números a cadenas que representan rangos y viceversa:
-
-```typescript
-export type Range = [number, number];
-
-export function fromArrayToRanges(arr: number[]): string {
-  if (arr.length === 0) return "";
-
-  let result: string[] = [];
-  let currentRange: Range = [arr[0], arr[0]];
-
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] === currentRange[1] + 1) {
-      currentRange[1] = arr[i];
-    } else {
-      result.push(getRangeString(currentRange));
-      currentRange = [arr[i], arr[i]];
-    }
-  }
-  result.push(getRangeString(currentRange));
-
-  return result.join(", ");
-}
-
-export function getRangeString(range: Range): string {
-  return range[0] === range[1] ? range[0].toString() : `${range[0]}_${range[1]}`;
-}
-
-export function fromRangesToArray(ranges: string): number[] {
-  if (ranges.trim() === "") {
-    return [];
-  }
-  let result: number[] = [];
-  const rangeStrings = ranges.split(", ");
-  for (let rangeStr of rangeStrings) {
-    const range = rangeStr.split("_").map(Number);
-    if (range.length === 1) {
-      result.push(range[0]);
-    } else {
-      for (let i = range[0]; i <= range[1]; i++) {
-        result.push(i);
-      }
-    }
-  }
-  return result;
-}
-```
-
-La primera función fromArrayToRanges toma un arreglo de números y lo convierte en una cadena que representa los rangos presentes en el arreglo. Por ejemplo, si se pasa un arreglo con [1,2,3,5,6,8,9] la función retornará la cadena "1_3, 5_6, 8_9". La función utiliza un bucle for que itera por el arreglo y verifica si el número actual es igual al anterior más uno. Si es así, se agrega el número actual al rango actual. De lo contrario, se empuja el rango actual a la matriz de resultados y se crea un nuevo rango con el número actual. Al final del bucle, el último rango creado se agrega a la matriz de resultados.
-
-La segunda función getRangeString toma un rango como argumento y retorna una cadena que representa el rango. Si el rango solo tiene un número, retorna ese número como una cadena. De lo contrario, retorna una cadena con el formato "inicio_fin".
-
-La tercera función fromRangesToArray toma una cadena de rangos y la convierte en un arreglo de números. Por ejemplo, si se pasa la cadena "1_3, 5_6, 8_9", la función retornará el arreglo [1,2,3,5,6,8,9]. La función separa los rangos por la coma y luego itera por cada rango. Si el rango solo tiene un número, se agrega ese número al resultado. De lo contrario, se itera desde el inicio hasta el fin del rango y se agrega cada número al resultado.
-
-#### Tests:
-
-Definimos los siguientes tests para comprobar el funcionamiento de nuestro código:
-
-```typescript
-import { describe, it } from 'mocha';
-import { expect } from "chai";
-import { fromArrayToRanges, fromRangesToArray } from "../src/ejercicio06";
-
-describe("fromArrayToRanges function", () => {
-    it("should return an empty string for an empty array", () => {
-      const arr: number[] = [];
-      const result = fromArrayToRanges(arr);
-      expect(result).to.equal("");
-    });
-  
-    it("should compress the array into a string of ranges", () => {
-      const arr = [5, 6, 7, 9, 12, 13, 14];
-      const expected = "5_7, 9, 12_14";
-      const result = fromArrayToRanges(arr);
-      expect(result).to.equal(expected);
-    });
-  
-    it("should handle negative numbers", () => {
-      const arr = [-3, -2, -1, 3, 5, 6, 7];
-      const expected = "-3_-1, 3, 5_7";
-      const result = fromArrayToRanges(arr);
-      expect(result).to.equal(expected);
-    });
-  
-    it("should handle a single number", () => {
-      const arr = [17];
-      const expected = "17";
-      const result = fromArrayToRanges(arr);
-      expect(result).to.equal(expected);
-    });
-  
-    it("should compress the array with multiple ranges", () => {
-      const arr = [3, 5, 6, 7, 9, 10];
-      const expected = "3, 5_7, 9_10";
-      const result = fromArrayToRanges(arr);
-      expect(result).to.equal(expected);
-    });
-  });
-  
-describe("fromRangesToArray function", () => {
-    it("should return an empty array for an empty string", () => {
-      const ranges = "";
-      const result = fromRangesToArray(ranges);
-      expect(result).to.deep.equal([]);
-    });
-  
-    it("should expand a string of ranges into an array", () => {
-      const ranges = "5_7, 9, 12_14";
-      const expected = [5, 6, 7, 9, 12, 13, 14];
-      const result = fromRangesToArray(ranges);
-    });
-});
-```
-
-Los tests para fromArrayToRanges comprueban que la función maneje correctamente los siguientes casos:
-
-Un array vacío
-Un array con números positivos y negativos
-Un array con un solo número
-Un array con múltiples rangos
-
-Por otro lado, la función fromRangesToArray hace lo contrario: toma una cadena de rangos y la expande en un array de números. Cada rango está representado por dos números separados por un guión bajo, y los rangos se separan con una coma y un espacio. Si un número no está en un rango, se muestra individualmente separado por comas y espacios. Por ejemplo, "5_7, 9, 12_14" se expandiría en [5, 6, 7, 9, 12, 13, 14].
-
-Los tests para fromRangesToArray comprueban que la función maneje correctamente los siguientes casos:
-
-Una cadena vacía
-Una cadena con un solo número
-Una cadena con múltiples rangos
-
-### Ejercicio 7 - Mensaje secreto <a name="ejercicio-7"></a>
+### Referencias <a name="referencias"></a>
 > [Volver al índice](#índice)
 
-> Si desea realizar algún proyecto usando una Raspberry Pi, probablemente necesitará usar resistencias. 
-> Para este ejercicio necesita conocer dos cosas sobre las resistencias:
-> 
-> Cada resistor o resistencia tiene un valor de resistencia en Ohmios asociado. Además, las resistencias son 
-> tan pequeñas que si se les imprimiera el valor en ellas, sería muy difícil de leer. Para resolver este problema, 
-> los fabricantes siguen un estándar de bandas codificadas de colores para indicar sus valores de resistencia. 
-> Cada banda tiene una posición y un valor numérico.
-
-> Las primeras dos bandas de una resistencia tienen un esquema de codificación muy simple: cada color se mapea a un 
-> único número. Por ejemplo, si una resistencia tiene impresa una banda marrón (valor 1) seguida de una banda verde 
-> (valor 5), el valor de la resistencia se traduciría al número 15.
-
-> El objetivo de este ejercicio es crear un programa que nos ayude a calcular el valor de una resistencia sin tener 
-> que memorizar los valores de las bandas. Para ello, cree una función decodeResistor que recibe como parámetros 
-> los nombres de los colores de una resistencia como entrada y devuelve un número de dos dígitos indicando el 
-> valor de la resistencia. La función deberá devover un número de dos dígitos incluso si recibe más de dos colores 
-> como parámetros.
-> 
-> Las bandas de colores están codificadas de la siguiente manera:
-> 
-> Negro: 0
-> Marrón: 1
-> Rojo: 2
-> Naranja: 3
-> Amarillo: 4
-> Verde: 5
-> Azul: 6
-> Violeta: 7
-> Gris: 8
-> Blanco: 9
-
-> De este modo, la combinación Marrón-Verde debería devolver 15 al igual que Marrón-Verde-Violeta ignorando el 
-tercer color.
-
-#### Solución:
-
-Desarrollamos el siguiente código:
-
-```typescript
-type ColorCode = { [color: string]: number };
-
-const colorCode: ColorCode = {
-  "negro": 0,
-  "marrón": 1,
-  "rojo": 2,
-  "naranja": 3,
-  "amarillo": 4,
-  "verde": 5,
-  "azul": 6,
-  "violeta": 7,
-  "gris": 8,
-  "blanco": 9
-};
-
-export function decodeResistor(colors: string[]): number {
-  const firstBand = colors[0].toLowerCase();
-  const secondBand = colors[1].toLowerCase();
-  const resistanceValue = colorCode[firstBand] * 10 + colorCode[secondBand];
-  return resistanceValue;
-}
-```
-
-El código define un objeto colorCode que contiene los valores numéricos asociados con cada color de una resistencia, y una función decodeResistor que toma un array de strings con los colores de la resistencia y devuelve el valor de la resistencia calculado a partir de los valores numéricos de los colores de la resistencia.
-
-El algoritmo utilizado para calcular el valor de la resistencia a partir de los colores es multiplicar el valor del primer color por 10 y sumarle el valor del segundo color.
-
-Los tests verifican que la función decodeResistor calcule correctamente el valor de la resistencia para diferentes combinaciones de colores. En particular, se verifican casos en los que se omitió el tercer color, ya que este color se utiliza para indicar la potencia de la resistencia y no se utiliza para calcular su valor.
-
-#### Tests:
-
-Desarrollamos los tests de nuestro código para comprobar su funcionamiento:
-
-```typescript
-import { describe, it } from 'mocha';
-import { expect } from "chai";
-import { decodeResistor } from "../src/ejercicio07";
-
-describe("decodeResistor", () => {
-  it("should return 15 when given ['marrón', 'verde']", () => {
-    const result = decodeResistor(["marrón", "verde"]);
-    expect(result).to.equal(15);
-  });
-
-  it("should return 15 when given ['marrón', 'verde', 'violeta']", () => {
-    const result = decodeResistor(["marrón", "verde", "violeta"]);
-    expect(result).to.equal(15);
-  });
-
-  it("should return 29 when given ['rojo', 'blanco']", () => {
-    const result = decodeResistor(["rojo", "blanco"]);
-    expect(result).to.equal(29);
-  });
-
-  it("should return 36 when given ['naranja', 'azul']", () => {
-    const result = decodeResistor(["naranja", "azul"]);
-    expect(result).to.equal(36);
-  });
-});
-```
-
-Cada prueba en el bloque describe consiste en pasar diferentes combinaciones de colores de banda a la función y comprobar si devuelve el valor correcto. Por ejemplo, la primera prueba comprueba que si se pasan los colores "marrón" y "verde", la función devuelve el valor 15, que es el valor de resistencia para un resistor con esas bandas de colores.
-
-Se utiliza la librería mocha para definir y ejecutar las pruebas, y la librería chai para hacer las comprobaciones de igualdad (expect(result).to.equal(expected)).
-
-### Ejercicio 8 - Wonder Woman <a name="ejercicio-8"></a>
-> [Volver al índice](#índice)
-
-> Dado un array que contiene exclusivamente cadenas de texto, comprobar que las palabras del array están encadenadas. 
-> Esto es, una o más letras del final de una cadena coinciden con el comienzo de la siguiente cadena del array.
-> 
-> Ejemplos de palabras encadenadas:
-> 
-> “apply” and “plywood”
-> “apple” and “each”
-> “behemoth” and “mother”
-> 
-> Ejemplos de palabras no encadenadas:
-> 
-> “apply” and “playground”
-> “apple” and “peggy”
-> “behemoth” and “mathematics
-> 
-> Para resolver este ejercicio, escriba una función meshArray que compruebe si las cadenas del array están 
-encadenadas o no. La función recibirá como parámetro un array de cadenas de texto y devolverá:
-> 
-> “Error al encadenar” si las cadenas del array no están encadenadas.
-> Una cadena de texto que contenga las letras que encadenan las palabras del array. 
-> A priori no sabe cuantas letras encadenadas tendrán en común, pero al menos será una.
-> 
-> Ejemplos de ejecución del programa:
-> 
-> 1: [“allow”, “lowering”, “ringmaster”, “terror”] –> “lowringter”
-> 
-> Este array está encadenado porque:
->
-> Las letras “low” de la primera palabra encadenan con la palabra “lowering”.
-> Las letras “ring” en la segunda y tercera palabras están encadenadas.
-> Por último, las letras “ter” en las dos últimas palabras también están encadenadas.
-> 2: [“kingdom”, “dominator”, “notorious”, “usual”, “allegory”] –> “Error al encadenar”
-
-> En este caso, aunque las palabras “dominator” y “notorious” comparten letras en el mismo orden, las últimas 
-letras de la primera palabra no encadenan con las primeras letras de la segunda.
-
-#### Solución:
-
-El código que hemos desarrollado es el siguiente:
-
-```typescript
-export function meshArray(words: string[]): string | "Error al encadenar" {
-     
-    let meshedLetters = "";
-  
-    for (let i = 1; i < words.length; i++) {
-      const currentWord = words[i];
-      const previousWord = words[i - 1];
-      const commonLetters = findCommonLetters(previousWord, currentWord);
-      
-      if (commonLetters === "") {
-        return "Error al encadenar";
-      }
-  
-      meshedLetters += commonLetters;
-    }
-  
-    return meshedLetters;
-  }  
-  
-  function findCommonLetters(str1: string, str2: string): string {
-    const maxLength = Math.min(str1.length, str2.length);
-    let commonLetters = "";
-  
-    for (let i = 1; i <= maxLength; i++) {
-      const suffix = str1.slice(str1.length - i);
-      const prefix = str2.slice(0, i);
-  
-      if (suffix === prefix) {
-        commonLetters = suffix;
-      }
-    }
-  
-    return commonLetters;
-  }
-  
-```
-
-El código define una función meshArray que toma como entrada un array de palabras y devuelve un string que contiene todas las letras que se encuentran en común entre las palabras consecutivas del array. Si no hay letras en común entre dos palabras consecutivas, la función devuelve la cadena "Error al encadenar".
-
-Para lograr esto, la función meshArray itera a través de las palabras del array, comparando cada palabra con la anterior utilizando la función findCommonLetters. Si las palabras no tienen letras en común, la función devuelve "Error al encadenar", de lo contrario, la función agrega las letras comunes al string meshedLetters. Al final, la función devuelve meshedLetters.
-
-La función findCommonLetters es una función auxiliar que toma dos strings como entrada y devuelve una cadena que contiene las letras que están presentes en ambos strings en el mismo orden. Para hacer esto, la función compara los sufijos de la primera palabra con los prefijos de la segunda palabra hasta encontrar el sufijo y el prefijo que son iguales. En ese punto, devuelve el sufijo como la cadena de letras comunes.
-
-#### Tests:
-
-Realizamos las pruebas del código, que son las siguientes:
-
-```typescript
-import { describe, it } from 'mocha';
-import { expect } from "chai";
-import {meshArray} from "../src/ejercicio08";
-
-describe("meshArray", () => {
-  it("should return 'lowringter' when given ['allow', 'lowering', 'ringmaster', 'terror']", () => {
-    const result = meshArray(["allow", "lowering", "ringmaster", "terror"]);
-    expect(result).to.equal("lowringter");
-  });
-
-  it("should return 'Error al encadenar' when given ['kingdom', 'dominator', 'notorious', 'usual', 'allegory']", () => {
-    const result = meshArray(["kingdom", "dominator", "notorious", "usual", "allegory"]);
-    expect(result).to.equal("Error al encadenar");
-  });
-
-  it("should return 'ta' when given ['ta', 'ta']", () => {
-    const result = meshArray(["ta", "ta"]);
-    expect(result).to.equal("ta");
-  });
-
-  it("should return '' when given ['t', 'a']", () => {
-    const result = meshArray(["t", "a"]);
-    expect(result).to.equal("Error al encadenar");
-  });
-});
-
-```
-
-Estos tests comprueban que la función meshArray que recibe como argumento un array de strings words y devuelve una cadena de texto que contiene las letras que coinciden entre el final de un string y el comienzo del siguiente. Si no hay coincidencia entre dos strings consecutivos, la función devuelve "Error al encadenar".
-
-El primer test comprueba que si se le pasan los strings "allow", "lowering", "ringmaster" y "terror", la función devuelve la cadena "lowringter".
-El segundo test comprueba que si se le pasan los strings "kingdom", "dominator", "notorious", "usual" y "allegory", la función devuelve la cadena "Error al encadenar".
-El tercer test comprueba que si se le pasan los strings "ta" y "ta", la función devuelve la cadena "ta".
-El cuarto test comprueba que si se le pasan los strings "t" y "a", la función devuelve la cadena "Error al encadenar".
+1. [Entrada de texto](https://www.npmjs.com/package/prompt-sync)
+2. [Formato de escape ANSI](https://es.wikipedia.org/wiki/C%C3%B3digo_escape_ANSI#:~:text=Los%20c%C3%B3digos%20de%20escape%20ANSI,color%20o%20moviendo%20el%20cursor.)

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html class="default" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <title>practica05</title>
+    <meta name="description" content="Documentation for practica05" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/highlight.css" />
+    <script async src="assets/search.js" id="search-script"></script>
+  </head>
+  <body>
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("tsd-theme") || "os";
+    </script>
+    <header class="tsd-page-toolbar">
+      <div class="tsd-toolbar-contents container">
+        <div class="table-cell" id="tsd-search" data-base=".">
+          <div class="field">
+            <label
+              for="tsd-search-field"
+              class="tsd-widget tsd-toolbar-icon search no-caption"
+              ><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z"
+                  fill="var(--color-text)"
+                ></path></svg></label
+            ><input type="text" id="tsd-search-field" aria-label="Search" />
+          </div>
+          <div class="field">
+            <div id="tsd-toolbar-links"></div>
+          </div>
+          <ul class="results">
+            <li class="state loading">Preparing search index...</li>
+            <li class="state failure">The search index is not available</li>
+          </ul>
+          <a href="index.html" class="title">practica05</a>
+        </div>
+        <div class="table-cell" id="tsd-widgets">
+          <a
+            href="#"
+            class="tsd-widget tsd-toolbar-icon menu no-caption"
+            data-toggle="menu"
+            aria-label="Menu"
+            ><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect
+                x="1"
+                y="3"
+                width="14"
+                height="2"
+                fill="var(--color-text)"
+              ></rect>
+              <rect
+                x="1"
+                y="7"
+                width="14"
+                height="2"
+                fill="var(--color-text)"
+              ></rect>
+              <rect
+                x="1"
+                y="11"
+                width="14"
+                height="2"
+                fill="var(--color-text)"
+              ></rect></svg
+          ></a>
+        </div>
+      </div>
+    </header>
+    <div class="container container-main">
+      <div class="col-8 col-content">
+        <div class="tsd-page-title">
+          <h2>practica05</h2>
+        </div>
+        <div class="tsd-panel tsd-typography">
+          <a
+            href="#práctica-5-objetos-clases-e-interfaces"
+            id="práctica-5-objetos-clases-e-interfaces"
+            style="color: inherit; text-decoration: none"
+          >
+            <h1>
+              <a
+                href="https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git"
+                >PRÁCTICA 5. OBJETOS, CLASES E INTERFACES</a
+              >.
+            </h1>
+          </a>
+
+          <a
+            href="#carla-oval-torres"
+            id="carla-oval-torres"
+            style="color: inherit; text-decoration: none"
+          >
+            <h2>Carla Oval Torres</h2>
+          </a>
+
+          <a
+            href="#índice-"
+            id="índice-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h2>Índice <a name="índice"></a></h2>
+          </a>
+          <ol>
+            <li><a href="#introducci%C3%B3n">Introducción</a></li>
+            <li>
+              <a href="#ejercicios-propuestos">Ejercicios propuestos</a>
+              <ol>
+                <li>
+                  <a href="#ejercicio-1">Ejercicio 1 - Biblioteca musical</a>
+                </li>
+                <li><a href="#ejercicio-2">Ejercicio 2 - Conecta 4</a></li>
+                <li><a href="#conclusiones">Conclusiones</a></li>
+                <li><a href="#referencias">Referencias</a></li>
+              </ol>
+            </li>
+          </ol>
+
+          <a
+            href="#introducción-"
+            id="introducción-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h2>Introducción <a name="introducción"></a></h2>
+          </a>
+          <blockquote>
+            <p><a href="#%C3%ADndice">Volver al índice</a></p>
+          </blockquote>
+          <p>
+            Lleve a cabo todos y cada uno de los ejercicios propuestos a
+            continuación. Dado que vamos a trabajar con clases y que,
+            probablemente, cada ejercicio implique el desarrollo de diferentes
+            clases, el código fuente de cada ejercicio deberá estar alojado en
+            un directorio independiente con nombre ejercicio-n/ dentro del
+            directorio src/ de su proyecto. Dentro del directorio
+            correspondiente a cada ejercicio, esto es, dentro del directorio
+            ejercicio-n, incluya cada clase desarrollada en un fichero
+            independiente.
+          </p>
+          <p>
+            Incluya la documentación de sus clases mediante el uso de TypeDoc y
+            adopte una metodología de desarrollo dirigido por
+            pruebas/comportamiento. Tenga en cuenta que seguir la metodología
+            TDD o BDD implica confirmar el correcto funcionamiento del código
+            desarrollado, así como los casos en los que dicho código debería
+            informar de un error cuando la entrada no sea la correcta (errors
+            should never pass silently). En consecuencia, desarrolle pruebas
+            unitarias que comprueben el correcto funcionamiento del código y,
+            además, incluya otras pruebas unitarias que verifiquen que el
+            software es robusto ante entradas no válidas o inesperadas.
+          </p>
+          <p>
+            Por último, recuerde argumentar en el informe de la práctica todas
+            las decisiones de diseño tomadas para cada ejercicio.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">*</span><span class="hl-0"> </span><span class="hl-1">as</span><span class="hl-0"> </span><span class="hl-3">Prompt</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-4">&#39;prompt-sync&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-0">  </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">prompt</span><span class="hl-0"> = </span><span class="hl-6">Prompt</span><span class="hl-0">();</span><br/><span class="hl-0">  </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">myNumber</span><span class="hl-0"> = </span><span class="hl-6">parseInt</span><span class="hl-0">(</span><span class="hl-6">prompt</span><span class="hl-0">(</span><span class="hl-4">&#39;Introduce a number: &#39;</span><span class="hl-0">));</span><br/><span class="hl-0">  </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-3">myNumber</span><span class="hl-0">)</span>
+</code></pre>
+
+          <a
+            href="#ejercicios-propuestos-"
+            id="ejercicios-propuestos-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h2>Ejercicios propuestos <a name="ejercicios-propuestos"></a></h2>
+          </a>
+
+          <a
+            href="#ejercicio-1---biblioteca-musical-"
+            id="ejercicio-1---biblioteca-musical-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h3>Ejercicio 1 - Biblioteca musical <a name="ejercicio-1"></a></h3>
+          </a>
+          <blockquote>
+            <p><a href="#%C3%ADndice">Volver al índice</a></p>
+          </blockquote>
+          <blockquote>
+            <p>
+              Diseñe el conjunto de clases e interfaces necesarias para
+              almacenar una biblioteca musical. El desarrollo realizado debe
+              cumplir los siguientes requisitos funcionales:
+            </p>
+            <p>
+              La información de un artista, ya sea un grupo o un solista, será
+              la siguiente:
+            </p>
+            <ul>
+              <li>Nombre</li>
+              <li>Número de oyentes mensuales</li>
+              <li>Discografía</li>
+            </ul>
+            <p>
+              La discografía de un artista consistirá en una colección de
+              discos, donde la información de un disco será:
+            </p>
+            <ul>
+              <li>Nombre</li>
+              <li>Año de publicación</li>
+              <li>Canciones</li>
+            </ul>
+            <p>
+              Por cada canción perteneciente a un disco, la información será la
+              siguiente:
+            </p>
+            <ul>
+              <li>Nombre</li>
+              <li>Duración en segundos</li>
+              <li>Géneros</li>
+              <li>
+                Single (determina si la canción fue lanzada como un single o no)
+              </li>
+              <li>Número de reproducciones</li>
+            </ul>
+            <p>La biblioteca musical deberá permitir:</p>
+            <ul>
+              <li>
+                Almacenar la información de diferentes artistas, su discografía
+                y las canciones pertenecientes a cada disco o álbum.
+              </li>
+              <li>
+                Mostrar por la consola la información de la biblioteca en
+                formato tabla (console.table).
+              </li>
+              <li>
+                Permitir llevar a cabo búsquedas de artistas, discos y canciones
+                y mostrar los resultados de la búsqueda en formato de tabla.
+              </li>
+              <li>
+                Permitir calcular el número de canciones incluidas en un disco
+                concreto.
+              </li>
+              <li>
+                Permitir calcular la duración de un disco, a partir de la
+                duración de todas y cada una de las canciones que lo conforman.
+              </li>
+              <li>
+                Permitir calcular el número de reproducciones de un disco, a
+                partir del número de reproducciones de todas y cada una de las
+                canciones incluidas en el mismo.
+              </li>
+            </ul>
+          </blockquote>
+
+          <a
+            href="#solución"
+            id="solución"
+            style="color: inherit; text-decoration: none"
+          >
+            <h4>Solución:</h4>
+          </a>
+          <p>Explicacion</p>
+          <pre><code class="language-typescript"><span class="hl-2">interface</span><span class="hl-0"> </span><span class="hl-7">Artist</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-3">name</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">monthlyListeners</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">discography</span><span class="hl-0">: </span><span class="hl-7">Album</span><span class="hl-0">[];</span><br/><span class="hl-0">}</span>
+</code></pre>
+          <p>Explicacion</p>
+          <pre><code class="language-typescript"><span class="hl-2">class</span><span class="hl-0"> </span><span class="hl-7">Album</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-2">constructor</span><span class="hl-0">(</span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">name</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">, </span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">year</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0">, </span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">songs</span><span class="hl-0">: </span><span class="hl-7">Song</span><span class="hl-0">[]) {}</span><br/><br/><span class="hl-0">  </span><span class="hl-6">getNumSongs</span><span class="hl-0">(): </span><span class="hl-7">number</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">songs</span><span class="hl-0">.</span><span class="hl-3">length</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span><br/><br/><span class="hl-0">  </span><span class="hl-6">getDuration</span><span class="hl-0">(): </span><span class="hl-7">number</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">duration</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">song</span><span class="hl-0"> </span><span class="hl-2">of</span><span class="hl-0"> </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">songs</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-3">duration</span><span class="hl-0"> += </span><span class="hl-3">song</span><span class="hl-0">.</span><span class="hl-3">duration</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">duration</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span><br/><br/><span class="hl-0">  </span><span class="hl-6">getNumReproductions</span><span class="hl-0">(): </span><span class="hl-7">number</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">numReproductions</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">song</span><span class="hl-0"> </span><span class="hl-2">of</span><span class="hl-0"> </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">songs</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-3">numReproductions</span><span class="hl-0"> += </span><span class="hl-3">song</span><span class="hl-0">.</span><span class="hl-3">numReproductions</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">numReproductions</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+</code></pre>
+          <p>Explicacion</p>
+          <pre><code class="language-typescript"><span class="hl-2">class</span><span class="hl-0"> </span><span class="hl-7">Song</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-2">constructor</span><span class="hl-0">(</span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">name</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">, </span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">duration</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0">, </span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">genres</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">[], </span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">isSingle</span><span class="hl-0">: </span><span class="hl-7">boolean</span><span class="hl-0">, </span><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-3">numReproductions</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0">) {}</span><br/><span class="hl-0">}</span>
+</code></pre>
+          <p>Explicacion</p>
+
+          <a
+            href="#tests"
+            id="tests"
+            style="color: inherit; text-decoration: none"
+          >
+            <h4>Tests:</h4>
+          </a>
+          <p>Explicacion</p>
+          <pre><code class="language-typescript">
+</code></pre>
+
+          <a
+            href="#ejercicio-2---conecta-4-"
+            id="ejercicio-2---conecta-4-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h3>Ejercicio 2 - Conecta 4 <a name="ejercicio-2"></a></h3>
+          </a>
+          <blockquote>
+            <p><a href="#%C3%ADndice">Volver al índice</a></p>
+          </blockquote>
+          <blockquote>
+            <p>Todos (o casi todos) hemos jugado alguna vez al Conecta 4.</p>
+            <p>
+              En una rejilla de 6 filas y 7 columnas, dos jugadores se turnan
+              para ir colocando un conjunto de fichas dejándolas caer por alguna
+              de las siete columnas de la rejilla. Cada jugador dispone de un
+              total de 21 fichas de un color diferente.
+            </p>
+            <p>
+              En cada turno, una ficha tomará la primera posición libre de la
+              columna seleccionada por el jugador que corresponda. Si la columna
+              está completa, esto es, ya cuenta con seis fichas, dicha columna
+              no podrá ser seleccionada por ninguno de los dos jugadores para
+              dejar caer otra ficha.
+            </p>
+            <p>
+              El objetivo del jugador es colocar cuatro fichas consecutivas ya
+              sea en una misma fila, una misma columna o en diagonal.
+            </p>
+            <p>
+              Cree la jerarquía de clases e interfaces necesarias para
+              implementar el juego Conecta 4, teniendo en cuenta la siguiente
+              funcionalidad:
+            </p>
+            <p>
+              El juego comienza con el Jugador 1 colocando la primera ficha y,
+              en turnos sucesivos, debe ir alternándose con el Jugador 2. Se
+              deberá mostrar por consola a qué jugador le toca colocar una
+              ficha.
+            </p>
+            <p>
+              Si un jugador intenta colocar una ficha en una columna completa,
+              se mostrará un mensaje informando de que la columna está completa
+              y se le permitirá seleccionar otra columna para colocar la ficha.
+              Lo anterior debe repetirse hasta que el jugador coloque su ficha.
+            </p>
+            <p>
+              Una vez que el jugador correspondiente haya colocado una ficha,
+              debe mostrarse por la consola el estado del tablero. Cuando alguno
+              de los dos jugadores gane, se debe informar de lo anterior en la
+              consola y terminar el juego.
+            </p>
+          </blockquote>
+
+          <a
+            href="#solución-1"
+            id="solución-1"
+            style="color: inherit; text-decoration: none"
+          >
+            <h4>Solución:</h4>
+          </a>
+          <p>
+            <strong>Interfaz <code>Player</code></strong>
+          </p>
+          <p>Se utiliza para representar a los jugadores del juego Connect4.</p>
+          <p>
+            La interfaz tiene dos propiedades, <code>name</code> y
+            <code>color</code>, ambas de tipo <em>string</em>.
+            <code>name</code> representa el nombre del jugador y
+            <code>color</code> representa el símbolo de la ficha del jugador
+            junto con el color del jugador en formato de escape ANSI.
+          </p>
+          <blockquote>
+            <p>
+              El formato de escape ANSI se utiliza para definir colores y otros
+              efectos visuales en la consola de texto. En este caso, el color
+              del jugador se define en este formato para que el juego pueda
+              imprimir los colores de los jugadores en la consola de texto.
+            </p>
+          </blockquote>
+          <pre><code class="language-typescript"><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">interface</span><span class="hl-0"> </span><span class="hl-7">Player</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-3">name</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-3">color</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">;</span><br/><span class="hl-0">}</span>
+</code></pre>
+          <p>
+            <strong>Clase <code>Conect4</code></strong>
+          </p>
+          <p>
+            En la clase Conect4, en la primera línea, importamos la biblioteca
+            prompt-sync y le damos el alias de Prompt. Esta biblioteca se
+            utiliza para solicitar entrada del usuario de forma síncrona en la
+            consola.
+          </p>
+          <p>
+            En la segunda línea, se importa la clase Player que definimos con
+            anterioridad desde el archivo Player.ts.
+          </p>
+          <p>
+            Luego, se define la clase Connect4, que tiene varias propiedades y
+            métodos:
+          </p>
+          <ul>
+            <li>
+              ROWS y COLS son constantes que indican el número de filas y
+              columnas en el tablero del juego, respectivamente. players es una
+              lista de los jugadores del juego.
+            </li>
+            <li>
+              currentPlayerIndex es un número que indica el índice del jugador
+              actual en la lista de jugadores. board es una matriz que
+              representa el tablero del juego, con cada elemento de la matriz
+              representando un espacio en el tablero.
+            </li>
+            <li>
+              El constructor de la clase toma una lista de jugadores como
+              parámetro y utiliza esto para inicializar las propiedades players
+              y board. El tablero se inicializa como una matriz vacía del tamaño
+              especificado por ROWS y COLS.
+            </li>
+          </ul>
+          <pre><code class="language-typescript"><span class="hl-1">import</span><span class="hl-0"> </span><span class="hl-2">*</span><span class="hl-0"> </span><span class="hl-1">as</span><span class="hl-0"> </span><span class="hl-3">Prompt</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-4">&#39;prompt-sync&#39;</span><span class="hl-0">;</span><br/><span class="hl-1">import</span><span class="hl-0"> {</span><span class="hl-3">Player</span><span class="hl-0">} </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-4">&#39;./Player&#39;</span><span class="hl-0">;</span><br/><br/><span class="hl-9">/**</span><br/><span class="hl-9"> * Representa un juego Connect 4.</span><br/><span class="hl-9"> */</span><br/><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">class</span><span class="hl-0"> </span><span class="hl-7">Connect4</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-9">/** Número de filas en el tablero */</span><br/><span class="hl-0">  </span><span class="hl-2">private</span><span class="hl-0"> </span><span class="hl-2">readonly</span><span class="hl-0"> </span><span class="hl-3">ROWS</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0"> = </span><span class="hl-8">6</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-9">/** Número de columnas en el tablero */</span><br/><span class="hl-0">  </span><span class="hl-2">private</span><span class="hl-0"> </span><span class="hl-2">readonly</span><span class="hl-0"> </span><span class="hl-3">COLS</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0"> = </span><span class="hl-8">7</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-9">/** Lista de jugadores */</span><br/><span class="hl-0">  </span><span class="hl-2">private</span><span class="hl-0"> </span><span class="hl-2">readonly</span><span class="hl-0"> </span><span class="hl-3">players</span><span class="hl-0">: </span><span class="hl-7">Player</span><span class="hl-0">[];</span><br/><span class="hl-0">  </span><span class="hl-9">/** Índice del jugador actual en la lista de jugadores */</span><br/><span class="hl-0">  </span><span class="hl-2">private</span><span class="hl-0"> </span><span class="hl-3">currentPlayerIndex</span><span class="hl-0">: </span><span class="hl-7">number</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">  </span><span class="hl-9">/** El tablero del juego */</span><br/><span class="hl-0">  </span><span class="hl-2">private</span><span class="hl-0"> </span><span class="hl-2">readonly</span><span class="hl-0"> </span><span class="hl-3">board</span><span class="hl-0">: </span><span class="hl-7">string</span><span class="hl-0">[][];</span><br/><br/><span class="hl-0">   </span><span class="hl-9">/**</span><br/><span class="hl-9">   * </span><span class="hl-2">@constructor</span><br/><span class="hl-9">   * Crea una instancia del juego Connect4 con los jugadores especificados.</span><br/><span class="hl-9">   * </span><span class="hl-2">@param</span><span class="hl-9"> </span><span class="hl-3">players</span><span class="hl-9"> La lista de jugadores.</span><br/><span class="hl-9">   */</span><br/><span class="hl-0">  </span><span class="hl-2">constructor</span><span class="hl-0">(</span><span class="hl-3">players</span><span class="hl-0">: </span><span class="hl-7">Player</span><span class="hl-0">[]) {</span><br/><span class="hl-0">    </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">players</span><span class="hl-0"> = </span><span class="hl-3">players</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0"> = [];</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">ROWS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">.</span><span class="hl-6">push</span><span class="hl-0">(</span><span class="hl-6">Array</span><span class="hl-0">(</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">).</span><span class="hl-6">fill</span><span class="hl-0">(</span><span class="hl-4">&#39; &#39;</span><span class="hl-0">));</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span>
+</code></pre>
+          <p>
+            El método play es el método principal del juego. Se ejecuta en un
+            bucle hasta que se determina un ganador o un empate. Dentro del
+            bucle, se muestra el tablero del juego, se solicita al usuario que
+            seleccione una columna en la que colocar una ficha, se coloca la
+            ficha en la posición correspondiente en el tablero y se verifica si
+            el jugador actual ha ganado el juego o si el juego ha terminado en
+            empate. Si no se ha determinado un ganador o un empate, se cambia el
+            turno al siguiente jugador.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-9">/**</span><br/><span class="hl-9">   * Comienza el juego y continúa hasta que se determina un ganador o un empate.</span><br/><span class="hl-9">   */</span><br/><span class="hl-0">  </span><span class="hl-3">public</span><span class="hl-0"> </span><span class="hl-6">play</span><span class="hl-0">() {</span><br/><span class="hl-0">    </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">gameOver</span><span class="hl-0"> = </span><span class="hl-2">false</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">winner</span><span class="hl-0">: </span><span class="hl-7">Player</span><span class="hl-0"> | </span><span class="hl-7">null</span><span class="hl-0"> = </span><span class="hl-2">null</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">while</span><span class="hl-0"> (!</span><span class="hl-3">gameOver</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">clear</span><span class="hl-0">();</span><br/><span class="hl-0">      </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-4">`It&#39;s </span><span class="hl-2">${</span><span class="hl-2">this</span><span class="hl-10">.</span><span class="hl-3">players</span><span class="hl-10">[</span><span class="hl-2">this</span><span class="hl-10">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-10">].</span><span class="hl-3">name</span><span class="hl-2">}</span><span class="hl-4">&#39;s (</span><span class="hl-2">${</span><span class="hl-2">this</span><span class="hl-10">.</span><span class="hl-3">players</span><span class="hl-10">[</span><span class="hl-2">this</span><span class="hl-10">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-10">].</span><span class="hl-3">color</span><span class="hl-2">}</span><span class="hl-4">) turn!`</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">printBoard</span><span class="hl-0">();</span><br/><br/><span class="hl-0">      </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">column</span><span class="hl-0"> = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">getColumnChoice</span><span class="hl-0">();</span><br/><span class="hl-0">      </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">row</span><span class="hl-0"> = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">getNextOpenRow</span><span class="hl-0">(</span><span class="hl-3">column</span><span class="hl-0">);</span><br/><br/><span class="hl-0">      </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-3">row</span><span class="hl-0">][</span><span class="hl-3">column</span><span class="hl-0">] = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">players</span><span class="hl-0">[</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-0">].</span><span class="hl-3">color</span><span class="hl-0">;</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">checkWin</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">, </span><span class="hl-3">column</span><span class="hl-0">)) {</span><br/><span class="hl-0">        </span><span class="hl-3">gameOver</span><span class="hl-0"> = </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">        </span><span class="hl-3">winner</span><span class="hl-0"> = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">players</span><span class="hl-0">[</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-0">];</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">checkDraw</span><span class="hl-0">()) {</span><br/><span class="hl-0">        </span><span class="hl-3">gameOver</span><span class="hl-0"> = </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-0"> = (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-0"> + </span><span class="hl-8">1</span><span class="hl-0">) % </span><span class="hl-8">2</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">clear</span><span class="hl-0">();</span><br/><span class="hl-0">    </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">printBoard</span><span class="hl-0">();</span><br/><span class="hl-0">    </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">winner</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-4">`Congratulations </span><span class="hl-2">${</span><span class="hl-3">winner</span><span class="hl-10">.</span><span class="hl-3">name</span><span class="hl-2">}</span><span class="hl-4">! You won!`</span><span class="hl-0">);</span><br/><span class="hl-0">    } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">      </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-4">&quot;It&#39;s a draw!&quot;</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span>
+</code></pre>
+          <p>
+            El método getColumnChoice solicita al usuario que seleccione una
+            columna en la que colocar una ficha y devuelve el índice de la
+            columna seleccionada. Se verifica que la selección del usuario sea
+            válida y se continúa solicitando una selección hasta que se
+            proporcione una selección válida.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-9">/**</span><br/><span class="hl-9">   * Solicita al usuario que elija una columna en la que colocar una ficha y devuelve el índice de la columna seleccionada.</span><br/><span class="hl-9">   * </span><span class="hl-2">@returns</span><span class="hl-9"> El índice de la columna seleccionada.</span><br/><span class="hl-9">   */</span><br/><span class="hl-0">  </span><span class="hl-3">private</span><span class="hl-0"> </span><span class="hl-6">getColumnChoice</span><span class="hl-0">(): </span><span class="hl-3">number</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">prompt</span><span class="hl-0"> = </span><span class="hl-6">Prompt</span><span class="hl-0">();</span><br/><span class="hl-0">    </span><span class="hl-1">while</span><span class="hl-0"> (</span><span class="hl-2">true</span><span class="hl-0">) {</span><br/><span class="hl-0">      </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">columnStr</span><span class="hl-0"> = </span><span class="hl-6">parseInt</span><span class="hl-0">(</span><span class="hl-6">prompt</span><span class="hl-0">(</span><span class="hl-4">`Enter column (1-</span><span class="hl-2">${</span><span class="hl-2">this</span><span class="hl-10">.</span><span class="hl-5">COLS</span><span class="hl-2">}</span><span class="hl-4">): `</span><span class="hl-0">));</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">columnStr</span><span class="hl-0"> === </span><span class="hl-2">null</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> -</span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">      </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">column</span><span class="hl-0"> = </span><span class="hl-3">columnStr</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">      </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">row</span><span class="hl-0"> = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-6">getNextOpenRow</span><span class="hl-0">(</span><span class="hl-3">column</span><span class="hl-0">);</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-6">isNaN</span><span class="hl-0">(</span><span class="hl-3">column</span><span class="hl-0">) || </span><span class="hl-3">column</span><span class="hl-0"> &lt; </span><span class="hl-8">0</span><span class="hl-0"> || </span><span class="hl-3">column</span><span class="hl-0"> &gt;= </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-4">&#39;Invalid column choice. Please try again.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">row</span><span class="hl-0"> === -</span><span class="hl-8">1</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-4">&#39;Column is full. Please choose again.&#39;</span><span class="hl-0">);</span><br/><span class="hl-0">        </span><span class="hl-1">continue</span><span class="hl-0">;</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">column</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span>
+</code></pre>
+          <p>
+            El método getNextOpenRow devuelve el índice de la siguiente fila
+            abierta en una columna determinada del tablero. Si la columna está
+            llena, devuelve -1.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-9">/**</span><br/><span class="hl-9">   * Obtiene la siguiente fila abierta en una columna determinada.</span><br/><span class="hl-9">   * </span><span class="hl-2">@param</span><span class="hl-9"> </span><span class="hl-3">column</span><span class="hl-9"> El índice de la columna.</span><br/><span class="hl-9">   * </span><span class="hl-2">@returns</span><span class="hl-9"> El índice de la fila, o -1 si la columna está llena.</span><br/><span class="hl-9">   */</span><br/><span class="hl-0">  </span><span class="hl-3">private</span><span class="hl-0"> </span><span class="hl-6">getNextOpenRow</span><span class="hl-0">(</span><span class="hl-3">column</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">): </span><span class="hl-3">number</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">row</span><span class="hl-0"> = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">ROWS</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0">; </span><span class="hl-3">row</span><span class="hl-0"> &gt;= </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">row</span><span class="hl-0">--) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-3">row</span><span class="hl-0">][</span><span class="hl-3">column</span><span class="hl-0">] === </span><span class="hl-4">&#39; &#39;</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-3">row</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> -</span><span class="hl-8">1</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span>
+</code></pre>
+          <p>
+            El método checkWin verifica si el jugador actual ha ganado el juego,
+            buscando en las cuatro posibles direcciones: horizontal, vertical y
+            las dos diagonales. El método toma como argumentos la fila y la
+            columna en la que se ha insertado la última ficha.
+          </p>
+          <p>
+            Primero, se almacena el color del jugador actual en la variable
+            color.
+          </p>
+          <p>
+            Luego, se realiza un bucle para verificar si hay cuatro fichas del
+            mismo color de manera horizontal, en la fila indicada por row. El
+            conteo de fichas se realiza con la variable count, que se restablece
+            a cero cada vez que se encuentra una ficha de un color diferente. Si
+            se encuentran cuatro fichas del mismo color, el método devuelve
+            true.
+          </p>
+          <p>
+            Luego, se realiza otro bucle para verificar si hay cuatro fichas del
+            mismo color de manera vertical, en la columna indicada por column.
+            El conteo de fichas se realiza de manera similar al caso anterior.
+            Si se encuentran cuatro fichas del mismo color, el método devuelve
+            true.
+          </p>
+          <p>
+            Después, se realizan dos bucles para verificar las dos diagonales.
+            En cada diagonal, se comienza en la posición correspondiente a la
+            esquina superior izquierda o superior derecha de la ficha recién
+            insertada y se avanza hacia la esquina inferior opuesta, contando
+            las fichas del mismo color. Si se encuentran cuatro fichas del mismo
+            color en cualquiera de las dos diagonales, el método devuelve true.
+          </p>
+          <p>
+            Si ninguna de las cuatro verificaciones anteriores encuentra cuatro
+            fichas del mismo color consecutivas, el método devuelve false.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-3">private</span><span class="hl-0"> </span><span class="hl-6">checkWin</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">, </span><span class="hl-3">column</span><span class="hl-0">: </span><span class="hl-3">number</span><span class="hl-0">): </span><span class="hl-3">boolean</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">color</span><span class="hl-0"> = </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">players</span><span class="hl-0">[</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">currentPlayerIndex</span><span class="hl-0">].</span><span class="hl-3">color</span><span class="hl-0">;</span><br/><br/><span class="hl-0">    </span><span class="hl-9">// Check horizontal</span><br/><span class="hl-0">    </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-3">row</span><span class="hl-0">][</span><span class="hl-3">i</span><span class="hl-0">] === </span><span class="hl-3">color</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0">++;</span><br/><span class="hl-0">        </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">count</span><span class="hl-0"> === </span><span class="hl-8">4</span><span class="hl-0">) {</span><br/><span class="hl-0">          </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-9">// Check vertical</span><br/><span class="hl-0">    </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">ROWS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-3">i</span><span class="hl-0">][</span><span class="hl-3">column</span><span class="hl-0">] === </span><span class="hl-3">color</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0">++;</span><br/><span class="hl-0">        </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">count</span><span class="hl-0"> === </span><span class="hl-8">4</span><span class="hl-0">) {</span><br/><span class="hl-0">          </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-9">// Check diagonal (top-left to bottom-right)</span><br/><span class="hl-0">    </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">topLeftRow</span><span class="hl-0"> = </span><span class="hl-3">row</span><span class="hl-0"> - </span><span class="hl-3">Math</span><span class="hl-0">.</span><span class="hl-6">min</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">, </span><span class="hl-3">column</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">topLeftCol</span><span class="hl-0"> = </span><span class="hl-3">column</span><span class="hl-0"> - </span><span class="hl-3">Math</span><span class="hl-0">.</span><span class="hl-6">min</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">, </span><span class="hl-3">column</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-3">topLeftRow</span><span class="hl-0">, </span><span class="hl-3">j</span><span class="hl-0"> = </span><span class="hl-3">topLeftCol</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">ROWS</span><span class="hl-0"> &amp;&amp; </span><span class="hl-3">j</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++, </span><span class="hl-3">j</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-3">i</span><span class="hl-0">][</span><span class="hl-3">j</span><span class="hl-0">] === </span><span class="hl-3">color</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0">++;</span><br/><span class="hl-0">        </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">count</span><span class="hl-0"> === </span><span class="hl-8">4</span><span class="hl-0">) {</span><br/><span class="hl-0">          </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-9">// Check diagonal (top-right to bottom-left)</span><br/><span class="hl-0">    </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">topRightRow</span><span class="hl-0"> = </span><span class="hl-3">row</span><span class="hl-0"> - </span><span class="hl-3">Math</span><span class="hl-0">.</span><span class="hl-6">min</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">, </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0"> - </span><span class="hl-3">column</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">topRightCol</span><span class="hl-0"> = </span><span class="hl-3">column</span><span class="hl-0"> + </span><span class="hl-3">Math</span><span class="hl-0">.</span><span class="hl-6">min</span><span class="hl-0">(</span><span class="hl-3">row</span><span class="hl-0">, </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0"> - </span><span class="hl-8">1</span><span class="hl-0"> - </span><span class="hl-3">column</span><span class="hl-0">);</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-3">topRightRow</span><span class="hl-0">, </span><span class="hl-3">j</span><span class="hl-0"> = </span><span class="hl-3">topRightCol</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">ROWS</span><span class="hl-0"> &amp;&amp; </span><span class="hl-3">j</span><span class="hl-0"> &gt;= </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++, </span><span class="hl-3">j</span><span class="hl-0">--) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-3">i</span><span class="hl-0">][</span><span class="hl-3">j</span><span class="hl-0">] === </span><span class="hl-3">color</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0">++;</span><br/><span class="hl-0">        </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-3">count</span><span class="hl-0"> === </span><span class="hl-8">4</span><span class="hl-0">) {</span><br/><span class="hl-0">          </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">      } </span><span class="hl-1">else</span><span class="hl-0"> {</span><br/><span class="hl-0">        </span><span class="hl-3">count</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><br/><span class="hl-0">    </span><span class="hl-9">// No winner</span><br/><span class="hl-0">   </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">false</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span>
+</code></pre>
+          <p>
+            El método checkDraw(): boolean verifica si el tablero está lleno y
+            no hay ganador. Si hay al menos una posición vacía en la fila
+            superior del tablero, el método devuelve false. De lo contrario, el
+            método devuelve true.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-3">private</span><span class="hl-0"> </span><span class="hl-6">checkDraw</span><span class="hl-0">(): </span><span class="hl-3">boolean</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-1">if</span><span class="hl-0"> (</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">board</span><span class="hl-0">[</span><span class="hl-8">0</span><span class="hl-0">][</span><span class="hl-3">i</span><span class="hl-0">] === </span><span class="hl-4">&#39; &#39;</span><span class="hl-0">) {</span><br/><span class="hl-0">        </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">false</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-1">return</span><span class="hl-0"> </span><span class="hl-2">true</span><span class="hl-0">;</span><br/><span class="hl-0">  }</span>
+</code></pre>
+          <p>
+            El método printBoard() se encarga de imprimir el tablero actual del
+            juego en la consola.
+          </p>
+          <p>
+            Primero, el método define una variable llamada columnNumbers que se
+            utiliza para almacenar los números de columna que se imprimirán en
+            la parte superior del tablero. A continuación, se utiliza un bucle
+            for para agregar cada número de columna a la cadena columnNumbers.
+          </p>
+          <p>
+            Luego, el método utiliza un bucle for anidado para recorrer cada
+            fila y columna del tablero. Para cada celda del tablero, se agrega
+            el valor de la celda a una cadena llamada rowString. Se utiliza el
+            formato de cadena para asegurarse de que cada celda esté rodeada por
+            bordes verticales y espacios.
+          </p>
+          <p>
+            Una vez que se ha terminado de construir la cadena rowString para
+            una fila completa, se la imprime en la consola. Esto se repite para
+            cada fila en el tablero, lo que resulta en la impresión del tablero
+            completo en la consola.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-0">  </span><span class="hl-3">private</span><span class="hl-0"> </span><span class="hl-6">printBoard</span><span class="hl-0">(): </span><span class="hl-2">void</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-9">// Print column numbers</span><br/><span class="hl-0">    </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">columnNumbers</span><span class="hl-0"> = </span><span class="hl-4">&#39;&#39;</span><span class="hl-0">;</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-8">1</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt;= </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-3">columnNumbers</span><span class="hl-0"> += </span><span class="hl-4">`  </span><span class="hl-2">${</span><span class="hl-3">i</span><span class="hl-2">}</span><span class="hl-4"> `</span><span class="hl-0">;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">    </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-3">columnNumbers</span><span class="hl-0">);</span><br/><span class="hl-0">  </span><br/><span class="hl-0">    </span><span class="hl-9">// Print board</span><br/><span class="hl-0">    </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">i</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">ROWS</span><span class="hl-0">; </span><span class="hl-3">i</span><span class="hl-0">++) {</span><br/><span class="hl-0">      </span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">rowString</span><span class="hl-0"> = </span><span class="hl-4">&#39;|&#39;</span><span class="hl-0">;</span><br/><span class="hl-0">      </span><span class="hl-1">for</span><span class="hl-0"> (</span><span class="hl-2">let</span><span class="hl-0"> </span><span class="hl-3">j</span><span class="hl-0"> = </span><span class="hl-8">0</span><span class="hl-0">; </span><span class="hl-3">j</span><span class="hl-0"> &lt; </span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-5">COLS</span><span class="hl-0">; </span><span class="hl-3">j</span><span class="hl-0">++) {</span><br/><span class="hl-0">        </span><span class="hl-3">rowString</span><span class="hl-0"> += </span><span class="hl-4">` </span><span class="hl-2">${</span><span class="hl-2">this</span><span class="hl-10">.</span><span class="hl-3">board</span><span class="hl-10">[</span><span class="hl-3">i</span><span class="hl-10">][</span><span class="hl-3">j</span><span class="hl-10">]</span><span class="hl-2">}</span><span class="hl-4"> |`</span><span class="hl-0">;</span><br/><span class="hl-0">      }</span><br/><span class="hl-0">      </span><span class="hl-3">console</span><span class="hl-0">.</span><span class="hl-6">log</span><span class="hl-0">(</span><span class="hl-3">rowString</span><span class="hl-0">);</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+</code></pre>
+          <p>
+            <strong>Clase <code>Game</code></strong>
+          </p>
+          <p>
+            La clase Game se utiliza para inicializar el juego y configurar los
+            jugadores, mientras que la clase Connect4 que vimos anteriormente se
+            encarga de manejar la lógica del juego y la interacción con el
+            usuario.
+          </p>
+          <pre><code class="language-typescript"><span class="hl-1">export</span><span class="hl-0"> </span><span class="hl-2">class</span><span class="hl-0"> </span><span class="hl-7">Game</span><span class="hl-0"> {</span><br/><span class="hl-2">private</span><span class="hl-0"> </span><span class="hl-2">readonly</span><span class="hl-0"> </span><span class="hl-3">players</span><span class="hl-0">: </span><span class="hl-7">Player</span><span class="hl-0">[];</span><br/><br/><span class="hl-2">constructor</span><span class="hl-0">() {</span><br/><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">players</span><span class="hl-0"> = [</span><br/><span class="hl-0">{ </span><span class="hl-3">name:</span><span class="hl-0"> </span><span class="hl-4">&#39;Player 1&#39;</span><span class="hl-0">, </span><span class="hl-3">color:</span><span class="hl-0"> </span><span class="hl-3">$</span><span class="hl-0">{</span><span class="hl-3">BOLD</span><span class="hl-0">}</span><span class="hl-3">$</span><span class="hl-0">{</span><span class="hl-3">RED</span><span class="hl-0">}</span><span class="hl-5">X$</span><span class="hl-0">{</span><span class="hl-3">RESET</span><span class="hl-0">} },</span><br/><span class="hl-0">{ </span><span class="hl-3">name:</span><span class="hl-0"> </span><span class="hl-4">&#39;Player 2&#39;</span><span class="hl-0">, </span><span class="hl-3">color:</span><span class="hl-0"> </span><span class="hl-3">$</span><span class="hl-0">{</span><span class="hl-3">BOLD</span><span class="hl-0">}</span><span class="hl-3">$</span><span class="hl-0">{</span><span class="hl-3">GREEN</span><span class="hl-0">}</span><span class="hl-5">O$</span><span class="hl-0">{</span><span class="hl-3">RESET</span><span class="hl-0">} },</span><br/><span class="hl-0">];</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-2">public</span><span class="hl-0"> </span><span class="hl-6">start</span><span class="hl-0">(): </span><span class="hl-7">void</span><span class="hl-0"> {</span><br/><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-5">connect4</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-6">Connect4</span><span class="hl-0">(</span><span class="hl-2">this</span><span class="hl-0">.</span><span class="hl-3">players</span><span class="hl-0">);</span><br/><span class="hl-3">connect4</span><span class="hl-0">.</span><span class="hl-6">play</span><span class="hl-0">();</span><br/><span class="hl-0">}</span><br/><span class="hl-0">}</span>
+</code></pre>
+          <p>
+            El código define una clase Game que tiene dos propiedades: players y
+            un constructor que establece los nombres de los jugadores y los
+            colores que representarán a cada uno. La propiedad players es un
+            arreglo de objetos que tienen dos propiedades: name (nombre del
+            jugador) y color (color que se utilizará para representar las fichas
+            del jugador en el juego).
+          </p>
+          <p>
+            La clase Game también tiene un método start que crea una nueva
+            instancia de la clase Connect4 y llama al método play para comenzar
+            el juego.
+          </p>
+
+          <a
+            href="#tests-1"
+            id="tests-1"
+            style="color: inherit; text-decoration: none"
+          >
+            <h4>Tests</h4>
+          </a>
+          <p>Explicacion</p>
+          <pre><code class="language-typescript">
+</code></pre>
+
+          <a
+            href="#conclusiones-"
+            id="conclusiones-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h3>Conclusiones <a name="conclusiones"></a></h3>
+          </a>
+          <blockquote>
+            <p><a href="#%C3%ADndice">Volver al índice</a></p>
+          </blockquote>
+
+          <a
+            href="#referencias-"
+            id="referencias-"
+            style="color: inherit; text-decoration: none"
+          >
+            <h3>Referencias <a name="referencias"></a></h3>
+          </a>
+          <blockquote>
+            <p><a href="#%C3%ADndice">Volver al índice</a></p>
+          </blockquote>
+          <ol>
+            <li>
+              <a href="https://www.npmjs.com/package/prompt-sync"
+                >Entrada de texto</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://es.wikipedia.org/wiki/C%C3%B3digo_escape_ANSI#:~:text=Los%20c%C3%B3digos%20de%20escape%20ANSI,color%20o%20moviendo%20el%20cursor."
+                >Formato de escape ANSI</a
+              >
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+        <div class="tsd-navigation settings">
+          <details class="tsd-index-accordion">
+            <summary class="tsd-accordion-summary">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z"
+                    fill="var(--color-text)"
+                  ></path>
+                </svg>
+                Settings
+              </h3>
+            </summary>
+            <div class="tsd-accordion-details">
+              <div class="tsd-filter-visibility">
+                <h4 class="uppercase">Member Visibility</h4>
+                <form>
+                  <ul id="tsd-filter-options">
+                    <li class="tsd-filter-item">
+                      <label class="tsd-filter-input"
+                        ><input
+                          type="checkbox"
+                          id="tsd-filter-protected"
+                          name="protected"
+                        /><svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          aria-hidden="true"
+                        >
+                          <rect
+                            class="tsd-checkbox-background"
+                            width="30"
+                            height="30"
+                            x="1"
+                            y="1"
+                            rx="6"
+                            fill="none"
+                          ></rect>
+                          <path
+                            class="tsd-checkbox-checkmark"
+                            d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+                            stroke="none"
+                            stroke-width="3.5"
+                            stroke-linejoin="round"
+                            fill="none"
+                          ></path></svg
+                        ><span>Protected</span></label
+                      >
+                    </li>
+                    <li class="tsd-filter-item">
+                      <label class="tsd-filter-input"
+                        ><input
+                          type="checkbox"
+                          id="tsd-filter-private"
+                          name="private"
+                        /><svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          aria-hidden="true"
+                        >
+                          <rect
+                            class="tsd-checkbox-background"
+                            width="30"
+                            height="30"
+                            x="1"
+                            y="1"
+                            rx="6"
+                            fill="none"
+                          ></rect>
+                          <path
+                            class="tsd-checkbox-checkmark"
+                            d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+                            stroke="none"
+                            stroke-width="3.5"
+                            stroke-linejoin="round"
+                            fill="none"
+                          ></path></svg
+                        ><span>Private</span></label
+                      >
+                    </li>
+                    <li class="tsd-filter-item">
+                      <label class="tsd-filter-input"
+                        ><input
+                          type="checkbox"
+                          id="tsd-filter-inherited"
+                          name="inherited"
+                          checked
+                        /><svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          aria-hidden="true"
+                        >
+                          <rect
+                            class="tsd-checkbox-background"
+                            width="30"
+                            height="30"
+                            x="1"
+                            y="1"
+                            rx="6"
+                            fill="none"
+                          ></rect>
+                          <path
+                            class="tsd-checkbox-checkmark"
+                            d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+                            stroke="none"
+                            stroke-width="3.5"
+                            stroke-linejoin="round"
+                            fill="none"
+                          ></path></svg
+                        ><span>Inherited</span></label
+                      >
+                    </li>
+                    <li class="tsd-filter-item">
+                      <label class="tsd-filter-input"
+                        ><input
+                          type="checkbox"
+                          id="tsd-filter-external"
+                          name="external"
+                        /><svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          aria-hidden="true"
+                        >
+                          <rect
+                            class="tsd-checkbox-background"
+                            width="30"
+                            height="30"
+                            x="1"
+                            y="1"
+                            rx="6"
+                            fill="none"
+                          ></rect>
+                          <path
+                            class="tsd-checkbox-checkmark"
+                            d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25"
+                            stroke="none"
+                            stroke-width="3.5"
+                            stroke-linejoin="round"
+                            fill="none"
+                          ></path></svg
+                        ><span>External</span></label
+                      >
+                    </li>
+                  </ul>
+                </form>
+              </div>
+              <div class="tsd-theme-toggle">
+                <h4 class="uppercase">Theme</h4>
+                <select id="theme">
+                  <option value="os">OS</option>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </div>
+            </div>
+          </details>
+        </div>
+        <nav class="tsd-navigation primary">
+          <details class="tsd-index-accordion" open>
+            <summary class="tsd-accordion-summary">
+              <h3>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z"
+                    fill="var(--color-text)"
+                  ></path>
+                </svg>
+                Modules
+              </h3>
+            </summary>
+            <div class="tsd-accordion-details">
+              <ul>
+                <li class="current selected">
+                  <a href="modules.html">practica05</a>
+                  <ul>
+                    <li class="tsd-kind-module">
+                      <a href="modules/ejercicio01_ejercicio01.html"
+                        >ejercicio01/ejercicio01</a
+                      >
+                    </li>
+                    <li class="tsd-kind-module">
+                      <a href="modules/ejercicio02_ejercicio02.html"
+                        >ejercicio02/ejercicio02</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </details>
+        </nav>
+      </div>
+    </div>
+    <div class="container tsd-generator">
+      <p>
+        Generated using
+        <a href="https://typedoc.org/" target="_blank">TypeDoc</a>
+      </p>
+    </div>
+    <div class="overlay"></div>
+    <script src="assets/main.js"></script>
+  </body>
+</html>

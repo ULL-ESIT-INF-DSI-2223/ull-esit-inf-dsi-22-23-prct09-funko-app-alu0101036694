@@ -1,40 +1,96 @@
 import { describe, it } from 'mocha';
 import { expect } from "chai";
-import {getAllergens, Allergen} from "../src/ejercicio01";
+import * as Prompt from 'prompt-sync';
+import { Song } from '../src/ejercicio01/song';
+import { Album } from '../src/ejercicio01/album';
+import { Artist } from '../src/ejercicio01/artist';
+import { MusicLibrary } from '../src/ejercicio01/library';
 
-describe("getAllergens", () => {
-  it("should return [Huevo, Gato] when given 129", () => {
-    const result = getAllergens(129);
-    expect(result).to.deep.equal([Allergen.Huevo, Allergen.Gato]);
-  });
+describe('MusicLibrary', () => {
+    describe('addArtist', () => {
+        it('should add an artist to the library', () => {
+            const library = new MusicLibrary();
+            const artist: Artist = {name:'Queen', monthlyListeners:1000000, discography:[
+                new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+                ]),
+            ]};
+            library.addArtist(artist);
+            expect(library.artists).to.deep.equal([artist]);
+        });
+    });
 
-  it("should return [Huevo] when given 257", () => {
-    const result = getAllergens(257);
-    expect(result).to.deep.equal([Allergen.Huevo]);
-  });
+    describe('countSongs', () => {
+        it('should count the number of songs in an album', () => {
+          const library = new MusicLibrary();
+          const artist: Artist = {
+            name: 'Queen',
+            monthlyListeners: 1000000,
+            discography: [
+              new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+              ]),
+            ],
+          };
+          library.addArtist(artist);
+          library.countSongs('A Night at the Opera');
+          const expectedCount = 3;
+          const actualCount = artist.discography[0].songs.length;
+          expect(actualCount).to.equal(expectedCount);
+        });
+      });
 
-  it("should return [] when given 256", () => {
-    const result = getAllergens(256);
-    expect(result).to.deep.equal([]);
-  });
+      describe('calculateDuration', () => {
+        it('should count the duration of the album', () => {
+          const library = new MusicLibrary();
+          const artist: Artist = {
+            name: 'Queen',
+            monthlyListeners: 1000000,
+            discography: [
+              new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+              ]),
+            ],
+          };
+          library.addArtist(artist);
+          let actualCount = 0;
+          const expectedCount = 11.98;
+          actualCount = library.calculateDuration('A Night at the Opera');
+          expect(actualCount).to.equal(expectedCount);
+        });
+      });
 
-  it("should return [Huevo, Cacahuete] when given 515", () => {
-    const result = getAllergens(515);
-    expect(result).to.deep.equal([Allergen.Huevo, Allergen.Cacahuete]);
-  });
+      describe('calculateReproductions', () => {
+        it('should count the reproductions of the album', () => {
+          const library = new MusicLibrary();
+          const artist: Artist = {
+            name: 'Queen',
+            monthlyListeners: 1000000,
+            discography: [
+              new Album('A Night at the Opera', 1975, [
+                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
+                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
+                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
+              ]),
+            ],
+          };
+          library.addArtist(artist);
+          let actualCount = 0;
+          const expectedCount = 2250000;
+          actualCount = library.calculateReproductions('A Night at the Opera');
+          expect(actualCount).to.equal(expectedCount);
+        });
+      });
 
-  it("should return [Marisco, Tomate, Polen] when given 84", () => {
-    const result = getAllergens(84);
-    expect(result).to.deep.equal([Allergen.Marisco, Allergen.Tomate, Allergen.Polen]);
-  });
 
-  it("should return undefined when given a non-positive integer value", () => {
-    const result = getAllergens(-1);
-    expect(result).to.be.undefined;
-  });
-
-  it("should return undefined when given a non-integer value", () => {
-    const result = getAllergens(3.14);
-    expect(result).to.be.undefined;
-  });
 });
+
+    
+
+  
