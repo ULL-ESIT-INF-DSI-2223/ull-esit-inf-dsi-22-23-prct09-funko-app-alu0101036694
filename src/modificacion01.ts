@@ -117,7 +117,7 @@ export class Rational implements Arithmeticable<Rational> {
  * @method multiply Multiplicación
  * @method divide División
  */
-class Complex implements Arithmeticable<Complex> {
+export class Complex implements Arithmeticable<Complex> {
     constructor(private real: number, private imaginary: number) {}
   
     public add(other: Complex): Complex {
