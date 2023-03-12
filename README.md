@@ -491,7 +491,30 @@ export class Lista<T> {
 }
 ```
 
+El código muestra la implementación de una clase genérica Lista en TypeScript, que puede contener elementos de cualquier tipo. La clase Lista tiene varios métodos que permiten realizar operaciones sobre una lista de elementos.
+
+El constructor de la clase toma un número variable de elementos de tipo T y los agrega a la lista mediante el método appendItem(). La clase Lista tiene un atributo privado "data" que es un objeto que mapea índices numéricos a elementos de tipo T. El método getData() devuelve un arreglo de todos los elementos de la lista.
+
+- El método appendItem() agrega un elemento al final de la lista, aumentando el valor del atributo privado "length" en 1.
+
+- El método appendList() agrega varios elementos a la lista actual mediante el método appendItem().
+
+- El método clear() vacía la lista, es decir, establece el objeto "data" en un objeto vacío y establece el valor del atributo "length" en 0.
+
+- El método concatenate() concatena varias listas en una sola lista. Toma un número variable de objetos Lista y agrega sus elementos a la lista actual mediante el método appendList().
+
+- El método filter() filtra los elementos de la lista utilizando un predicado lógico que toma un elemento de la lista y devuelve un valor booleano. El método devuelve una nueva lista que contiene solo los elementos que cumplen con el predicado.
+
+- El método getLength() devuelve el número de elementos en la lista.
+
+- El método map() aplica una función a cada elemento de la lista y devuelve una nueva lista que contiene los resultados. La función debe tomar un elemento de la lista como entrada y devolver un nuevo valor de tipo U.
+
+La clase Lista utiliza la sintaxis de plantilla de TypeScript para especificar el tipo de los elementos de la lista. Esto significa que se puede crear una instancia de la clase Lista para cualquier tipo de datos. Por ejemplo, se pueden crear listas de números, cadenas, objetos, etc.
+
+
 #### Tests:
+
+Los tests que se han desarrollado para este ejercicio son los que siguen:
 
 ```typescript
 import { describe, it } from 'mocha';
@@ -611,6 +634,30 @@ describe('Lista', () => {
 });
 ```
 
+Aquí se explican algunas de las pruebas realizadas en este ejercicio:
+
+- Constructor de la clase: Prueba la creación de una lista utilizando diferentes tipos de datos, asegurándose de que se crea correctamente y de que sus datos iniciales son los esperados.
+
+- #getData(): Prueba el método getData() de la clase, que devuelve los datos almacenados en la lista. Se crea una lista de prueba y se verifica que el método devuelve los datos esperados.
+
+- #appendItem(): Prueba el método appendItem() de la clase, que agrega un elemento a la lista. Se crea una lista de prueba y se agrega un elemento, luego se verifica que la longitud de la lista es la esperada.
+
+- #appendList(): Prueba el método appendList() de la clase, que agrega una lista entera a la lista actual. Se crean dos listas de prueba y se agrega una a la otra, luego se verifica que la lista resultante es la esperada.
+
+- #concatenate(): Prueba el método concatenate() de la clase, que concatena varias listas en una sola. Se crean tres listas de prueba y se concatenan, luego se verifica que la longitud y los datos de la lista resultante son los esperados.
+
+- #filter(): Prueba el método filter() de la clase, que filtra los elementos de la lista utilizando un predicado lógico. Se crea una lista de prueba y se filtran los elementos pares, luego se verifica que la lista resultante contiene los elementos esperados.
+
+- #getLength(): Prueba el método getLength() de la clase, que devuelve la longitud de la lista. Se crea una lista de prueba y se verifica que su longitud es la esperada.
+
+- #map(): Prueba el método map() de la clase, que aplica una función a cada elemento de la lista. Se crea una lista de prueba y se aplica una función que duplica cada elemento, luego se verifica que la lista resultante contiene los elementos esperados.
+
+- #reduce(): Prueba el método reduce() de la clase, que reduce la lista a un único valor utilizando una función y un acumulador inicial. Se crea una lista de prueba y se reduce sumando todos sus elementos, luego se verifica que el resultado es el esperado.
+
+- #reverse(): Prueba el método reverse() de la clase, que devuelve una lista con los elementos en orden inverso. Se crea una lista de prueba y se verifica que la lista invertida contiene los elementos esperados.
+
+- #forEach(): Prueba el método forEach() de la clase, que itera en los elementos de la lista y ejecuta una función con cada uno de ellos. Se crea una lista de prueba y se itera en sus elementos sumándolos, luego se verifica que la suma resultante es la esperada.
+
 #### Cumplimiento de los principios SOLID:
 
 Esta clase `Lista` cumple los principios SOLID con la siguiente justificación:
@@ -638,6 +685,8 @@ Esta clase `Lista` cumple los principios SOLID con la siguiente justificación:
 > Además, ahora deberá hacer que la discografía sea una clase genérica. En algún punto de su código deberá concretar esta clase genérica indicando que la discografía puede ser una colección de discos, una colección de singles o una colección de discos y singles.
 
 #### Solución:
+
+Dado que el ejercicio de la biblioteca musical ya cumple con los principios SOLID, no es necesario realizar ninguna modificación a este respecto.
 
 **Interfaz `Artist`**
 
