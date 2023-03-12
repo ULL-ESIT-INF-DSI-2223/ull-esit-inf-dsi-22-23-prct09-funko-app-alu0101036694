@@ -1,157 +1,115 @@
 import { describe, it } from 'mocha';
 import { expect } from "chai";
-import { Game } from '../src/ejercicio02/Game';
-import { Player } from '../src/ejercicio02/Player';
-import { Connect4 } from '../src/ejercicio02/Connect4';
+import { Lista } from '../src/ejercicio02/ejercicio02';
 
-describe('Player interface', () => {
-  it('should have a name property of type string', () => {
-    const player: Player = { name: 'John', color: '\x1b[31m' };
-    expect(typeof player.name).equal('string');
-  });
-
-  it('should have a color property of type string', () => {
-    const player: Player = { name: 'John', color: '\x1b[31m' };
-    expect(typeof player.color).equal('string');
-  });
-});
-
-describe('Connect4', () => {
-  let player1: Player = { name: 'Player 1', color: `X` };
-  let player2: Player = { name: 'Player 2', color: `O` };
-  let connect4: Connect4;
+describe('Lista', () => {
+  // Crear una lista de números para las pruebas
+  const listaNumeros = new Lista<number>();
 
   beforeEach(() => {
-    const players = [player1, player2]
-    connect4 = new Connect4(players);
+    listaNumeros.appendItem(1);
+    listaNumeros.appendItem(2);
+    listaNumeros.appendItem(3);
   });
 
-  it('should start with an empty board', () => {
-    const expectedBoard = [
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    ];
-    expect(connect4['board']).to.deep.equal(expectedBoard);
+  afterEach(() => {
+    listaNumeros.clear();
   });
 
-  describe('constructor', () => {
-    it('should create a new Connect4 game with the correct properties', () => {
-      expect(connect4.currentPlayerIndex).equal(0);
-      expect(connect4.players).to.deep.equal([player1, player2]);
-      expect(connect4.board.length).equal(6);
-      expect(connect4.board[0].length).equal(7);
-      expect(connect4.checkDraw()).eq(false);
+  describe('Constructor de la clase', () => {
+    it('La lista se crea correctamente', () => {
+      expect(new Lista<number>(1, 2, 3, 4, 5)).to.be.instanceOf(Lista);
+      expect(new Lista<number>(1, 2, 3, 4, 5).getData()).to.deep.equal([1, 2, 3, 4, 5]);
     });
-  });
 
-  describe('Estado del juego', () => {
-    it('No está en tablas', () => {
-      expect(connect4.checkDraw()).eq(false);
+    it('Puedo crear lista de strings', () => {
+      expect(new Lista<string>('a', 'b', 'c', 'd', 'e')).to.be.instanceOf(Lista);
+      expect(new Lista<string>('a', 'b', 'c', 'd', 'e').getData()).to.deep.equal(['a', 'b', 'c', 'd', 'e']);
     });
-    it('No hay ganador', () => {
-      expect(connect4.checkWin(0, 0)).eq(false);
+
+    it('Puedo crear lista de booleanos', () => {
+      expect(new Lista<boolean>(true, false, true, false)).to.be.instanceOf(Lista);
+      expect(new Lista<boolean>(true, false, true, false).getData()).to.deep.equal([true, false, true, false]);
     });
   });
 
-  describe('Se inserta una ficha', () => {
-    /*let promptStub;
-    before(() => {
-      // Simula el input por consola
-      promptStub = sinon.stub().returns(1); // Devuelve 1 siempre
-    });
-
-    after(() => {
-      // Restaura el prompt original
-      promptStub.restore();
-    });
-
-    it('En la columna 1', () => {
-      // Sobrescribe la función Prompt() con la función simulada
-      const originalPrompt = global.Prompt;
-      global.Prompt = promptStub;
-
-      // Ejecuta el test
-      const columnChoice = connect4.getColumnChoice();
-      expect(columnChoice).to.deep.eq(0);
-      // Restaura la función Prompt() original
-      global.Prompt = originalPrompt;
-      });*/
-    it('En la columna 1 (presionar el uno 1)', () => {
-      expect(connect4.getColumnChoice()).to.deep.eq(0);
+  describe('#getData()', () => {
+    it('El getter de los datos funciona', () => {
+      let listaNumeros_1 = new Lista<number>(1, 2, 3, 4);
+      expect(listaNumeros_1.getData()).to.deep.equal([1, 2, 3, 4]);
     });
   });
 
-  describe('Siguiente fila abierta en una columna determinada', () => {
-    it('Ya hay una ficha', () => {
-      expect(connect4.getNextOpenRow(0)).to.equal(5);
-    });
-    it('No hay una ficha', () => {
-      expect(connect4.getNextOpenRow(1)).to.equal(5);
-    });
-  });
-});
-
-/*describe('Connect4', () => {
-  let connect4: Connect4;
-  let player1: Player;
-  let player2: Player;
-
-  beforeEach(() => {
-    player1 = { name: 'Alice', color: '\u001b[31m' };
-    player2 = { name: 'Bob', color: '\u001b[34m' };
-    connect4 = new Connect4([player1, player2]);
-  });
-
-  
-
-  describe('makeMove', () => {
-    it('should place a piece in the correct row and column', () => {
-      connect4.makeMove(0);
-      expect(connect4.board[5][0]).toBe(player1.color);
-      connect4.makeMove(0);
-      expect(connect4.board[4][0]).toBe(player2.color);
-    });
-
-    it('should update the currentPlayerIndex', () => {
-      connect4.makeMove(0);
-      expect(connect4.currentPlayerIndex).toBe(1);
-      connect4.makeMove(0);
-      expect(connect4.currentPlayerIndex).toBe(0);
-    });
-
-    it('should update the winner property when there is a winner', () => {
-      connect4.board = [
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', player1.color, player1.color, player1.color, player1.color],
-      ];
-      connect4.makeMove(3);
-      expect(connect4.winner).toEqual(player1);
-    });
-
-    it('should update the isDraw property when there is a draw', () => {
-      connect4.board = [
-        [player1.color, player2.color, player1.color, player2.color, player1.color, player2.color, player1.color],
-        [player2.color, player1.color, player2.color, player1.color, player2.color, player1.color, player2.color],
-        [player1.color, player2.color, player1.color, player2.color, player1.color, player2.color, player1.color],
-        [player2.color, player1.color, player2.color, player1.color, player2.color, player1.color, player2.color],
-        [player1.color, player2.color, player1.color, player2.color, player1.color, player2.color, player1.color],
-        [player2.color, player1.color, player2.color, player1.color, player2.color, player1.color, player2.color],
-      ];
-      connect4.makeMove(0);
-      expect(connect4.isDraw).toBe(true);
+  describe('#appendItem()', () => {
+    it('debe agregar elementos a la lista', () => {
+      listaNumeros.appendItem(4);
+      expect(listaNumeros.getLength()).to.equal(4);
     });
   });
 
-  describe('checkWin', () => {
-    it('should return true for a horizontal win',
+  describe('#appendList()', () => {
+    let listaNumeros_1 = new Lista<number>(1, 2, 3, 4);
+    let listaNumeros_2 = new Lista<number>(1, 2, 3, 4);
+    listaNumeros_1.appendList(listaNumeros_2)
+    it('debe agragar una lista a la actual', () => {
+      expect(listaNumeros_1.getData()).to.deep.equal([1, 2, 3, 4, 1, 2, 3, 4]);
+    });
+  });
+
+  describe('#concatenate()', () => {
+    describe('debe concatenar varias listas en una sola', () => {
+      const listaNumeros1 = new Lista<number>(4, 5);
+      const listaNumeros2 = new Lista<number>(6, 7);
+      const listaNumeros3 = new Lista<number>(8, 9, 10);
+      listaNumeros1.concatenate(listaNumeros2, listaNumeros3);
+      it('El tamaño es el correcto', () => {
+        expect(listaNumeros1.getLength()).to.equal(7);
+      });
+      it('Los elementos coinciden', () => {
+        expect(listaNumeros1.getData()).to.deep.equal([4, 5, 6, 7, 8, 9, 10]);
+      });
+    });
+  });  
+
+  describe('#filter()', () => {
+    it('debe filtrar la lista utilizando un predicado lógico', () => {
+      const listaPares = listaNumeros.filter((num) => num % 2 === 0);
+      expect(listaPares.getData()).to.deep.equal([2]);
+    });
+  });
+
+  describe('#getLength()', () => {
+    it('debe obtener la longitud de la lista', () => {
+      expect(listaNumeros.getLength()).to.equal(3);
+    });
+  });
+
+  describe('#map()', () => {
+    it('debe aplicar una función a cada elemento de la lista', () => {
+      const listaDobles = listaNumeros.map((num) => num * 2);
+      expect(listaDobles.getData()).to.deep.equal([2, 4, 6]);
+    });
+  });
+
+  describe('#reduce()', () => {
+    it('debe reducir la lista a un único valor utilizando una función y un acumulador inicial', () => {
+      const resultado = listaNumeros.reduce((accumulator, num) => accumulator + num, 0);
+      expect(resultado).to.equal(6);
+    });
+  });
+
+  describe('#reverse()', () => {
+    it('debe obtener una lista con los elementos en orden inverso', () => {
+      const listaInvertida = listaNumeros.reverse();
+      expect(listaInvertida.getData()).to.deep.equal([3, 2, 1]);
+    });
+  });
+
+  describe('#forEach()', () => {
+    it('debe iterar en los elementos de la lista y ejecutar una función con cada uno de ellos', () => {
+      let suma = 0;
+      listaNumeros.forEach((num) => suma += num);
+      expect(suma).to.equal(6);
+    });
   });
 });
-*/

@@ -1,5 +1,3 @@
-// Clase Song
-
 /**
  * @class Song - Clase que representa una canción de música.
  * @property {string} name - El nombre de la canción.

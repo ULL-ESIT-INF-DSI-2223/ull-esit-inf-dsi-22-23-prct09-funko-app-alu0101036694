@@ -1,16 +1,18 @@
-# [PRÁCTICA 5. OBJETOS, CLASES E INTERFACES](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git). 
+# [PRÁCTICA 5. OBJETOS, CLASES E INTERFACES](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct04-arrays-tuples-enums-alu0101036694.git).
 
 ## Carla Oval Torres
 
 ## Índice <a name="índice"></a>
+
 1. [Introducción](#introducción)
 2. [Ejercicios propuestos](#ejercicios-propuestos)
-    1. [Ejercicio 1 - Biblioteca musical](#ejercicio-1)
-    2. [Ejercicio 2 - Conecta 4](#ejercicio-2)
-    3. [Conclusiones](#conclusiones)
-    4. [Referencias](#referencias)
+   1. [Ejercicio 1 - Biblioteca musical](#ejercicio-1)
+   2. [Ejercicio 2 - Conecta 4](#ejercicio-2)
+   3. [Conclusiones](#conclusiones)
+   4. [Referencias](#referencias)
 
 ## Introducción <a name="introducción"></a>
+
 > [Volver al índice](#índice)
 
 Lleve a cabo todos y cada uno de los ejercicios propuestos a continuación. Dado que vamos a trabajar con clases y que, probablemente, cada ejercicio implique el desarrollo de diferentes clases, el código fuente de cada ejercicio deberá estar alojado en un directorio independiente con nombre ejercicio-n/ dentro del directorio src/ de su proyecto. Dentro del directorio correspondiente a cada ejercicio, esto es, dentro del directorio ejercicio-n, incluya cada clase desarrollada en un fichero independiente.
@@ -20,44 +22,49 @@ Incluya la documentación de sus clases mediante el uso de TypeDoc y adopte una 
 Por último, recuerde argumentar en el informe de la práctica todas las decisiones de diseño tomadas para cada ejercicio.
 
 ```typescript
-  import * as Prompt from 'prompt-sync';
+import * as Prompt from "prompt-sync";
 
-  const prompt = Prompt();
-  const myNumber = parseInt(prompt('Introduce a number: '));
-  console.log(myNumber)
+const prompt = Prompt();
+const myNumber = parseInt(prompt("Introduce a number: "));
+console.log(myNumber);
 ```
 
 ## Ejercicios propuestos <a name="ejercicios-propuestos"></a>
+
 ### Ejercicio 1 - Biblioteca musical <a name="ejercicio-1"></a>
+
 > [Volver al índice](#índice)
 
 > Diseñe el conjunto de clases e interfaces necesarias para almacenar una biblioteca musical. El desarrollo realizado debe cumplir los siguientes requisitos funcionales:
-> 
+>
 > La información de un artista, ya sea un grupo o un solista, será la siguiente:
+>
 > - Nombre
 > - Número de oyentes mensuales
 > - Discografía
-> 
+>
 > La discografía de un artista consistirá en una colección de discos, donde la información de un disco será:
+>
 > - Nombre
 > - Año de publicación
 > - Canciones
-> 
+>
 > Por cada canción perteneciente a un disco, la información será la siguiente:
+>
 > - Nombre
 > - Duración en segundos
 > - Géneros
 > - Single (determina si la canción fue lanzada como un single o no)
 > - Número de reproducciones
-> 
+>
 > La biblioteca musical deberá permitir:
+>
 > - Almacenar la información de diferentes artistas, su discografía y las canciones pertenecientes a cada disco o álbum.
 > - Mostrar por la consola la información de la biblioteca en formato tabla (console.table).
 > - Permitir llevar a cabo búsquedas de artistas, discos y canciones y mostrar los resultados de la búsqueda en formato de tabla.
 > - Permitir calcular el número de canciones incluidas en un disco concreto.
 > - Permitir calcular la duración de un disco, a partir de la duración de todas y cada una de las canciones que lo conforman.
 > - Permitir calcular el número de reproducciones de un disco, a partir del número de reproducciones de todas y cada una de las canciones incluidas en el mismo.
-
 
 #### Solución:
 
@@ -133,9 +140,16 @@ La clase también tiene un constructor que acepta valores para todas las propied
 
 ```typescript
 class Song {
-  constructor(public name: string, public duration: number, public genres: string[], public isSingle: boolean, public numReproductions: number) {}
+  constructor(
+    public name: string,
+    public duration: number,
+    public genres: string[],
+    public isSingle: boolean,
+    public numReproductions: number
+  ) {}
 }
 ```
+
 No hay métodos adicionales en la clase Song, pero se pueden utilizar las propiedades públicas de la clase en conjunto con otras clases para realizar diversas operaciones relacionadas con la música. Por ejemplo, la propiedad duration de la clase Song se utiliza en el método getDuration() de la clase Album para calcular la duración total de un álbum.
 
 **Clase `MusicLibrary`**
@@ -143,11 +157,11 @@ No hay métodos adicionales en la clase Song, pero se pueden utilizar las propie
 El código presentado es una implementación de una biblioteca musical en TypeScript. Comienza importando las clases Album, Song y Artist desde los archivos './album', './song' y './artist', respectivamente. Luego, importa la biblioteca 'prompt-sync' y establece tres constantes de color para su uso posterior en la consola.
 
 ```typescript
-import { Album } from './album';
-import { Song } from './song';
-import { Artist } from './artist';
+import { Album } from "./album";
+import { Song } from "./song";
+import { Artist } from "./artist";
 
-import * as Prompt from 'prompt-sync';
+import * as Prompt from "prompt-sync";
 
 const RESET = "\u001b[0m";
 const BOLD = "\u001b[1m";
@@ -185,17 +199,17 @@ export class MusicLibrary {
       )
     );
   }
-  
+
   public search(query: string): void {
-    const artistResults: { artist: Artist, albums: string[] }[] = [];
+    const artistResults: { artist: Artist; albums: string[] }[] = [];
     const albumResults: Album[] = [];
     const songResults: Song[] = [];
-  
+
     for (const artist of this.artists) {
       if (artist.name.toLowerCase().includes(query.toLowerCase())) {
         artistResults.push({
           artist,
-          albums: artist.discography.map(album => album.name)
+          albums: artist.discography.map((album) => album.name),
         });
       } else {
         for (const album of artist.discography) {
@@ -211,15 +225,15 @@ export class MusicLibrary {
         }
       }
     }
-  
+
     if (artistResults.length > 0) {
       console.log("Artists:");
       console.table(
         artistResults.flatMap(({ artist, albums }) => {
-          return albums.map(album => ({
+          return albums.map((album) => ({
             Artist: artist.name,
             Album: album,
-            "Monthly Listeners": artist.monthlyListeners
+            "Monthly Listeners": artist.monthlyListeners,
           }));
         })
       );
@@ -233,7 +247,7 @@ export class MusicLibrary {
       console.table(songResults);
     }
   }
-  
+
   public countSongs(albumName: string): number {
     for (const artist of this.artists) {
       for (const album of artist.discography) {
@@ -297,13 +311,21 @@ export class MusicLibrary {
           exit = true;
           break;
         case "1":
-          const song1 = new Song('Song A', 180, ['Rock'], true, 100);
-          const song2 = new Song('Song B', 240, ['Pop', 'R&B'], false, 50);
-          const song3 = new Song('Song C', 230, ['Disco', 'R&B'], false, 50);
-          const album1 = new Album('Album A', 2022, [song1, song2]);
-          const album2 = new Album('Album A', 2021, [song2, song3]);
-          const artista_ej: Artist = { name: 'Artist A', monthlyListeners: 10000, discography: [album1] };
-          const artist_otro: Artist = { name: 'Artist B', monthlyListeners: 5000, discography: [album1, album2] };
+          const song1 = new Song("Song A", 180, ["Rock"], true, 100);
+          const song2 = new Song("Song B", 240, ["Pop", "R&B"], false, 50);
+          const song3 = new Song("Song C", 230, ["Disco", "R&B"], false, 50);
+          const album1 = new Album("Album A", 2022, [song1, song2]);
+          const album2 = new Album("Album A", 2021, [song2, song3]);
+          const artista_ej: Artist = {
+            name: "Artist A",
+            monthlyListeners: 10000,
+            discography: [album1],
+          };
+          const artist_otro: Artist = {
+            name: "Artist B",
+            monthlyListeners: 5000,
+            discography: [album1, album2],
+          };
           this.addArtist(artista_ej);
           break;
         case "2":
@@ -313,29 +335,41 @@ export class MusicLibrary {
           // Pedir un query
           do {
             the_query = prompt(`Enter a query: `);
-          } while (typeof(the_query) !== 'string');
+          } while (typeof the_query !== "string");
           this.search(the_query);
           break;
         case "4":
           // Pedir el nombre del album
           do {
             the_album = prompt(`Enter an album name: `);
-          } while (typeof(the_album) !== 'string');
-          console.log(`${BOLD}${GREEN}Number of songs in ${the_album}: ${this.countSongs(the_album)}${RESET}`);
+          } while (typeof the_album !== "string");
+          console.log(
+            `${BOLD}${GREEN}Number of songs in ${the_album}: ${this.countSongs(
+              the_album
+            )}${RESET}`
+          );
           break;
         case "5":
           // Pedir el nombre del album
           do {
             the_album = prompt(`Enter an album name: `);
-          } while (typeof(the_album) !== 'string');
-          console.log(`${BOLD}${GREEN}Duration of ${the_album}: ${this.calculateDuration(the_album)}${RESET}`);
+          } while (typeof the_album !== "string");
+          console.log(
+            `${BOLD}${GREEN}Duration of ${the_album}: ${this.calculateDuration(
+              the_album
+            )}${RESET}`
+          );
           break;
         case "6":
           // Pedir el nombre del album
           do {
             the_album = prompt(`Enter an album name: `);
-          } while (typeof(the_album) !== 'string');
-          console.log(`${BOLD}${GREEN}Reproductions of ${the_album}: ${this.calculateReproductions(the_album)}${RESET}`);
+          } while (typeof the_album !== "string");
+          console.log(
+            `${BOLD}${GREEN}Reproductions of ${the_album}: ${this.calculateReproductions(
+              the_album
+            )}${RESET}`
+          );
           break;
         default:
           console.log("Invalid option. Try again.");
@@ -468,7 +502,6 @@ export class Library {
 }
 
 const the_library = new Library();
-
 ```
 
 #### Tests:
@@ -476,97 +509,123 @@ const the_library = new Library();
 Los tests que hemos realizado para comprobar el correcto funcionamiento de la biblioteca son los siguientes:
 
 ```typescript
-import { describe, it } from 'mocha';
+import { describe, it } from "mocha";
 import { expect } from "chai";
-import * as Prompt from 'prompt-sync';
-import { Song } from '../src/ejercicio01/song';
-import { Album } from '../src/ejercicio01/album';
-import { Artist } from '../src/ejercicio01/artist';
-import { MusicLibrary } from '../src/ejercicio01/library';
+import * as Prompt from "prompt-sync";
+import { Song } from "../src/ejercicio01/song";
+import { Album } from "../src/ejercicio01/album";
+import { Artist } from "../src/ejercicio01/artist";
+import { MusicLibrary } from "../src/ejercicio01/library";
 
-describe('MusicLibrary', () => {
-    describe('addArtist', () => {
-        it('should add an artist to the library', () => {
-            const library = new MusicLibrary();
-            const artist: Artist = {name:'Queen', monthlyListeners:1000000, discography:[
-                new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-                ]),
-            ]};
-            library.addArtist(artist);
-            expect(library.artists).to.deep.equal([artist]);
-        });
+describe("MusicLibrary", () => {
+  describe("addArtist", () => {
+    it("should add an artist to the library", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      expect(library.artists).to.deep.equal([artist]);
     });
+  });
 
-    describe('countSongs', () => {
-        it('should count the number of songs in an album', () => {
-          const library = new MusicLibrary();
-          const artist: Artist = {
-            name: 'Queen',
-            monthlyListeners: 1000000,
-            discography: [
-              new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-              ]),
-            ],
-          };
-          library.addArtist(artist);
-          library.countSongs('A Night at the Opera');
-          const expectedCount = 3;
-          const actualCount = artist.discography[0].songs.length;
-          expect(actualCount).to.equal(expectedCount);
-        });
-      });
+  describe("countSongs", () => {
+    it("should count the number of songs in an album", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      library.countSongs("A Night at the Opera");
+      const expectedCount = 3;
+      const actualCount = artist.discography[0].songs.length;
+      expect(actualCount).to.equal(expectedCount);
+    });
+  });
 
-      describe('calculateDuration', () => {
-        it('should count the duration of the album', () => {
-          const library = new MusicLibrary();
-          const artist: Artist = {
-            name: 'Queen',
-            monthlyListeners: 1000000,
-            discography: [
-              new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-              ]),
-            ],
-          };
-          library.addArtist(artist);
-          let actualCount = 0;
-          const expectedCount = 11.98;
-          actualCount = library.calculateDuration('A Night at the Opera');
-          expect(actualCount).to.equal(expectedCount);
-        });
-      });
+  describe("calculateDuration", () => {
+    it("should count the duration of the album", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      let actualCount = 0;
+      const expectedCount = 11.98;
+      actualCount = library.calculateDuration("A Night at the Opera");
+      expect(actualCount).to.equal(expectedCount);
+    });
+  });
 
-      describe('calculateReproductions', () => {
-        it('should count the reproductions of the album', () => {
-          const library = new MusicLibrary();
-          const artist: Artist = {
-            name: 'Queen',
-            monthlyListeners: 1000000,
-            discography: [
-              new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-              ]),
-            ],
-          };
-          library.addArtist(artist);
-          let actualCount = 0;
-          const expectedCount = 2250000;
-          actualCount = library.calculateReproductions('A Night at the Opera');
-          expect(actualCount).to.equal(expectedCount);
-        });
-      });
-
-
+  describe("calculateReproductions", () => {
+    it("should count the reproductions of the album", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      let actualCount = 0;
+      const expectedCount = 2250000;
+      actualCount = library.calculateReproductions("A Night at the Opera");
+      expect(actualCount).to.equal(expectedCount);
+    });
+  });
 });
 ```
 
@@ -581,25 +640,25 @@ Donde se prueban los siguientes métodos:
 4. calculateReproductions(): se prueba si se puede calcular el número total de reproducciones de un álbum específico y se espera que el número de reproducciones calculado sea el mismo que el número real de reproducciones del álbum.
 
 ### Ejercicio 2 - Conecta 4 <a name="ejercicio-2"></a>
+
 > [Volver al índice](#índice)
 
 > Todos (o casi todos) hemos jugado alguna vez al Conecta 4.
-> 
+>
 > En una rejilla de 6 filas y 7 columnas, dos jugadores se turnan para ir colocando un conjunto de fichas dejándolas caer por alguna de las siete columnas de la rejilla. Cada jugador dispone de un total de 21 fichas de un color diferente.
-> 
+>
 > En cada turno, una ficha tomará la primera posición libre de la columna seleccionada por el jugador que corresponda. Si la columna está completa, esto es, ya cuenta con seis fichas, dicha columna no podrá ser seleccionada por ninguno de los dos jugadores para dejar caer otra ficha.
-> 
+>
 > El objetivo del jugador es colocar cuatro fichas consecutivas ya sea en una misma fila, una misma columna o en diagonal.
-> 
+>
 > Cree la jerarquía de clases e interfaces necesarias para implementar el juego Conecta 4, teniendo en cuenta la siguiente funcionalidad:
-> 
+>
 > El juego comienza con el Jugador 1 colocando la primera ficha y, en turnos sucesivos, debe ir alternándose con el Jugador 2. Se deberá mostrar por consola a qué jugador le toca colocar una ficha.
-> 
+>
 > Si un jugador intenta colocar una ficha en una columna completa, se mostrará un mensaje informando de que la columna está completa y se le permitirá seleccionar otra columna para colocar la ficha. Lo anterior debe repetirse hasta que el jugador coloque su ficha.
-> 
+>
 > Una vez que el jugador correspondiente haya colocado una ficha, debe mostrarse por la consola el estado del tablero.
 > Cuando alguno de los dos jugadores gane, se debe informar de lo anterior en la consola y terminar el juego.
-
 
 #### Solución:
 
@@ -607,7 +666,7 @@ Donde se prueban los siguientes métodos:
 
 Se utiliza para representar a los jugadores del juego Connect4.
 
-La interfaz tiene dos propiedades, `name` y `color`, ambas de tipo *string*. `name` representa el nombre del jugador y `color` representa el símbolo de la ficha del jugador junto con el color del jugador en formato de escape ANSI.
+La interfaz tiene dos propiedades, `name` y `color`, ambas de tipo _string_. `name` representa el nombre del jugador y `color` representa el símbolo de la ficha del jugador junto con el color del jugador en formato de escape ANSI.
 
 > El formato de escape ANSI se utiliza para definir colores y otros efectos visuales en la consola de texto. En este caso, el color del jugador se define en este formato para que el juego pueda imprimir los colores de los jugadores en la consola de texto.
 
@@ -620,7 +679,6 @@ export interface Player {
 
 **Clase `Conect4`**
 
-
 En la clase Conect4, en la primera línea, importamos la biblioteca prompt-sync y le damos el alias de Prompt. Esta biblioteca se utiliza para solicitar entrada del usuario de forma síncrona en la consola.
 
 En la segunda línea, se importa la clase Player que definimos con anterioridad desde el archivo Player.ts.
@@ -628,9 +686,9 @@ En la segunda línea, se importa la clase Player que definimos con anterioridad 
 Luego, se define la clase Connect4, que tiene varias propiedades y métodos:
 
 - ROWS y COLS son constantes que indican el número de filas y columnas en el tablero del juego, respectivamente.
-players es una lista de los jugadores del juego.
+  players es una lista de los jugadores del juego.
 - currentPlayerIndex es un número que indica el índice del jugador actual en la lista de jugadores.
-board es una matriz que representa el tablero del juego, con cada elemento de la matriz representando un espacio en el tablero.
+  board es una matriz que representa el tablero del juego, con cada elemento de la matriz representando un espacio en el tablero.
 - El constructor de la clase toma una lista de jugadores como parámetro y utiliza esto para inicializar las propiedades players y board. El tablero se inicializa como una matriz vacía del tamaño especificado por ROWS y COLS.
 
 ```typescript
@@ -856,7 +914,7 @@ Una vez que se ha terminado de construir la cadena rowString para una fila compl
       columnNumbers += `  ${i} `;
     }
     console.log(columnNumbers);
-  
+
     // Print board
     for (let i = 0; i < this.ROWS; i++) {
       let rowString = '|';
@@ -872,7 +930,6 @@ Una vez que se ha terminado de construir la cadena rowString para una fila compl
 **Clase `Game`**
 
 La clase Game se utiliza para inicializar el juego y configurar los jugadores, mientras que la clase Connect4 que vimos anteriormente se encarga de manejar la lógica del juego y la interacción con el usuario.
-
 
 ```typescript
 export class Game {
@@ -896,54 +953,53 @@ El código define una clase Game que tiene dos propiedades: players y un constru
 
 La clase Game también tiene un método start que crea una nueva instancia de la clase Connect4 y llama al método play para comenzar el juego.
 
-
 #### Tests
 
 Las pruebas del código que desarrollamos son las siguientes:
 
 ```typescript
-import { describe, it } from 'mocha';
+import { describe, it } from "mocha";
 import { expect } from "chai";
-import { Game } from '../src/ejercicio02/Game';
-import { Player } from '../src/ejercicio02/Player';
-import { Connect4 } from '../src/ejercicio02/Connect4';
+import { Game } from "../src/ejercicio02/Game";
+import { Player } from "../src/ejercicio02/Player";
+import { Connect4 } from "../src/ejercicio02/Connect4";
 
-describe('Player interface', () => {
-  it('should have a name property of type string', () => {
-    const player: Player = { name: 'John', color: '\x1b[31m' };
-    expect(typeof player.name).equal('string');
+describe("Player interface", () => {
+  it("should have a name property of type string", () => {
+    const player: Player = { name: "John", color: "\x1b[31m" };
+    expect(typeof player.name).equal("string");
   });
 
-  it('should have a color property of type string', () => {
-    const player: Player = { name: 'John', color: '\x1b[31m' };
-    expect(typeof player.color).equal('string');
+  it("should have a color property of type string", () => {
+    const player: Player = { name: "John", color: "\x1b[31m" };
+    expect(typeof player.color).equal("string");
   });
 });
 
-describe('Connect4', () => {
-  let player1: Player = { name: 'Player 1', color: `X` };
-  let player2: Player = { name: 'Player 2', color: `O` };
+describe("Connect4", () => {
+  let player1: Player = { name: "Player 1", color: `X` };
+  let player2: Player = { name: "Player 2", color: `O` };
   let connect4: Connect4;
 
   beforeEach(() => {
-    const players = [player1, player2]
+    const players = [player1, player2];
     connect4 = new Connect4(players);
   });
 
-  it('should start with an empty board', () => {
+  it("should start with an empty board", () => {
     const expectedBoard = [
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
     ];
-    expect(connect4['board']).to.deep.equal(expectedBoard);
+    expect(connect4["board"]).to.deep.equal(expectedBoard);
   });
 
-  describe('constructor', () => {
-    it('should create a new Connect4 game with the correct properties', () => {
+  describe("constructor", () => {
+    it("should create a new Connect4 game with the correct properties", () => {
       expect(connect4.currentPlayerIndex).equal(0);
       expect(connect4.players).to.deep.equal([player1, player2]);
       expect(connect4.board.length).equal(6);
@@ -952,31 +1008,30 @@ describe('Connect4', () => {
     });
   });
 
-  describe('Estado del juego', () => {
-    it('No está en tablas', () => {
+  describe("Estado del juego", () => {
+    it("No está en tablas", () => {
       expect(connect4.checkDraw()).eq(false);
     });
-    it('No hay ganador', () => {
+    it("No hay ganador", () => {
       expect(connect4.checkWin(0, 0)).eq(false);
     });
   });
 
-  describe('Se inserta una ficha', () => {
-    it('En la columna 1 (presionar el uno 1)', () => {
+  describe("Se inserta una ficha", () => {
+    it("En la columna 1 (presionar el uno 1)", () => {
       expect(connect4.getColumnChoice()).to.deep.eq(0);
     });
   });
 
-  describe('Siguiente fila abierta en una columna determinada', () => {
-    it('Ya hay una ficha', () => {
+  describe("Siguiente fila abierta en una columna determinada", () => {
+    it("Ya hay una ficha", () => {
       expect(connect4.getNextOpenRow(0)).to.equal(5);
     });
-    it('No hay una ficha', () => {
+    it("No hay una ficha", () => {
       expect(connect4.getNextOpenRow(1)).to.equal(5);
     });
   });
 });
-
 ```
 
 En la primera sección de pruebas, se prueba la interfaz del jugador. Se espera que un objeto jugador tenga una propiedad "name" de tipo string y una propiedad "color" de tipo string.
@@ -989,8 +1044,8 @@ En la cuarta sección de pruebas, se prueba la inserción de una ficha en el tab
 
 En la quinta sección de pruebas, se prueba la funcionalidad para encontrar la siguiente fila disponible en una columna determinada. Se espera que la función getNextOpenRow() retorne el número correcto de fila.
 
-
 ### Conclusiones <a name="conclusiones"></a>
+
 > [Volver al índice](#índice)
 
 La función table puede ser muy útil para depurar objetos complejos y visualizarlos de una manera más estructurada y legible. Es especialmente útil cuando se está tratando con datos tabulares o cuando se necesita comparar varias instancias de un mismo objeto.
@@ -998,6 +1053,7 @@ La función table puede ser muy útil para depurar objetos complejos y visualiza
 Por otro lado el uso de clases e interfaces nos posibilita la creación de objetos con propiedades y métodos que nos permiten modelar el comportamiento de los mismos. Esto nos permite crear objetos que se comporten de una manera determinada y que nos permitan realizar operaciones sobre ellos de una manera más sencilla y ordenada, incluso si son objetos complejos.
 
 ### Referencias <a name="referencias"></a>
+
 > [Volver al índice](#índice)
 
 1. [Entrada de texto](https://www.npmjs.com/package/prompt-sync)

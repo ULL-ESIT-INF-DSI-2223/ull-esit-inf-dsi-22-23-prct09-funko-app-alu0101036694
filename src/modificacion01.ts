@@ -27,10 +27,10 @@ Como entrega de esta tarea deberá indicar, de nuevo, el enlace a dicho reposito
  * @method divide División
  */
 export interface Arithmeticable<T> {
-    add(arg: T): T;
-    subtract(arg: T): T;
-    multiply(arg: T): T;
-    divide(arg: T): T;
+  add(arg: T): T;
+  subtract(arg: T): T;
+  multiply(arg: T): T;
+  divide(arg: T): T;
 }
 
 // Colección de aritméticos
@@ -44,19 +44,19 @@ export interface Arithmeticable<T> {
  * @method getNumberOfArithmeticables Obtiene el tamaño de la colección
  */
 export class ArithmeticableCollection<T extends Arithmeticable<T>> {
-    private collection: T[] = [];
-  
-    public addArithmeticable(item: T): void {
-      this.collection.push(item);
-    }
-  
-    public getArithmeticable(index: number): T {
-      return this.collection[index];
-    }
-  
-    public getNumberOfArithmeticables(): number {
-      return this.collection.length;
-    }  
+  private collection: T[] = [];
+
+  public addArithmeticable(item: T): void {
+    this.collection.push(item);
+  }
+
+  public getArithmeticable(index: number): T {
+    return this.collection[index];
+  }
+
+  public getNumberOfArithmeticables(): number {
+    return this.collection.length;
+  }
 }
 
 //Racionales
@@ -72,38 +72,38 @@ export class ArithmeticableCollection<T extends Arithmeticable<T>> {
  * @method divide División
  */
 export class Rational implements Arithmeticable<Rational> {
+  constructor(private numerator: number, private denominator: number) {}
 
-    constructor(private numerator: number, private denominator: number) {}
-  
-    public add(other: Rational): Rational {
-      const denominator = this.denominator * other.denominator;
-      const numerator = this.numerator * other.denominator + other.numerator * this.denominator;
-      return new Rational(numerator, denominator);
-    }
-  
-    public subtract(other: Rational): Rational {
-      const denominator = this.denominator * other.denominator;
-      const numerator = this.numerator * other.denominator - other.numerator * this.denominator;
-      return new Rational(numerator, denominator);
-    }
-  
-    public multiply(other: Rational): Rational {
-      const numerator = this.numerator * other.numerator;
-      const denominator = this.denominator * other.denominator;
-      return new Rational(numerator, denominator);
-    }
-  
-    public divide(other: Rational): Rational {
-      const numerator = this.numerator * other.denominator;
-      const denominator = this.denominator * other.numerator;
-      return new Rational(numerator, denominator);
-    }
-
-    public getValue(): number {
-        return this.numerator / this.denominator;
-    }
-
+  public add(other: Rational): Rational {
+    const denominator = this.denominator * other.denominator;
+    const numerator =
+      this.numerator * other.denominator + other.numerator * this.denominator;
+    return new Rational(numerator, denominator);
   }
+
+  public subtract(other: Rational): Rational {
+    const denominator = this.denominator * other.denominator;
+    const numerator =
+      this.numerator * other.denominator - other.numerator * this.denominator;
+    return new Rational(numerator, denominator);
+  }
+
+  public multiply(other: Rational): Rational {
+    const numerator = this.numerator * other.numerator;
+    const denominator = this.denominator * other.denominator;
+    return new Rational(numerator, denominator);
+  }
+
+  public divide(other: Rational): Rational {
+    const numerator = this.numerator * other.denominator;
+    const denominator = this.denominator * other.numerator;
+    return new Rational(numerator, denominator);
+  }
+
+  public getValue(): number {
+    return this.numerator / this.denominator;
+  }
+}
 
 // Complejos
 
@@ -118,31 +118,38 @@ export class Rational implements Arithmeticable<Rational> {
  * @method divide División
  */
 export class Complex implements Arithmeticable<Complex> {
-    constructor(private real: number, private imaginary: number) {}
-  
-    public add(other: Complex): Complex {
-      return new Complex(this.real + other.real, this.imaginary + other.imaginary);
-    }
-  
-    public subtract(other: Complex): Complex {
-      return new Complex(this.real - other.real, this.imaginary - other.imaginary);
-    }
-  
-    public multiply(other: Complex): Complex {
-      return new Complex(
-        this.real * other.real - this.imaginary * other.imaginary,
-        this.real * other.imaginary + this.imaginary * other.real
-      );
-    }
-  
-    public divide(other: Complex): Complex {
-      const denominator = other.real * other.real + other.imaginary * other.imaginary;
-      return new Complex(
-        (this.real * other.real + this.imaginary * other.imaginary) / denominator,
-        (this.imaginary * other.real - this.real * other.imaginary) / denominator
-      );
-    }
+  constructor(private real: number, private imaginary: number) {}
+
+  public add(other: Complex): Complex {
+    return new Complex(
+      this.real + other.real,
+      this.imaginary + other.imaginary
+    );
   }
+
+  public subtract(other: Complex): Complex {
+    return new Complex(
+      this.real - other.real,
+      this.imaginary - other.imaginary
+    );
+  }
+
+  public multiply(other: Complex): Complex {
+    return new Complex(
+      this.real * other.real - this.imaginary * other.imaginary,
+      this.real * other.imaginary + this.imaginary * other.real
+    );
+  }
+
+  public divide(other: Complex): Complex {
+    const denominator =
+      other.real * other.real + other.imaginary * other.imaginary;
+    return new Complex(
+      (this.real * other.real + this.imaginary * other.imaginary) / denominator,
+      (this.imaginary * other.real - this.real * other.imaginary) / denominator
+    );
+  }
+}
 
 // const rationalCollection = new ArithmeticableCollection<Rational>();
 // rationalCollection.addArithmeticable(new Rational(1, 2));
