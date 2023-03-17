@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node dist/destravate.js\"",
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "ej1": "tsc-watch --onSuccess \"node dist/ejercicio01/ejercicio01.js\"",
     "ej2": "tsc-watch --onSuccess \"node dist/ejercicio02/ejercicio02.js\"",
     "ej3": "tsc-watch --onSuccess \"node dist/ejercicio03/ejercicio03.js\"",
