@@ -1,12 +1,12 @@
 import inquirer from 'inquirer';
-import { usuarios } from './usuarios'
+import { usuario } from './usuarios'
 import { rutas } from './rutas';
 
 export class grupo {
 
     id: string; // ID único del grupo
     nombre: string; // IDs de los miembros del grupo
-    participantes: usuarios[];
+    participantes: string[];
 
     /* estadisticasEntrenamiento: { // Estadísticas de entrenamiento grupal en la semana, mes y año
       semana: { km: number; desnivel: number };
@@ -14,32 +14,20 @@ export class grupo {
       anio: { km: number; desnivel: number }; 
     }; */
     
-    clasificacionUsuarios: { userId: string; kmTotales: number; desnivelTotal: number }[]; // Clasificación de los usuarios
+    //clasificacionUsuarios: { userId: string; kmTotales: number; desnivelTotal: number }[]; // Clasificación de los usuarios
     // rutasFavoritas: string[]; // Rutas favoritas del grupo
-    historicoRutas: { fecha: Date; ruta: rutas }[]; // Histórico de rutas realizadas por el grupo
+    historicoRutas: { fecha: Date; ruta: string }[]; // Histórico de rutas realizadas por el grupo
     // Atributo de usuario creador
     constructor(
       id: string,
       nombre: string,
-      participantes: usuarios[],
-
-      estadisticasEntrenamiento: {
-        semana: { km: number; desnivel: number };
-        mes: { km: number; desnivel: number };
-        anio: { km: number; desnivel: number };
-      },
-
-      clasificacionUsuarios: { userId: string; kmTotales: number; desnivelTotal: number }[],
-      rutasFavoritas: string[],
-      historicoRutas: { fecha: Date; ruta: rutas }[],
+      participantes: string[],
+      historicoRutas: { fecha: Date; ruta: string }[],
       
     ) {
       this.id = id;
       this.nombre = nombre;
       this.participantes = participantes;
-      // this.estadisticasEntrenamiento = estadisticasEntrenamiento;
-      this.clasificacionUsuarios = clasificacionUsuarios;
-      // this.rutasFavoritas = rutasFavoritas;
       this.historicoRutas = historicoRutas;
     }
 
@@ -53,15 +41,11 @@ export class grupo {
         return this.nombre;
     }
 
-    getParticipantes(): usuarios[] {
+    getParticipantes(): string[] {
         return this.participantes;
     }
-  
-    getClasificacionUsuarios(): { userId: string; kmTotales: number; desnivelTotal: number }[] {
-        return this.clasificacionUsuarios;
-    }
 
-    getHistoricoRutas(): { fecha: Date; ruta: rutas }[] {
+    getHistoricoRutas(): { fecha: Date; ruta: string }[] {
         return this.historicoRutas;
     }
 
@@ -72,4 +56,8 @@ export class grupo {
     getRutasFavoritas(){
 
     }
+  }
+
+  module.exports = {
+    grupo
   }

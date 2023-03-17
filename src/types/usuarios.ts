@@ -2,39 +2,62 @@ import inquirer from 'inquirer';
 import { rutas } from './rutas'
 import { grupo } from './grupos'
 
-export enum actividades { Correr = 'Correr', Ciclismo = 'Ciclismo'}
 
-export class usuarios{
+export class usuario{
     private id: string
     private nombre: string
-    private actividades: actividades [] //Correr, ciclismo
-    private amigos: usuarios [] //usuarios con los que interacciona
-    private grupoAmigos: grupo [] //Ids de usuarios con los que realiza rutas
+    private actividades: "Correr" | "Ciclismo"
+    private amigos: string [] //usuarios con los que interacciona
+    private grupoAmigos: string [] //Ids de usuarios con los que realiza rutas
     //private rutasFavoritas: string []
     //private retosActivos: string []
-    private historicoRutas: {fecha: Date; ruta: rutas } []; //ID de la ruta y fecha
+    private historicoRutas: {fecha: Date; ruta: string } []; //ID de la ruta y fecha
 
-    constructor(id: string,  nombre: string, actividades: actividades [], amigos: usuarios [], grupoAmigos: grupo [], historicoRutas: { fecha: Date; ruta: rutas }[]) {
+    constructor(id: string, nombre: string, actividades: "Correr" | "Ciclismo", amigos: string [], grupoAmigos: string [], historicoRutas: { fecha: Date; ruta: string }[]) {
             this.id = id
             this.nombre = nombre
             this.actividades = actividades
             this.amigos = amigos
             this.grupoAmigos = grupoAmigos
-            // this.rutasFavoritas = rutasFavoritas
-            // this.retosActivos = retosActivos
             this.historicoRutas = historicoRutas
          }
     
-    getEstadisticas(){
+    public getId(): string {
+        return this.id
+    }
+    public getNombre(): string {
+        return this.nombre;
+    }
+
+    public getActividades(): "Correr" | "Ciclismo" {
+        return  this.actividades;
+    }
+
+    public getAmigos(): string [] {
+        return this.amigos;
+    }
+
+    public getGrupoAmigos(): string [] {
+        return this.grupoAmigos;
+    }
+    public getHistoricoRutas(): { fecha: Date; ruta: string }[] {
+        return this.historicoRutas
+    }
+
+    public getEstadisticas(){
         
     }
 
-    getRutasFavoritas(){
+    public getRutasFavoritas(){
 
     }
 
-    getRetosActivos(){
+    public getRetosActivos(){
         
     }
     
+}
+
+module.exports={
+    usuario
 }

@@ -1,0 +1,11 @@
+export type grupoSchema = {
+    grupo: {
+        id: string,
+        nombre: string,
+        participantes: string[],
+        historicoRutas: {
+            fecha: Date,
+            ruta: string,
+        }[]
+    } []
+}

@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+
 
 export class rutas {
     private id: string
@@ -7,11 +7,11 @@ export class rutas {
     private coordenadasFinal: string
     private longitudRuta: number
     private desnivelMedio: number
-    private usuariosFinalizados: string // Cambiar a vector de usuarios
+    private usuariosFinalizados: string []
     private tipoActividad: 'Bicicleta' | 'Corriendo'
     private calificacionMedia: number
 
-    constructor(id: string, nombre: string, coordenadasInicio: string, coordenadasFinal: string, longitudRuta: number, desnivelMedio: number, usuariosFinalizados: string, tipoActividad: 'Bicicleta' | 'Corriendo', calificacionMedia: number){
+    constructor(id: string, nombre: string, coordenadasInicio: string, coordenadasFinal: string, longitudRuta: number, desnivelMedio: number, usuariosFinalizados: string [], tipoActividad: 'Bicicleta' | 'Corriendo', calificacionMedia: number){
         this.id = id;
         this.nombre = nombre;
         this.coordenadasInicio = coordenadasInicio;
@@ -71,11 +71,11 @@ export class rutas {
         return this.desnivelMedio
     }
 
-    setUsuariosFinalizados(usuariosFinalizados: string){
+    setUsuariosFinalizados(usuariosFinalizados: string []){
         this.usuariosFinalizados = usuariosFinalizados
     }
 
-    getUsuariosFinalizados(): string {
+    getUsuariosFinalizados(): string [] {
         return this.usuariosFinalizados
     }
 
@@ -94,4 +94,8 @@ export class rutas {
     getCalificacionMedia(): number {
         return this.calificacionMedia
     }
+}
+
+module.exports = {
+    rutas
 }
