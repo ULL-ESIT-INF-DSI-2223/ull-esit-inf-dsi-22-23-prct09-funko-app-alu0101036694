@@ -1,4 +1,4 @@
-name: Sonar-Cloud
+name: Sonar-Cloud 
 
 on:
   push:
@@ -10,24 +10,19 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
-
     steps:
       - name: Cloning repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
+      - name: Using Node.js 19.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-
+          node-version: 19.x
       - name: Installing dependencies
-        run: npm install 
-
-      - name: Generating coverage information
+        run: npm i
+      - name: Generating coverage report
         run: npm run coverage
-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
