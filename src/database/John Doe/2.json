@@ -1,0 +1,12 @@
+{
+  "id": 2,
+  "name": "Superman",
+  "description": "Funko of Superman",
+  "type": "Pop!",
+  "genre": "Anime",
+  "franchise": "Superman",
+  "number": 1,
+  "exclusive": false,
+  "specialFeatures": "[]",
+  "marketValue": 150
+}

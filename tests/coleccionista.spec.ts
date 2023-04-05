@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { assert } from "chai";
-import { Funko, FunkoType, FunkoGenre } from "../src/code/funko.js";
-import { Coleccionista } from "../src/code/coleccionista.js";
+import { Funko, FunkoType, FunkoGenre } from "../src/code/funko";
+import { Coleccionista } from "../src/code/coleccionista";
 
 describe("Coleccionista", function() {
   describe("#getId()", function() {

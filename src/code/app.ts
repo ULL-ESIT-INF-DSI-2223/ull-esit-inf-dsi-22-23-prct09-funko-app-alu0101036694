@@ -1,7 +1,7 @@
 import yargs from "yargs";
 import { hideBin } from 'yargs/helpers.js';
-import * as chalk from "chalk/index.js";
-import { Funko } from "./funko.js";
+import * as chalk from "chalk";
+import { Funko } from "./funko";
 import { Coleccionista } from "./coleccionista.js";
 import * as fs from "fs";
 import * as path from  "path";

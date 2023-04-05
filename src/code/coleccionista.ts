@@ -1,9 +1,9 @@
 const fs = require("fs");
 import * as path from  "path";
 //import chalk from "chalk";
-import * as chalk from "chalk/index.js";
+import * as chalk from "chalk";
 
-import { Funko } from "./funko.js";
+import { Funko } from "./funko";
 
 export class Coleccionista {
   private id: number;

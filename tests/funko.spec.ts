@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { assert } from "chai";
-import { Funko, FunkoType, FunkoGenre } from "../src/code/funko.js";
+import { Funko, FunkoType, FunkoGenre } from "../src/code/funko";
 
 describe('Funko', function() {
   const funko = new Funko(
