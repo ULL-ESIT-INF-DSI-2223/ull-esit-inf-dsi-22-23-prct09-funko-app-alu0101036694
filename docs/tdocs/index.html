@@ -1,0 +1,279 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>practica09</title><meta name="description" content="Documentation for practica09"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">practica09</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>practica09</h2></div>
+<div class="tsd-panel tsd-typography">
+<a href="#práctica-7-destravate" id="práctica-7-destravate" style="color: inherit; text-decoration: none;">
+  <h1><a href="https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupof.git">PRÁCTICA 7. DESTRAVATE</a>.</h1>
+</a>
+<p><a href="https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694?branch=main"><img src="https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694/badge.svg?branch=main" alt="Coverage Status"></a></p>
+
+<a href="#carla-oval-torres-jairo-alonso-abreu-gabi-vacaru" id="carla-oval-torres-jairo-alonso-abreu-gabi-vacaru" style="color: inherit; text-decoration: none;">
+  <h2>Carla Oval Torres, Jairo Alonso Abreu, Gabi Vacaru</h2>
+</a>
+
+<a href="#índice-" id="índice-" style="color: inherit; text-decoration: none;">
+  <h2>Índice <a name="índice"></a></h2>
+</a>
+<ol>
+<li><a href="#introducci%C3%B3n">Introducción</a></li>
+<li><a href="#requisitos">Descripción de los requisitos del sistema</a></li>
+<li><a href="#funcionamiento">Funcionamiento</a><ol>
+<li><a href="#tipos">Tipos de datos (rutas, retos, usuarios y grupos)</a></li>
+<li><a href="#colecciones">Colecciones de datos (schemas)</a></li>
+<li><a href="#database">Base de datos</a></li>
+<li><a href="#principal">Programa principal</a></li>
+</ol>
+</li>
+<li><a href="#conclusiones">Conclusiones</a></li>
+<li><a href="#referencias">Referencias</a></li>
+</ol>
+
+<a href="#introducción-" id="introducción-" style="color: inherit; text-decoration: none;">
+  <h2>Introducción <a name="introducción"></a></h2>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+<p>En esta práctica, la primera grupal de la asignatura, tendrá que llevar a cabo un diseño orientado a objetos del modelo de datos de un sistema de información que permita almacenar registros de actividades deportivas.</p>
+<p>Todo el código desarrollado deberá estar alojado en el repositorio generado tras la aceptación de la asignación grupal de GitHub Classroom. En ese sentido, utilice en dicho repositorio una estructura de proyecto similar a la que hemos visto en clase.</p>
+<p>Trate de respetar los principios SOLID de diseño orientado a objetos. Recuerde hacer uso durante su desarrollo de todas las herramientas relacionadas con el cubrimiento del código (Coveralls), integración contínua (Github Actions) y calidad del código (Sonar Cloud).</p>
+<p>Por último, tendrá que comentar en un informe la solución diseñada, haciendo hincapié en las decisiones de diseño que ha implementado.</p>
+
+<a href="#descripción-de-los-requisitos-del-sistema-" id="descripción-de-los-requisitos-del-sistema-" style="color: inherit; text-decoration: none;">
+  <h2>Descripción de los requisitos del sistema <a name="requisitos"></a></h2>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+<blockquote>
+<p>Rutas</p>
+<p>Para cada ruta incluida dentro del sistema, se debe almacenar la información siguiente:</p>
+<ol>
+<li>ID único de la ruta.</li>
+<li>Nombre de la ruta.</li>
+<li>Geolocalización del inicio (coordenadas).</li>
+<li>Geolocalización del final de la ruta (coordenadas).</li>
+<li>Longitud de la ruta en kilómetros.</li>
+<li>Desnivel medio de la ruta.</li>
+<li>Usuarios que han realizado la ruta (IDs).</li>
+<li>Tipo de actividad: Indicador si la ruta se puede realizar en bicicleta o corriendo.</li>
+<li>Calificación media de la ruta.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Usuarios</p>
+<p>Dentro del sistema, necesitamos la siguiente información de los usuarios:</p>
+<ol>
+<li>ID único del usuario (puede ser un username creado por el usuario en el registro o un valor generado automáticamente por el sistema).</li>
+<li>Nombre del usuario.</li>
+<li>Actividades que realiza: Correr o bicicleta.</li>
+<li>Amigos en la aplicación: Colleción de IDs de usuarios con los que interacciona.</li>
+<li>Grupos de amigos: Diferentes colecciones de IDs de usuarios con los que suele realizar rutas.</li>
+<li>Estadísticas de entrenamiento: Cantidad de km y desnivel total acumulados en la semana, mes y año.</li>
+<li>Rutas favoritas: IDs de las rutas que el usuario ha realizado con mayor frecuencia.</li>
+<li>Retos activos: IDs de los retos que el usuario está realizando actualmente.</li>
+<li>Histórico de rutas: Los usuarios deben almacenar el historial de rutas realizadas desde que se registraron en el sistema. La información almacenada en esta estructura de datos deberá contener la información de la fecha y el ID de la ruta realizada. Nótese que un usuario puede realizar más de una ruta al día y está decisión puede afectar al tipo de estructura en el que se almacena la información.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Grupos</p>
+<p>Un grupo de usuarios engloba la información de los usuarios que se unen para realizar rutas juntos.</p>
+<ol>
+<li>ID único del grupo.</li>
+<li>Nombre del grupo.</li>
+<li>Participantes: IDs de los miembros del grupo.</li>
+<li>Estadísticas de entrenamiento grupal: Cantidad de km y desnivel total acumulados de manera grupal en la semana, mes y año</li>
+<li>Clasificación de los usuarios: Ranking de los usuarios que más entrenamientos han realizado históricamente dentro del grupo, es decir, ordenar los usuarios por la cantidad de km totales o desnivel total que han acumulado.</li>
+<li>Rutas favoritas del grupo: Rutas que los usuarios del grupo han realizado con mayor frecuencia en sus salidas conjuntas.</li>
+<li>Histórico de rutas realizadas por el grupo: Información similar que almacenan los usuarios pero en este caso referente a los grupos. Nótese que un usuario puede realizar rutas con un grupo y/o de manera individual el mismo día. Es decir, a modo de simplificación, asumimos que todos los usuarios de un grupo realizan la actividad cuando se planifica. Aunque, también pueden realizar otras actividades de manera individual.</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Retos</p>
+<p>Los retos serán otra entidad dentro del sistema. Esta entidad deberá contener toda la información asociada a objetivos de entrenamientos:</p>
+</blockquote>
+<ol>
+<li>ID único del reto.</li>
+<li>Nombre del reto.</li>
+<li>Rutas que forman parte del reto.</li>
+<li>Tipo de actividad del reto: bicicleta o correr.</li>
+<li>Km totales a realizar (como la suma de los kms de las rutas que lo engloban)</li>
+<li>Usuarios que están realizando el reto.</li>
+</ol>
+
+<a href="#funcionamiento-" id="funcionamiento-" style="color: inherit; text-decoration: none;">
+  <h3>Funcionamiento <a name="funcionamiento"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+<blockquote>
+<p>Para comprobar el funcionamiento de su diseño deberá crear:</p>
+<ol>
+<li>Al menos 10 rutas distintas.</li>
+<li>Incluir al menos 20 usuarios distintos.</li>
+<li>Un mínimo de 5 grupos.</li>
+<li>Al menos 3 retos.</li>
+</ol>
+<p>En este punto, deberá hacer uso del módulo Inquirer.js para la gestión de una línea de comandos interactiva. De este modo, su aplicación deberá permitir añadir, borrar y modificar rutas, usuarios, grupos y retos. Para ello, le recomendamos que lea el Capítulo 1 del libro Essential TypeScript: From Beginner to Pro, dado que se describe un ejemplo detallado de su uso, incluyendo cómo podría hacer para que toda la información introducida persista mediante el uso del paquete Lowdb. Recuerde hacer uso de las versiones de los paquetes utilizadas en el libro.</p>
+<p>En cuanto a la gestión avanzada de rutas, usuarios, grupos y retos, simplemente se requiere poder navegar la información asociada a estás entidades. Para cada tipo de información se podrá mostrar la información correspondiente de la siguiente manera:</p>
+<p>Rutas:</p>
+<ul>
+<li>Alfabéticamente por nombre de la ruta, ascendente y descendente.</li>
+<li>Cantidad de usuarios que realizan las rutas, ascendente y descendente.</li>
+<li>Por longitud de la ruta, ascendente y descendente.</li>
+<li>Por la calificación media de la ruta, ascendente y descendente.</li>
+<li>Ordenar por actividad: correr o ciclismo.</li>
+</ul>
+<p>Usuarios:</p>
+<ul>
+<li>Alfabéticamente por nombre del usuario, ascendente y descendente.</li>
+<li>Por cantidad de KM realizados (ascendente y descendentemente) en función de la semana actual, mes o año.</li>
+</ul>
+<p>Grupos:</p>
+<ul>
+<li>Alfabéticamente por nombre de la grupo, ascendente y descendente.</li>
+<li>Por cantidad de KM realizados conjuntamente (ascendente y descendentemente) en función de la semana actual, mes o año.</li>
+<li>Por la cantidad de miembros que lo componen, ascendente y descendente.</li>
+</ul>
+<p>Retos:
+Alfabéticamente por nombre del reto, ascendente y descendente.
+Por cantidad de KM que se deben realizar, ascendente y descendente.
+Por la cantidad de usuarios que lo están realizando, ascendente y descendente.</p>
+</blockquote>
+<blockquote>
+
+<a href="#clase-gestor" id="clase-gestor" style="color: inherit; text-decoration: none;">
+  <h4>Clase Gestor</h4>
+</a>
+<p>Por último, deberá crear una clase Gestor que permita gestionar el tratamiento de la información del sistema.</p>
+<p>Para el funcionamiento de la clase Gestor, también necesitará hacer uso de Inquirer.js. En concreto, un usuario podrá:
+Registrarse en el sistema. Un usuario que se conecte por primera vez al sistema deberá poder incluir su información para ser almacenada en el sistema. Asimismo, un usuario podrá visualizar el listado de usuarios existentes dentro del sistema y añadir/borrar amigos.
+Visualizar todas las rutas existentes dentro del sistema. En este apartado se deben poder consultar el listado de rutas así como acceder a la información completa de cada una de ellas.
+Unirse a un grupo existente. Este apartado considera la opción de un usuario que desea incluirse dentro de un grupo ya existente en el sistema.
+Visualizar, crear y borrar grupos. Un usuario podrá borrar un grupo, pero solo si esta ha sido creado por él, es decir, no se podrá borrar un grupo pre-cargado en el sistema. Por otro lado, los grupos se podrán guardar usando el mismo sistema empleado para guardar la información cargada en el sistema. Por último, considere que en posteriores conexiones al sistema, el usuario podrá desear borrar un grupo que haya creado anteriormente. Debido a esto, se deberá distinguir entre los grupos creados por el usuario y los creados por el sistema con el objetivo de evitar borrar información sin permiso.</p>
+</blockquote>
+
+<a href="#tipos-de-datos-rutas-retos-usuarios-y-grupos-" id="tipos-de-datos-rutas-retos-usuarios-y-grupos-" style="color: inherit; text-decoration: none;">
+  <h3>Tipos de datos (rutas, retos, usuarios y grupos) <a name="tipos"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+<blockquote>
+<p>Descripcion de la clase</p>
+</blockquote>
+<p>Explicacion</p>
+
+<a href="#clase-x" id="clase-x" style="color: inherit; text-decoration: none;">
+  <h4>Clase X:</h4>
+</a>
+<pre><code class="language-typescript">
+</code></pre>
+<p>Explicación</p>
+
+<a href="#tests" id="tests" style="color: inherit; text-decoration: none;">
+  <h4>Tests:</h4>
+</a>
+<p>Explicación</p>
+<pre><code class="language-typescript">
+</code></pre>
+<p>Explicación</p>
+<pre><code class="language-typescript">
+</code></pre>
+
+<a href="#cumplimiento-de-los-principios-solid-en-la-clase-x" id="cumplimiento-de-los-principios-solid-en-la-clase-x" style="color: inherit; text-decoration: none;">
+  <h4>Cumplimiento de los principios SOLID en la clase X:</h4>
+</a>
+<p>Esta clase <code>X</code> cumple los principios SOLID con la siguiente justificación:</p>
+<ul>
+<li><p><strong>Single responsibility (SRP)</strong>: </p>
+</li>
+<li><p><strong>Open/Closed Principle (OCP)</strong>: </p>
+</li>
+<li><p><strong>Liskov Substitution Principle (LSP)</strong>: </p>
+</li>
+<li><p><strong>Interface Segregation Principle (ISP)</strong>: </p>
+</li>
+<li><p><strong>Dependency Inversion Principle (DIP)</strong>:</p>
+</li>
+</ul>
+
+<a href="#colecciones-de-datos-schemas-" id="colecciones-de-datos-schemas-" style="color: inherit; text-decoration: none;">
+  <h3>Colecciones de datos (schemas) <a name="colecciones"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+
+<a href="#base-de-datos-" id="base-de-datos-" style="color: inherit; text-decoration: none;">
+  <h3>Base de datos <a name="database"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+
+<a href="#programa-principal-" id="programa-principal-" style="color: inherit; text-decoration: none;">
+  <h3>Programa principal <a name="principal"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+
+<a href="#conclusiones-" id="conclusiones-" style="color: inherit; text-decoration: none;">
+  <h3>Conclusiones <a name="conclusiones"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+<p>Explicacion</p>
+
+<a href="#referencias-" id="referencias-" style="color: inherit; text-decoration: none;">
+  <h3>Referencias <a name="referencias"></a></h3>
+</a>
+<blockquote>
+<p><a href="#%C3%ADndice">Volver al índice</a></p>
+</blockquote>
+<ol>
+<li><a href="https://www.npmjs.com/package/prompt-sync">Entrada de texto</a></li>
+<li><a href="https://es.wikipedia.org/wiki/C%C3%B3digo_escape_ANSI#:~:text=Los%20c%C3%B3digos%20de%20escape%20ANSI,color%20o%20moviendo%20el%20cursor.">Formato de escape ANSI</a></li>
+</ol>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">practica09</a>
+<ul>
+<li class="tsd-kind-module"><a href="modules/app.html">app</a></li>
+<li class="tsd-kind-module"><a href="modules/coleccionista.html">coleccionista</a></li>
+<li class="tsd-kind-module"><a href="modules/funko.html">funko</a></li></ul></li></ul></div></details></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>

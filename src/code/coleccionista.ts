@@ -5,28 +5,78 @@ import * as chalk from "chalk";
 
 import { Funko } from "./funko";
 
+/**
+ * Clase Coleccionista
+ * @class Coleccionista
+ * @description Clase que representa a un coleccionista de Funkos
+ * @property {number} id - Identificador del coleccionista
+ * @property {string} nombre - Nombre del coleccionista
+ * @property {Funko[]} coleccion - Array de Funkos
+ * @method getId - Devuelve el identificador del coleccionista
+ * @method getNombre - Devuelve el nombre del coleccionista
+ * @method getColeccion - Devuelve la colección de Funkos del coleccionista
+ * @method guardarColeccion - Guarda la colección de Funkos del coleccionista
+ * @method cargarColeccion - Carga la colección de Funkos del coleccionista
+ * @method addFunko - Añade un Funko a la colección del coleccionista
+ * @method modificarFunko - Modifica un Funko de la colección del coleccionista
+ * @method eliminarFunko - Elimina un Funko de la colección del coleccionista
+ * @method mostrarFunko - Muestra un Funko de la colección del coleccionista
+ * @method listarColeccion - Lista la colección de Funkos del coleccionista
+ */
 export class Coleccionista {
   private id: number;
   private nombre: string;
   private coleccion: Funko[]; // Array de Funkos
 
+  /**
+   * Constructor de la clase Coleccionista
+   * @param {number} id - Identificador del coleccionista
+   * @param {string} nombre - Nombre del coleccionista
+   * @param {Funko[]} coleccion - Array de Funkos
+   * @returns {Coleccionista} - Objeto Coleccionista
+   */
   constructor(id: number, nombre: string, coleccion: Funko[]) {
     this.id = id;
     this.nombre = nombre;
     this.coleccion = coleccion;
   }
 
+  /**
+   * Getter del identificador del coleccionista
+   * @returns {number} - Identificador del coleccionista
+   * @memberof Coleccionista
+   * @method getId
+   */
   public getId(): number {
     return this.id;
   }
+
+  /**
+   * Getter del nombre del coleccionista
+   * @returns {string} - Nombre del coleccionista
+   * @memberof Coleccionista
+   * @method getNombre
+   */
   public getNombre(): string {
     return this.nombre;
   }
 
+  /**
+   * Getter de la colección de Funkos del coleccionista
+   * @returns {Funko[]} - Colección de Funkos del coleccionista
+   * @memberof Coleccionista
+   * @method getColeccion
+   */
   public getColeccion(): Funko[] {
     return this.coleccion;
   }
 
+  /**
+   * Guarda la colección de Funkos del coleccionista en la base de datos
+   * @memberof Coleccionista
+   * @method guardarColeccion
+   * @returns {void}
+   */
   public guardarColeccion(): void {
     const userDir = path.join(__dirname, "../database/", this.nombre);
     if (!fs.existsSync(userDir)) {
@@ -40,6 +90,12 @@ export class Coleccionista {
     });
   }
 
+  /**
+   * Carga la colección de Funkos del coleccionista de la base de datos
+   * @memberof Coleccionista
+   * @method cargarColeccion
+   * @returns {void}
+   */
   public cargarColeccion(): void {
     const userDir = path.join(__dirname, "../database/", this.nombre);
     if (!fs.existsSync(userDir)) {
@@ -73,6 +129,13 @@ export class Coleccionista {
     this.coleccion = coleccion;
   }
 
+  /**
+   * Añade un Funko a la colección del coleccionista
+   * @param {Funko} funko - Funko a añadir
+   * @memberof Coleccionista
+   * @method addFunko
+   * @returns {void}
+   */
   public addFunko(funko: Funko): void {
     const encontrado = this.coleccion.some((f: Funko) => {
       if (f.getId() === funko.getId()) {
@@ -95,6 +158,13 @@ export class Coleccionista {
     this.guardarColeccion();
   }
 
+  /**
+   * Modifica un Funko de la colección del coleccionista
+   * @param {Funko} funkoModificado - Funko modificado
+   * @memberof Coleccionista
+   * @method modificarFunko
+   * @returns {void}
+   */
   public modificarFunko(funkoModificado: Funko): void {
     //this.cargarColeccion();
     const index = this.coleccion.findIndex(
@@ -116,6 +186,13 @@ export class Coleccionista {
     this.guardarColeccion();
   }
 
+  /**
+   * Elimina un Funko de la colección del coleccionista
+   * @param {number} id - Identificador del Funko a eliminar
+   * @memberof Coleccionista
+   * @method eliminarFunko
+   * @returns {void}
+   */
   public eliminarFunko(id: number): void {
     //this.cargarColeccion();
     //const index = this.coleccion.findIndex((funko: Funko) => funko.getId() === id);
@@ -152,6 +229,12 @@ export class Coleccionista {
     this.guardarColeccion();
   }
 
+  /**
+   * Lista la colección del coleccionista
+   * @memberof Coleccionista
+   * @method listarColeccion
+   * @returns {void}
+   */
   public listarColeccion(): void {
     this.cargarColeccion();
 
@@ -199,6 +282,13 @@ export class Coleccionista {
     });
   }
 
+  /**
+   * Muestra un Funko de la colección del coleccionista en base a su identificador
+   * @param {number} id - Identificador del Funko a mostrar
+   * @memberof Coleccionista
+   * @method mostrarFunko
+   * @returns {void}
+   */
   public mostrarFunko(id: number): void {
     this.cargarColeccion();
 

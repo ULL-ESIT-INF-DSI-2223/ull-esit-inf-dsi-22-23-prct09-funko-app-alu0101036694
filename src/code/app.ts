@@ -6,6 +6,15 @@ import { Coleccionista } from "./coleccionista.js";
 import * as fs from "fs";
 import * as path from  "path";
 
+/**
+ * Programa principal de la aplicación.
+ * @returns {void}
+ * @throws {Error} Si no se ha introducido ningún comando.
+ * @throws {Error} Si el comando introducido no es válido.
+ * @throws {Error} Si el comando introducido no tiene los argumentos necesarios.
+ * @throws {Error} Si el comando introducido tiene argumentos no válidos.
+ */
+
 /*
 const yargs = require('yargs');
 const chalk = require('chalk');
