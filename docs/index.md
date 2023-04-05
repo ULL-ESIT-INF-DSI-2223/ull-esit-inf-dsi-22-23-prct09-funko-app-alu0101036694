@@ -1,19 +1,21 @@
-# [PRÁCTICA 6. OBJETOS, CLASES E INTERFACES](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694.git). 
+# [PRÁCTICA 6. OBJETOS, CLASES E INTERFACES](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694.git).
 
 [![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694?branch=main)
 
 ## Carla Oval Torres
 
 ## Índice <a name="índice"></a>
+
 1. [Introducción](#introducción)
 2. [Ejercicios propuestos](#ejercicios-propuestos)
-    1. [Ejercicio 1 - DSIflix](#ejercicio-1)
-    2. [Ejercicio 2 - Implementación de una lista y sus operaciones](#ejercicio-2)
-    3. [Ejercicio 3 - Ampliando la biblioteca musical](#ejercicio-3)
-    4. [Conclusiones](#conclusiones)
-    5. [Referencias](#referencias)
+   1. [Ejercicio 1 - DSIflix](#ejercicio-1)
+   2. [Ejercicio 2 - Implementación de una lista y sus operaciones](#ejercicio-2)
+   3. [Ejercicio 3 - Ampliando la biblioteca musical](#ejercicio-3)
+   4. [Conclusiones](#conclusiones)
+   5. [Referencias](#referencias)
 
 ## Introducción <a name="introducción"></a>
+
 > [Volver al índice](#índice)
 
 Lleve a cabo todos y cada uno de los ejercicios propuestos a continuación. Dado que vamos a trabajar con clases y que, probablemente, cada ejercicio implique el desarrollo de diferentes clases, el código fuente de cada ejercicio deberá estar alojado en un directorio independiente con nombre ejercicio-n/ dentro del directorio src/ de su proyecto. Dentro del directorio correspondiente a cada ejercicio, esto es, dentro del directorio ejercicio-n, incluya cada clase/interfaz desarrollada en un fichero independiente.
@@ -23,25 +25,27 @@ Incluya la documentación de sus clases mediante el uso de TypeDoc y adopte una 
 Por último, recuerde argumentar en el informe de la práctica todas las decisiones de diseño tomadas para cada ejercicio.
 
 ```typescript
-  import * as Prompt from 'prompt-sync';
+import * as Prompt from "prompt-sync";
 
-  const prompt = Prompt();
-  const myNumber = parseInt(prompt('Introduce a number: '));
-  console.log(myNumber)
+const prompt = Prompt();
+const myNumber = parseInt(prompt("Introduce a number: "));
+console.log(myNumber);
 ```
 
 ## Ejercicios propuestos <a name="ejercicios-propuestos"></a>
+
 ### Ejercicio 1 - DSIflix <a name="ejercicio-1"></a>
+
 > [Volver al índice](#índice)
 
 > Imagine que tiene que diseñar el modelo de datos de una plataforma de vídeo en streaming. A través del catálogo de dicha plataforma se puede acceder a películas, series y documentales:
-> 
+>
 > Defina una interfaz genérica Streamable que trate de especificar propiedades y métodos con los que debería contar una colección de emisiones concreta como, por ejemplo, una colección de series. Por ejemplo, deberían definirse métodos de búsqueda en dicha interfaz, que permitan obtener listados en función de diferentes términos de búsqueda: por año o por nombre, entre otros.
-> 
+>
 > Defina una clase abstracta genérica BasicStreamableCollection que implemente dicha interfaz genérica. En este punto, podrá particularizar algunas de las propiedades y métodos de la interfaz Streamable, aunque otros tendrán que permanecer como abstractos para ser definidos más abajo en la jerarquía de clases. Todo dependerá del diseño que haya llevado a cabo.
-> 
+>
 > Tendrá que extender la clase abstracta anterior para obtener subclases que modelen cada uno de los tres tipos de colecciones: series, películas y documentales.
-> 
+>
 > Trate de aplicar los principios SOLID. Preste especial atención al diseño de la interfaz Streamable. Si cree que debe dividirla en interfaces genéricas más pequeñas porque su diseño inicial es muy complejo, hágalo, con el objetivo de cumplir con el cuarto principio SOLID Interface segregation.
 
 #### Solución:
@@ -53,25 +57,25 @@ Estas interfaces pueden ser utilizadas por otras clases para implementar sus pro
 ```typescript
 // Definición de las interfaces
 
-  export interface Searchable {
-    searchByYear(year: number): Streamable[];
-    searchByName(name: string): Streamable[];
-  }
+export interface Searchable {
+  searchByYear(year: number): Streamable[];
+  searchByName(name: string): Streamable[];
+}
 
-  export interface Collectable {
-    addToCollection(streamable: Streamable): void;
-    removeFromCollection(streamable: Streamable): void;
-  }
-  
-  export interface Streamable {
-    id: string;
-    title: string;
-    description: string;
-    genre: string[];
-    rating: number;
-    releaseYear: number;
-    getDuration(): number;
-  }
+export interface Collectable {
+  addToCollection(streamable: Streamable): void;
+  removeFromCollection(streamable: Streamable): void;
+}
+
+export interface Streamable {
+  id: string;
+  title: string;
+  description: string;
+  genre: string[];
+  rating: number;
+  releaseYear: number;
+  getDuration(): number;
+}
 ```
 
 Las interfaces se definen con más detaññe a continuación:
@@ -82,38 +86,45 @@ Las interfaces se definen con más detaññe a continuación:
 
 - Streamable es una interfaz que define seis propiedades y un método. Las propiedades son id, title, description, genre, rating y releaseYear, todas de tipos primitivos o arrays de tipos primitivos. El método getDuration() no toma argumentos y devuelve un número. Esto significa que cualquier clase que implemente la interfaz Streamable debe proporcionar una implementación de este método.
 
-
 A cintinuación, definimos la clase abstracta BasicStreamableCollection que implementa las interfaces Searchable y Collectable:
 
 ```typescript
-  // Clase abstracta BasicStreamableCollection
-  
-  export abstract class BasicStreamableCollection implements Searchable, Collectable {
-    private collection: Streamable[];
-  
-    constructor() {
-      this.collection = [];
-    }
-  
-    searchByYear(year: number): Streamable[] {
-      return this.collection.filter(streamable => streamable.releaseYear === year);
-    }
-  
-    searchByName(name: string): Streamable[] {
-      return this.collection.filter(streamable => streamable.title.toLowerCase().includes(name.toLowerCase()));
-    }
-  
-    addToCollection(streamable: Streamable): void {
-      this.collection.push(streamable);
-    }
-  
-    removeFromCollection(streamable: Streamable): void {
-      const index = this.collection.findIndex(item => item.id === streamable.id);
-      if (index !== -1) {
-        this.collection.splice(index, 1);
-      }
+// Clase abstracta BasicStreamableCollection
+
+export abstract class BasicStreamableCollection
+  implements Searchable, Collectable
+{
+  private collection: Streamable[];
+
+  constructor() {
+    this.collection = [];
+  }
+
+  searchByYear(year: number): Streamable[] {
+    return this.collection.filter(
+      (streamable) => streamable.releaseYear === year
+    );
+  }
+
+  searchByName(name: string): Streamable[] {
+    return this.collection.filter((streamable) =>
+      streamable.title.toLowerCase().includes(name.toLowerCase())
+    );
+  }
+
+  addToCollection(streamable: Streamable): void {
+    this.collection.push(streamable);
+  }
+
+  removeFromCollection(streamable: Streamable): void {
+    const index = this.collection.findIndex(
+      (item) => item.id === streamable.id
+    );
+    if (index !== -1) {
+      this.collection.splice(index, 1);
     }
   }
+}
 ```
 
 La clase tiene una propiedad privada collection que es un arreglo de objetos Streamable.
@@ -125,34 +136,34 @@ Al ser una clase abstracta, no se puede instanciar directamente, sino que debe s
 Por último, se definen las subclases Series, Movies y Documentaries que extienden de BasicStreamableCollection:
 
 ```typescript
-  // Subclases que extienden BasicStreamableCollection
+// Subclases que extienden BasicStreamableCollection
 
-  export class Series extends BasicStreamableCollection {
-    private episodes: Streamable[];
-  
-    constructor() {
-      super();
-      this.episodes = [];
-    }
+export class Series extends BasicStreamableCollection {
+  private episodes: Streamable[];
+
+  constructor() {
+    super();
+    this.episodes = [];
   }
-  
-  export class Movies extends BasicStreamableCollection {
-    private duration: number;
-  
-    constructor() {
-      super();
-      this.duration = 0;
-    }
+}
+
+export class Movies extends BasicStreamableCollection {
+  private duration: number;
+
+  constructor() {
+    super();
+    this.duration = 0;
   }
-  
-  export class Documentaries extends BasicStreamableCollection {
-    private topics: string[];
-  
-    constructor() {
-      super();
-      this.topics = [];
-    }
+}
+
+export class Documentaries extends BasicStreamableCollection {
+  private topics: string[];
+
+  constructor() {
+    super();
+    this.topics = [];
   }
+}
 ```
 
 Se definen tres clases que extienden la clase abstracta BasicStreamableCollection. Cada una de ellas tiene sus propias propiedades y métodos que las diferencian entre sí.
@@ -165,7 +176,6 @@ Se definen tres clases que extienden la clase abstracta BasicStreamableCollectio
 
 Todas estas clases implementan las interfaces Searchable y Collectable, lo que significa que heredan los métodos definidos en la clase BasicStreamableCollection. Esto les permite realizar búsquedas por año y por nombre, agregar y eliminar elementos de la colección. Además, pueden definir sus propios métodos y propiedades específicos para cada subclase.
 
-
 #### Test:
 
 Se han realizado tests para comprobar que las clases Series, Movies y Documentaries, que extienden la clase abstracta BasicStreamableCollection, funcionan correctamente y cumplen con las especificaciones de su interfaz. En concreto, los tests comprueban que las instancias de estas clases pueden añadir y eliminar elementos de sus respectivas colecciones, y que las búsquedas por nombre y año de publicación funcionan correctamente.
@@ -173,85 +183,92 @@ Se han realizado tests para comprobar que las clases Series, Movies y Documentar
 Para ello, cada test realiza una serie de acciones sobre una instancia de la clase que está siendo probada (por ejemplo, añadir un elemento a la colección) y después comprueba que el resultado de una búsqueda realizada sobre esa instancia es el esperado (por ejemplo, que la búsqueda por nombre devuelve un array con un solo elemento). En caso de que el resultado esperado no se cumpla, el test falla.
 
 ```typescript
-import { describe, it } from 'mocha';
+import { describe, it } from "mocha";
 import { expect } from "chai";
-import * as Prompt from 'prompt-sync';
-import { BasicStreamableCollection, Series, Movies, Documentaries } from '../src/ejercicio01/ejercicio01';
+import * as Prompt from "prompt-sync";
+import {
+  BasicStreamableCollection,
+  Series,
+  Movies,
+  Documentaries,
+} from "../src/ejercicio01/ejercicio01";
 
-describe('Series', () => {
+describe("Series", () => {
   let series: Series;
 
   beforeEach(() => {
     series = new Series();
   });
 
-  it('should be able to add and remove series', () => {
+  it("should be able to add and remove series", () => {
     const streamable = {
-      id: '1',
-      title: 'Stranger Things',
-      description: 'A love letter to the supernatural classics of the 80s',
-      genre: ['Drama', 'Fantasy', 'Horror'],
+      id: "1",
+      title: "Stranger Things",
+      description: "A love letter to the supernatural classics of the 80s",
+      genre: ["Drama", "Fantasy", "Horror"],
       rating: 8.7,
       releaseYear: 2016,
-      getDuration: () => 60
+      getDuration: () => 60,
     };
     series.addToCollection(streamable);
-    expect(series.searchByName('stranger')).to.have.lengthOf(1);
-    expect(series.searchByName('things')).to.have.lengthOf(1);
+    expect(series.searchByName("stranger")).to.have.lengthOf(1);
+    expect(series.searchByName("things")).to.have.lengthOf(1);
     series.removeFromCollection(streamable);
-    expect(series.searchByName('stranger')).to.have.lengthOf(0);
-    expect(series.searchByName('things')).to.have.lengthOf(0);
+    expect(series.searchByName("stranger")).to.have.lengthOf(0);
+    expect(series.searchByName("things")).to.have.lengthOf(0);
   });
 });
 
-describe('Movies', () => {
+describe("Movies", () => {
   let movies: Movies;
 
   beforeEach(() => {
     movies = new Movies();
   });
 
-  it('should be able to add and remove movies', () => {
+  it("should be able to add and remove movies", () => {
     const streamable = {
-      id: '1',
-      title: 'The Shawshank Redemption',
-      description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
-      genre: ['Drama'],
+      id: "1",
+      title: "The Shawshank Redemption",
+      description:
+        "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      genre: ["Drama"],
       rating: 9.3,
       releaseYear: 1994,
-      getDuration: () => 142
+      getDuration: () => 142,
     };
     movies.addToCollection(streamable);
-    expect(movies.searchByName('shawshank')).to.have.lengthOf(1);
+    expect(movies.searchByName("shawshank")).to.have.lengthOf(1);
     expect(movies.searchByYear(1994)).to.have.lengthOf(1);
     movies.removeFromCollection(streamable);
-    expect(movies.searchByName('shawshank')).to.have.lengthOf(0);
+    expect(movies.searchByName("shawshank")).to.have.lengthOf(0);
     expect(movies.searchByYear(1994)).to.have.lengthOf(0);
   });
 });
 
-describe('Documentaries', () => {
+describe("Documentaries", () => {
   let documentaries: Documentaries;
 
   beforeEach(() => {
     documentaries = new Documentaries();
   });
 
-  it('should be able to add and remove documentaries', () => {
+  it("should be able to add and remove documentaries", () => {
     const streamable = {
-      id: '1',
-      title: 'The Social Dilemma',
-      description: 'Explores the dangerous human impact of social networking, with tech experts sounding the alarm on their own creations.',
-      genre: ['Documentary'],
+      id: "1",
+      title: "The Social Dilemma",
+      description:
+        "Explores the dangerous human impact of social networking, with tech experts sounding the alarm on their own creations.",
+      genre: ["Documentary"],
       rating: 7.6,
       releaseYear: 2020,
-      getDuration: () => 94
+      getDuration: () => 94,
     };
     documentaries.addToCollection(streamable);
-    expect(documentaries.searchByName('social dilemma')).to.have.lengthOf(1);
+    expect(documentaries.searchByName("social dilemma")).to.have.lengthOf(1);
     expect(documentaries.searchByYear(2020)).to.have.lengthOf(1);
     documentaries.removeFromCollection(streamable);
-    expect(documentaries.searchByName('social dilemma')).to.have.lengthOf(0);
+    expect(documentaries.searchByName("social dilemma")).to.have.lengthOf(0);
     expect(documentaries.searchByYear(2020)).to.have.lengthOf(0);
   });
 });
@@ -284,6 +301,7 @@ El código parece cumplir con algunos principios SOLID, pero no todos.
 - **Principio de Inversión de Dependencia (DIP)**: El código no parece cumplir con el principio DIP porque las subclases dependen directamente de la clase BasicStreamableCollection. Si se hace una modificación en BasicStreamableCollection, puede haber un impacto en las subclases. Por lo tanto, las subclases dependen de una implementación concreta en lugar de una abstracción. Una solución podría ser definir una interfaz o una clase abstracta que defina los métodos comunes que necesitan las subclases y hacer que BasicStreamableCollection implemente esa interfaz o extienda esa clase abstracta.
 
 ### Ejercicio 2 - Implementación de una lista y sus operaciones <a name="ejercicio-2"></a>
+
 > [Volver al índice](#índice)
 
 > En este ejercicio tendrá que implementar una clase genérica que modele una lista de elementos de cualquier tipo y sus operaciones sin hacer uso de ninguna de las funcionlidades proporcionadas por Array.prototype. Se permite, sin embargo, el uso de [].
@@ -317,7 +335,7 @@ A continuación, se muestra la clase `Lista` implementada:
 export class Lista<T> {
   /**
    * Longitud de la lista
-   * 
+   *
    */
   private length: number = 0;
   /**
@@ -384,7 +402,7 @@ export class Lista<T> {
     this.data = {};
     this.length = 0;
   }
-  
+
   /**
    * Concatenar varias listas en una sola
    * @param lists Listas a concatenar
@@ -473,7 +491,7 @@ export class Lista<T> {
       result.appendItem(this.data[i]);
     }
     return result;
-  }  
+  }
 
   /**
    * Iterar en los elementos de la lista y ejecutar una función con cada uno de ellos
@@ -511,17 +529,16 @@ El constructor de la clase toma un número variable de elementos de tipo T y los
 
 La clase Lista utiliza la sintaxis de plantilla de TypeScript para especificar el tipo de los elementos de la lista. Esto significa que se puede crear una instancia de la clase Lista para cualquier tipo de datos. Por ejemplo, se pueden crear listas de números, cadenas, objetos, etc.
 
-
 #### Tests:
 
 Los tests que se han desarrollado para este ejercicio son los que siguen:
 
 ```typescript
-import { describe, it } from 'mocha';
+import { describe, it } from "mocha";
 import { expect } from "chai";
-import { Lista } from '../src/ejercicio02/ejercicio02';
+import { Lista } from "../src/ejercicio02/ejercicio02";
 
-describe('Lista', () => {
+describe("Lista", () => {
   // Crear una lista de números para las pruebas
   const listaNumeros = new Lista<number>();
 
@@ -535,99 +552,112 @@ describe('Lista', () => {
     listaNumeros.clear();
   });
 
-  describe('Constructor de la clase', () => {
-    it('La lista se crea correctamente', () => {
+  describe("Constructor de la clase", () => {
+    it("La lista se crea correctamente", () => {
       expect(new Lista<number>(1, 2, 3, 4, 5)).to.be.instanceOf(Lista);
-      expect(new Lista<number>(1, 2, 3, 4, 5).getData()).to.deep.equal([1, 2, 3, 4, 5]);
+      expect(new Lista<number>(1, 2, 3, 4, 5).getData()).to.deep.equal([
+        1, 2, 3, 4, 5,
+      ]);
     });
 
-    it('Puedo crear lista de strings', () => {
-      expect(new Lista<string>('a', 'b', 'c', 'd', 'e')).to.be.instanceOf(Lista);
-      expect(new Lista<string>('a', 'b', 'c', 'd', 'e').getData()).to.deep.equal(['a', 'b', 'c', 'd', 'e']);
+    it("Puedo crear lista de strings", () => {
+      expect(new Lista<string>("a", "b", "c", "d", "e")).to.be.instanceOf(
+        Lista
+      );
+      expect(
+        new Lista<string>("a", "b", "c", "d", "e").getData()
+      ).to.deep.equal(["a", "b", "c", "d", "e"]);
     });
 
-    it('Puedo crear lista de booleanos', () => {
-      expect(new Lista<boolean>(true, false, true, false)).to.be.instanceOf(Lista);
-      expect(new Lista<boolean>(true, false, true, false).getData()).to.deep.equal([true, false, true, false]);
+    it("Puedo crear lista de booleanos", () => {
+      expect(new Lista<boolean>(true, false, true, false)).to.be.instanceOf(
+        Lista
+      );
+      expect(
+        new Lista<boolean>(true, false, true, false).getData()
+      ).to.deep.equal([true, false, true, false]);
     });
   });
 
-  describe('#getData()', () => {
-    it('El getter de los datos funciona', () => {
+  describe("#getData()", () => {
+    it("El getter de los datos funciona", () => {
       let listaNumeros_1 = new Lista<number>(1, 2, 3, 4);
       expect(listaNumeros_1.getData()).to.deep.equal([1, 2, 3, 4]);
     });
   });
 
-  describe('#appendItem()', () => {
-    it('debe agregar elementos a la lista', () => {
+  describe("#appendItem()", () => {
+    it("debe agregar elementos a la lista", () => {
       listaNumeros.appendItem(4);
       expect(listaNumeros.getLength()).to.equal(4);
     });
   });
 
-  describe('#appendList()', () => {
+  describe("#appendList()", () => {
     let listaNumeros_1 = new Lista<number>(1, 2, 3, 4);
     let listaNumeros_2 = new Lista<number>(1, 2, 3, 4);
-    listaNumeros_1.appendList(listaNumeros_2)
-    it('debe agragar una lista a la actual', () => {
+    listaNumeros_1.appendList(listaNumeros_2);
+    it("debe agragar una lista a la actual", () => {
       expect(listaNumeros_1.getData()).to.deep.equal([1, 2, 3, 4, 1, 2, 3, 4]);
     });
   });
 
-  describe('#concatenate()', () => {
-    describe('debe concatenar varias listas en una sola', () => {
+  describe("#concatenate()", () => {
+    describe("debe concatenar varias listas en una sola", () => {
       const listaNumeros1 = new Lista<number>(4, 5);
       const listaNumeros2 = new Lista<number>(6, 7);
       const listaNumeros3 = new Lista<number>(8, 9, 10);
       listaNumeros1.concatenate(listaNumeros2, listaNumeros3);
-      it('El tamaño es el correcto', () => {
+      it("El tamaño es el correcto", () => {
         expect(listaNumeros1.getLength()).to.equal(7);
       });
-      it('Los elementos coinciden', () => {
+      it("Los elementos coinciden", () => {
         expect(listaNumeros1.getData()).to.deep.equal([4, 5, 6, 7, 8, 9, 10]);
       });
     });
-  });  
+  });
 
-  describe('#filter()', () => {
-    it('debe filtrar la lista utilizando un predicado lógico', () => {
+  describe("#filter()", () => {
+    it("debe filtrar la lista utilizando un predicado lógico", () => {
       const listaPares = listaNumeros.filter((num) => num % 2 === 0);
       expect(listaPares.getData()).to.deep.equal([2]);
     });
   });
 
-  describe('#getLength()', () => {
-    it('debe obtener la longitud de la lista', () => {
+  describe("#getLength()", () => {
+    it("debe obtener la longitud de la lista", () => {
       expect(listaNumeros.getLength()).to.equal(3);
     });
   });
 
-  describe('#map()', () => {
-    it('debe aplicar una función a cada elemento de la lista', () => {
+  describe("#map()", () => {
+    it("debe aplicar una función a cada elemento de la lista", () => {
       const listaDobles = listaNumeros.map((num) => num * 2);
       expect(listaDobles.getData()).to.deep.equal([2, 4, 6]);
     });
   });
 
-  describe('#reduce()', () => {
-    it('debe reducir la lista a un único valor utilizando una función y un acumulador inicial', () => {
-      const resultado = listaNumeros.reduce((accumulator, num) => accumulator + num, 0);
+  describe("#reduce()", () => {
+    it("debe reducir la lista a un único valor utilizando una función y un acumulador inicial", () => {
+      const resultado = listaNumeros.reduce(
+        (accumulator, num) => accumulator + num,
+        0
+      );
       expect(resultado).to.equal(6);
     });
   });
 
-  describe('#reverse()', () => {
-    it('debe obtener una lista con los elementos en orden inverso', () => {
+  describe("#reverse()", () => {
+    it("debe obtener una lista con los elementos en orden inverso", () => {
       const listaInvertida = listaNumeros.reverse();
       expect(listaInvertida.getData()).to.deep.equal([3, 2, 1]);
     });
   });
 
-  describe('#forEach()', () => {
-    it('debe iterar en los elementos de la lista y ejecutar una función con cada uno de ellos', () => {
+  describe("#forEach()", () => {
+    it("debe iterar en los elementos de la lista y ejecutar una función con cada uno de ellos", () => {
       let suma = 0;
-      listaNumeros.forEach((num) => suma += num);
+      listaNumeros.forEach((num) => (suma += num));
       expect(suma).to.equal(6);
     });
   });
@@ -672,16 +702,16 @@ Esta clase `Lista` cumple los principios SOLID con la siguiente justificación:
 
 - **Dependency Inversion Principle (DIP)**: La clase `Lista` utiliza inyección de dependencias implícita, ya que no depende directamente de otras clases. En su lugar, los métodos aceptan objetos de tipo `T`, que pueden ser cualquier clase que implemente la interfaz esperada. Además, la clase `Lista` se puede extender a través de la herencia, lo que permite una mayor flexibilidad en el diseño del código.
 
-
 ### Ejercicio 3 - Ampliando la biblioteca musical <a name="ejercicio-3"></a>
+
 > [Volver al índice](#índice)
 
 > Teniendo en cuenta el ejercicio de la biblioteca musical implementado en la práctica 5, mejore su diseño tratando de cumplir todos los principios SOLID si es que aún no los cumple.
-> 
+>
 > Luego, trate de introducir las siguientes modificaciones a su diseño:
-> 
+>
 > Ahora, la discografía de un artista podrá estar formada por una colección de discos o de singles. Por lo tanto, tendrá que contemplar la nueva entidad single. Generalmente, un single se diferencia de un disco en que el single contiene una única canción o varias versiones de la misma canción.
-> 
+>
 > Además, ahora deberá hacer que la discografía sea una clase genérica. En algún punto de su código deberá concretar esta clase genérica indicando que la discografía puede ser una colección de discos, una colección de singles o una colección de discos y singles.
 
 #### Solución:
@@ -760,9 +790,16 @@ La clase también tiene un constructor que acepta valores para todas las propied
 
 ```typescript
 class Song {
-  constructor(public name: string, public duration: number, public genres: string[], public isSingle: boolean, public numReproductions: number) {}
+  constructor(
+    public name: string,
+    public duration: number,
+    public genres: string[],
+    public isSingle: boolean,
+    public numReproductions: number
+  ) {}
 }
 ```
+
 No hay métodos adicionales en la clase Song, pero se pueden utilizar las propiedades públicas de la clase en conjunto con otras clases para realizar diversas operaciones relacionadas con la música. Por ejemplo, la propiedad duration de la clase Song se utiliza en el método getDuration() de la clase Album para calcular la duración total de un álbum.
 
 **Clase `MusicLibrary`**
@@ -770,11 +807,11 @@ No hay métodos adicionales en la clase Song, pero se pueden utilizar las propie
 El código presentado es una implementación de una biblioteca musical en TypeScript. Comienza importando las clases Album, Song y Artist desde los archivos './album', './song' y './artist', respectivamente. Luego, importa la biblioteca 'prompt-sync' y establece tres constantes de color para su uso posterior en la consola.
 
 ```typescript
-import { Album } from './album';
-import { Song } from './song';
-import { Artist } from './artist';
+import { Album } from "./album";
+import { Song } from "./song";
+import { Artist } from "./artist";
 
-import * as Prompt from 'prompt-sync';
+import * as Prompt from "prompt-sync";
 
 const RESET = "\u001b[0m";
 const BOLD = "\u001b[1m";
@@ -812,17 +849,17 @@ export class MusicLibrary {
       )
     );
   }
-  
+
   public search(query: string): void {
-    const artistResults: { artist: Artist, albums: string[] }[] = [];
+    const artistResults: { artist: Artist; albums: string[] }[] = [];
     const albumResults: Album[] = [];
     const songResults: Song[] = [];
-  
+
     for (const artist of this.artists) {
       if (artist.name.toLowerCase().includes(query.toLowerCase())) {
         artistResults.push({
           artist,
-          albums: artist.discography.map(album => album.name)
+          albums: artist.discography.map((album) => album.name),
         });
       } else {
         for (const album of artist.discography) {
@@ -838,15 +875,15 @@ export class MusicLibrary {
         }
       }
     }
-  
+
     if (artistResults.length > 0) {
       console.log("Artists:");
       console.table(
         artistResults.flatMap(({ artist, albums }) => {
-          return albums.map(album => ({
+          return albums.map((album) => ({
             Artist: artist.name,
             Album: album,
-            "Monthly Listeners": artist.monthlyListeners
+            "Monthly Listeners": artist.monthlyListeners,
           }));
         })
       );
@@ -860,7 +897,7 @@ export class MusicLibrary {
       console.table(songResults);
     }
   }
-  
+
   public countSongs(albumName: string): number {
     for (const artist of this.artists) {
       for (const album of artist.discography) {
@@ -924,13 +961,21 @@ export class MusicLibrary {
           exit = true;
           break;
         case "1":
-          const song1 = new Song('Song A', 180, ['Rock'], true, 100);
-          const song2 = new Song('Song B', 240, ['Pop', 'R&B'], false, 50);
-          const song3 = new Song('Song C', 230, ['Disco', 'R&B'], false, 50);
-          const album1 = new Album('Album A', 2022, [song1, song2]);
-          const album2 = new Album('Album A', 2021, [song2, song3]);
-          const artista_ej: Artist = { name: 'Artist A', monthlyListeners: 10000, discography: [album1] };
-          const artist_otro: Artist = { name: 'Artist B', monthlyListeners: 5000, discography: [album1, album2] };
+          const song1 = new Song("Song A", 180, ["Rock"], true, 100);
+          const song2 = new Song("Song B", 240, ["Pop", "R&B"], false, 50);
+          const song3 = new Song("Song C", 230, ["Disco", "R&B"], false, 50);
+          const album1 = new Album("Album A", 2022, [song1, song2]);
+          const album2 = new Album("Album A", 2021, [song2, song3]);
+          const artista_ej: Artist = {
+            name: "Artist A",
+            monthlyListeners: 10000,
+            discography: [album1],
+          };
+          const artist_otro: Artist = {
+            name: "Artist B",
+            monthlyListeners: 5000,
+            discography: [album1, album2],
+          };
           this.addArtist(artista_ej);
           break;
         case "2":
@@ -940,29 +985,41 @@ export class MusicLibrary {
           // Pedir un query
           do {
             the_query = prompt(`Enter a query: `);
-          } while (typeof(the_query) !== 'string');
+          } while (typeof the_query !== "string");
           this.search(the_query);
           break;
         case "4":
           // Pedir el nombre del album
           do {
             the_album = prompt(`Enter an album name: `);
-          } while (typeof(the_album) !== 'string');
-          console.log(`${BOLD}${GREEN}Number of songs in ${the_album}: ${this.countSongs(the_album)}${RESET}`);
+          } while (typeof the_album !== "string");
+          console.log(
+            `${BOLD}${GREEN}Number of songs in ${the_album}: ${this.countSongs(
+              the_album
+            )}${RESET}`
+          );
           break;
         case "5":
           // Pedir el nombre del album
           do {
             the_album = prompt(`Enter an album name: `);
-          } while (typeof(the_album) !== 'string');
-          console.log(`${BOLD}${GREEN}Duration of ${the_album}: ${this.calculateDuration(the_album)}${RESET}`);
+          } while (typeof the_album !== "string");
+          console.log(
+            `${BOLD}${GREEN}Duration of ${the_album}: ${this.calculateDuration(
+              the_album
+            )}${RESET}`
+          );
           break;
         case "6":
           // Pedir el nombre del album
           do {
             the_album = prompt(`Enter an album name: `);
-          } while (typeof(the_album) !== 'string');
-          console.log(`${BOLD}${GREEN}Reproductions of ${the_album}: ${this.calculateReproductions(the_album)}${RESET}`);
+          } while (typeof the_album !== "string");
+          console.log(
+            `${BOLD}${GREEN}Reproductions of ${the_album}: ${this.calculateReproductions(
+              the_album
+            )}${RESET}`
+          );
           break;
         default:
           console.log("Invalid option. Try again.");
@@ -1095,7 +1152,6 @@ export class Library {
 }
 
 const the_library = new Library();
-
 ```
 
 #### Tests:
@@ -1103,97 +1159,123 @@ const the_library = new Library();
 Los tests que hemos realizado para comprobar el correcto funcionamiento de la biblioteca son los siguientes:
 
 ```typescript
-import { describe, it } from 'mocha';
+import { describe, it } from "mocha";
 import { expect } from "chai";
-import * as Prompt from 'prompt-sync';
-import { Song } from '../src/ejercicio01/song';
-import { Album } from '../src/ejercicio01/album';
-import { Artist } from '../src/ejercicio01/artist';
-import { MusicLibrary } from '../src/ejercicio01/library';
+import * as Prompt from "prompt-sync";
+import { Song } from "../src/ejercicio01/song";
+import { Album } from "../src/ejercicio01/album";
+import { Artist } from "../src/ejercicio01/artist";
+import { MusicLibrary } from "../src/ejercicio01/library";
 
-describe('MusicLibrary', () => {
-    describe('addArtist', () => {
-        it('should add an artist to the library', () => {
-            const library = new MusicLibrary();
-            const artist: Artist = {name:'Queen', monthlyListeners:1000000, discography:[
-                new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-                ]),
-            ]};
-            library.addArtist(artist);
-            expect(library.artists).to.deep.equal([artist]);
-        });
+describe("MusicLibrary", () => {
+  describe("addArtist", () => {
+    it("should add an artist to the library", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      expect(library.artists).to.deep.equal([artist]);
     });
+  });
 
-    describe('countSongs', () => {
-        it('should count the number of songs in an album', () => {
-          const library = new MusicLibrary();
-          const artist: Artist = {
-            name: 'Queen',
-            monthlyListeners: 1000000,
-            discography: [
-              new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-              ]),
-            ],
-          };
-          library.addArtist(artist);
-          library.countSongs('A Night at the Opera');
-          const expectedCount = 3;
-          const actualCount = artist.discography[0].songs.length;
-          expect(actualCount).to.equal(expectedCount);
-        });
-      });
+  describe("countSongs", () => {
+    it("should count the number of songs in an album", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      library.countSongs("A Night at the Opera");
+      const expectedCount = 3;
+      const actualCount = artist.discography[0].songs.length;
+      expect(actualCount).to.equal(expectedCount);
+    });
+  });
 
-      describe('calculateDuration', () => {
-        it('should count the duration of the album', () => {
-          const library = new MusicLibrary();
-          const artist: Artist = {
-            name: 'Queen',
-            monthlyListeners: 1000000,
-            discography: [
-              new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-              ]),
-            ],
-          };
-          library.addArtist(artist);
-          let actualCount = 0;
-          const expectedCount = 11.98;
-          actualCount = library.calculateDuration('A Night at the Opera');
-          expect(actualCount).to.equal(expectedCount);
-        });
-      });
+  describe("calculateDuration", () => {
+    it("should count the duration of the album", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      let actualCount = 0;
+      const expectedCount = 11.98;
+      actualCount = library.calculateDuration("A Night at the Opera");
+      expect(actualCount).to.equal(expectedCount);
+    });
+  });
 
-      describe('calculateReproductions', () => {
-        it('should count the reproductions of the album', () => {
-          const library = new MusicLibrary();
-          const artist: Artist = {
-            name: 'Queen',
-            monthlyListeners: 1000000,
-            discography: [
-              new Album('A Night at the Opera', 1975, [
-                new Song('Bohemian Rhapsody', 6.07, ['Rock'], false, 1000000),
-                new Song('Love of My Life', 3.39, ['Rock', 'Ballad'], false, 500000),
-                new Song('You\'re My Best Friend', 2.52, ['Rock'], true, 750000),
-              ]),
-            ],
-          };
-          library.addArtist(artist);
-          let actualCount = 0;
-          const expectedCount = 2250000;
-          actualCount = library.calculateReproductions('A Night at the Opera');
-          expect(actualCount).to.equal(expectedCount);
-        });
-      });
-
-
+  describe("calculateReproductions", () => {
+    it("should count the reproductions of the album", () => {
+      const library = new MusicLibrary();
+      const artist: Artist = {
+        name: "Queen",
+        monthlyListeners: 1000000,
+        discography: [
+          new Album("A Night at the Opera", 1975, [
+            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
+            new Song(
+              "Love of My Life",
+              3.39,
+              ["Rock", "Ballad"],
+              false,
+              500000
+            ),
+            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
+          ]),
+        ],
+      };
+      library.addArtist(artist);
+      let actualCount = 0;
+      const expectedCount = 2250000;
+      actualCount = library.calculateReproductions("A Night at the Opera");
+      expect(actualCount).to.equal(expectedCount);
+    });
+  });
 });
 ```
 
@@ -1234,6 +1316,7 @@ Esta interfaz cumple con los principios SOLID, ya que se enfoca en definir la es
 La clase `Song` es simple y cohesiva, con una única responsabilidad de representar una canción de música. Además, utiliza el principio de encapsulación al ocultar su implementación interna detrás de una interfaz pública consistente. Además, se podrían añadir nuevas funcionalidades a la clase sin modificar el código ya existente.
 
 ### Conclusiones <a name="conclusiones"></a>
+
 > [Volver al índice](#índice)
 
 La función table puede ser muy útil para depurar objetos complejos y visualizarlos de una manera más estructurada y legible. Es especialmente útil cuando se está tratando con datos tabulares o cuando se necesita comparar varias instancias de un mismo objeto.
@@ -1241,8 +1324,8 @@ La función table puede ser muy útil para depurar objetos complejos y visualiza
 Por otro lado el uso de clases e interfaces nos posibilita la creación de objetos con propiedades y métodos que nos permiten modelar el comportamiento de los mismos. Esto nos permite crear objetos que se comporten de una manera determinada y que nos permitan realizar operaciones sobre ellos de una manera más sencilla y ordenada, incluso si son objetos complejos.
 
 ### Referencias <a name="referencias"></a>
+
 > [Volver al índice](#índice)
 
 1. [Entrada de texto](https://www.npmjs.com/package/prompt-sync)
 2. [Formato de escape ANSI](https://es.wikipedia.org/wiki/C%C3%B3digo_escape_ANSI#:~:text=Los%20c%C3%B3digos%20de%20escape%20ANSI,color%20o%20moviendo%20el%20cursor.)
-

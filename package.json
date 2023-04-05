@@ -4,18 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
-    "ej1": "tsc-watch --onSuccess \"node dist/ejercicio01/ejercicio01.js\"",
-    "ej2": "tsc-watch --onSuccess \"node dist/ejercicio02/ejercicio02.js\"",
-    "ej3": "tsc-watch --onSuccess \"node dist/ejercicio03/ejercicio03.js\"",
+    "build": "tsc src/code/app.ts",
+    "add": "node src/code/app.js add --user \"carla\" --id 1 --name \"Classic Sonic\" --desc \"The best Sonic Funko ever\" --type \"Pop!\" --genre \"Games\" --franchise \"A\" --number 1 --exclusive 0 --special \"C\" --value 10",
+    "update": "node src/code/app.js update --user \"carla\" --id 1 --name \"Classic Sonic 2\" --desc \"The best Sonic Funko ever\" --type \"Pop!\" --genre \"Games\" --franchise \"A\" --number 1 --exclusive 0 --special \"C\" --value 20",
+    "read": "node src/code/app.js read --user \"carla\" --id 1",
+    "list": "node src/code/app.js list --user \"carla\"",
+    "remove": "node src/code/app.js remove --user \"carla\" --id 1",
+    "start": "tsc-watch --onSuccess \"node dist/app.js\"",
     "doc": "typedoc",
     "test": "nyc mocha -r ts-node/register 'tests/**/*.ts'",
-    "test1": "mocha -r ts-node/register 'tests/ejercicio01.spec.ts'",
-    "test2": "mocha -r ts-node/register 'tests/ejercicio02.spec.ts'",
-    "test3": "mocha -r ts-node/register 'tests/ejercicio03.spec.ts'",
     "mod1": "mocha -r ts-node/register 'tests/modificacion01.spec.ts'",
     "mod2": "mocha -r ts-node/register 'tests/modificacion02.spec.ts'",
-    "coverage": "nyc npm test && nyc report --reporter=lcov"
+    "coverage": "c8 npm test && c8 report --reporter=lcov"
   },
   "keywords": [],
   "author": "",
@@ -25,8 +25,10 @@
     "@types/lowdb": "^1.0.11",
     "@types/mocha": "^10.0.1",
     "@types/prompt-sync": "^4.2.0",
+    "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
+    "c8": "^7.13.0",
     "chai": "^4.3.7",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
@@ -42,8 +44,10 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
     "inquirer": "^9.1.4",
     "lowdb": "^1.0.0",
-    "sinon": "^15.0.1"
+    "sinon": "^15.0.1",
+    "yargs": "^17.7.1"
   }
 }

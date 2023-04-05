@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { AddMapReduce, SubMapReduce, ProdMapReduce, DivMapReduce } from '../src/modificacion02';
+import { AddMapReduce, SubMapReduce, ProdMapReduce, DivMapReduce } from '../src/modifications/modificacion02';
 
 describe('MapReduceTemplate', () => {
   const numbers1 = [1, 2, 3, 4, 5];

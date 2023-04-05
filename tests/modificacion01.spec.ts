@@ -1,10 +1,10 @@
 import { describe, it } from 'mocha';
 import { expect } from "chai";
 import * as Prompt from 'prompt-sync';
-import { BubbleSortStrategy } from '../src/bubbleSort';
-import { MergeSortStrategy } from '../src/mergeSort';
-import { SortingInterface } from "../src/interface";
-import { SortingContext } from '../src/modificacion01';
+import { BubbleSortStrategy } from '../src/modifications/bubbleSort';
+import { MergeSortStrategy } from '../src/modifications/mergeSort';
+import { SortingInterface } from "../src/modifications/interface";
+import { SortingContext } from '../src/modifications/modificacion01';
 
 // BubbleSortStrategy tests
 

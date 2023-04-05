@@ -1,0 +1,12 @@
+{
+  "id": 2,
+  "name": "Classic Sonic",
+  "description": "The best Sonic Funko ever",
+  "type": "Pop!",
+  "genre": "Games",
+  "franchise": "A",
+  "number": 1,
+  "exclusive": true,
+  "specialFeatures": "B",
+  "marketValue": 3
+}
