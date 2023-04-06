@@ -1,1331 +1,830 @@
-# [PRÁCTICA 6. OBJETOS, CLASES E INTERFACES](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694.git).
+# [PRÁCTICA 9. APLICACION DE REGISTRO DE FUNKOPOPS](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct09-funko-app-alu0101036694.git). 
 
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct09-funko-app-alu0101036694.git/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694?branch=main)
 
 ## Carla Oval Torres
 
 ## Índice <a name="índice"></a>
-
 1. [Introducción](#introducción)
-2. [Ejercicios propuestos](#ejercicios-propuestos)
-   1. [Ejercicio 1 - DSIflix](#ejercicio-1)
-   2. [Ejercicio 2 - Implementación de una lista y sus operaciones](#ejercicio-2)
-   3. [Ejercicio 3 - Ampliando la biblioteca musical](#ejercicio-3)
-   4. [Conclusiones](#conclusiones)
-   5. [Referencias](#referencias)
+2. [Descripción de los requisitos del sistema y funcionamiento esperado](#requisitos)
+3. [Descripción de la solución diseñada](#solución)
+    1. [Clase funko](#funko)
+    2. [Clase coleccionista](#coleccionista)
+    3. [Programa principal](#principal)
+    4. [Base de datos](#database)
+4. [Conclusiones](#conclusiones)
+5. [Referencias](#referencias)
 
 ## Introducción <a name="introducción"></a>
-
 > [Volver al índice](#índice)
 
-Lleve a cabo todos y cada uno de los ejercicios propuestos a continuación. Dado que vamos a trabajar con clases y que, probablemente, cada ejercicio implique el desarrollo de diferentes clases, el código fuente de cada ejercicio deberá estar alojado en un directorio independiente con nombre ejercicio-n/ dentro del directorio src/ de su proyecto. Dentro del directorio correspondiente a cada ejercicio, esto es, dentro del directorio ejercicio-n, incluya cada clase/interfaz desarrollada en un fichero independiente.
+En esta práctica, tendrá que implementar una aplicación que permita almacenar información de los Funko Pops pertenecientes a la colección de un usuario. En concreto, el sistema permitirá añadir, modificar, eliminar, listar y leer la información asociada a un Funko. La información de cada Funko se almacenará como un JSON en el sistema de ficheros de la máquina donde se ejecute la aplicación. Además, solo se podrá interactuar con la aplicación desde la línea de comandos (no existirá un menú interactivo).
 
-Incluya la documentación de sus clases mediante el uso de TypeDoc y adopte una metodología de desarrollo dirigido por pruebas/comportamiento. Tenga en cuenta que seguir la metodología TDD o BDD implica confirmar el correcto funcionamiento del código desarrollado, así como los casos en los que dicho código debería informar de un error cuando la entrada no sea la correcta (errors should never pass silently). En consecuencia, desarrolle pruebas unitarias que comprueben el correcto funcionamiento del código y, además, incluya otras pruebas unitarias que verifiquen que el software es robusto ante entradas no válidas o inesperadas.
+Todo el código desarrollado deberá estar alojado en el repositorio generado tras la aceptación de la asignación de GitHub Classroom. En ese sentido, utilice en dicho repositorio una estructura de proyecto similar a la que hemos visto en clase.
 
-Por último, recuerde argumentar en el informe de la práctica todas las decisiones de diseño tomadas para cada ejercicio.
+Por último, tendrá que comentar en un informe la solución diseñada, haciendo hincapié en las decisiones de diseño que ha tomado.
 
-```typescript
-import * as Prompt from "prompt-sync";
+## Descripción de los requisitos del sistema  funcionamiento esperado<a name="requisitos"></a>
+> [Volver al índice](#índice)
+> 
+> Los requisitos que debe cumplir la aplicación son los siguientes:
+> 
+> La aplicación deberá permitir que múltiples usuarios interactúen con ella, pero no simultáneamente.
+> 
+> En concreto, un Funko vendrá descrito por los siguientes elementos mínimos de información que deberán ser almacenados:
+> 1. ID. Debe ser un identificador único del Funko.
+> 2. Nombre. Debe ser una cadena de caracteres.
+> 3. Descripción. Debe ser una cadena de caracteres.
+> 4. Tipo. Debe ser un enumerado con valores como, por ejemplo, Pop!, Pop! Rides, Vynil Soda o Vynil Gold, entre otros.
+> 5. Género. Debe ser un enumerado con valores como, por ejemplo, Animación, Películas y TV, Videojuegos, Deportes, Música o Ánime, entre otras.
+> 6. Franquicia. Debe ser una cadena de caracteres como, por ejemplo, The Big Bang Theory, Game of Thrones, Sonic The Hedgehog o Marvel: Guardians of the Galaxy, entre otras.
+> 7. Número. Debe ser el número identificativo del Funko dentro de la franquicia correspondiente.
+> 8. Exclusivo. Debe ser un valor booleano, esto es, verdadero en el caso de que el Funko sea exclusivo o falso en caso contrario.
+> 9. Características especiales. Debe ser una cadena de caracteres que indique las característica especiales del Funko como, por ejemplo, si brilla en la oscuridad o si su cabeza balancea.
+> 10. Valor de mercado. Debe ser un valor numérico positivo.
+> 
+> Cada usuario tendrá su propia lista de Funko Pops, con la que podrá llevar a cabo las siguientes operaciones:
+> - Añadir un Funko a la lista. Antes de añadir un Funko a la lista se debe comprobar si ya existe un Funko con el mismo ID. En caso de que así fuera, deberá mostrarse un mensaje de error por la consola. En caso contrario, se añadirá el nuevo Funko a la lista y se mostrará un mensaje informativo por la consola.
+> - Modificar un Funko de la lista. Antes de modificar un Funko, previamente se debe comprobar si ya existe un Funko con el ID del Funko a modificar en la lista. Si existe, se procede a su modificación y se emite un mensaje informativo por la consola. En caso contrario, debe mostrarse un mensaje de error por la consola.
+> - Eliminar un Funko de la lista. Antes de eliminar un Funko, previamente se debe comprobar si existe un Funko con el ID del Funko a eliminar en la lista. Si existe, se procede a su eliminación y se emite un mensaje informativo por la consola. En caso contrario, debe mostrarse un mensaje de error por la consola.
+> - Listar los Funkos existentes en una lista. En este caso, deberá mostrarse la información asociada a cada Funko existente en la lista por la consola. Además, deberá utilizar el paquete chalk para ello. Primero, deberá establecer rangos de valor de mercado. Luego, el valor de mercado de cada Funko deberá mostrarse con colores diferentes. Por ejemplo, para aquellos Funko con un valor de mercado elevado, dicho valor deberá mostrarse en color verde, mientras que para los de menor valor de mercado, dicho valor se mostrará con color rojo. Establezca, al menos, cuatro rangos de valor de mercado diferentes.
+> - Mostrar la información de un Funko concreto existente en la lista. Antes de mostrar la información del Funko, se debe comprobar que en la lista existe un Funko cuyo ID sea el del Funko a mostrar. Si existe, se mostrará toda su información, incluyendo el color de su valor de mercado. Para ello, use el paquete chalk. En caso contrario, se mostrará un mensaje de error por la consola.
+>
+>Todos los mensajes informativos se mostrarán con color verde, mientras que los mensajes de error se mostrarán con color rojo. Use el paquete chalk para ello.
+>
+>Hacer persistente la lista de Funko de cada usuario. Aquí es donde entra en juego el uso de la API síncrona de Node.js para trabajar con el sistema de ficheros:
+> - Guardar cada Funko de la lista en un fichero independiente con formato JSON. Los ficheros JSON correspondientes a los Funko de un usuario concreto deberán almacenarse en un directorio con el nombre de dicho usuario.
+> - Cargar los Funko desde los diferentes ficheros con formato JSON almacenados en el directorio del usuario correspondiente.
+>
+> Un usuario solo puede interactuar con la aplicación a través de la línea de comandos. Los diferentes comandos, opciones de los mismos, así como manejadores asociados a cada uno de ellos deben gestionarse mediante el uso del paquete yargs.
 
-const prompt = Prompt();
-const myNumber = parseInt(prompt("Introduce a number: "));
-console.log(myNumber);
-```
-
-## Ejercicios propuestos <a name="ejercicios-propuestos"></a>
-
-### Ejercicio 1 - DSIflix <a name="ejercicio-1"></a>
-
+## Descripción de la solución diseñada <a name="solución"></a>
 > [Volver al índice](#índice)
 
-> Imagine que tiene que diseñar el modelo de datos de una plataforma de vídeo en streaming. A través del catálogo de dicha plataforma se puede acceder a películas, series y documentales:
->
-> Defina una interfaz genérica Streamable que trate de especificar propiedades y métodos con los que debería contar una colección de emisiones concreta como, por ejemplo, una colección de series. Por ejemplo, deberían definirse métodos de búsqueda en dicha interfaz, que permitan obtener listados en función de diferentes términos de búsqueda: por año o por nombre, entre otros.
->
-> Defina una clase abstracta genérica BasicStreamableCollection que implemente dicha interfaz genérica. En este punto, podrá particularizar algunas de las propiedades y métodos de la interfaz Streamable, aunque otros tendrán que permanecer como abstractos para ser definidos más abajo en la jerarquía de clases. Todo dependerá del diseño que haya llevado a cabo.
->
-> Tendrá que extender la clase abstracta anterior para obtener subclases que modelen cada uno de los tres tipos de colecciones: series, películas y documentales.
->
-> Trate de aplicar los principios SOLID. Preste especial atención al diseño de la interfaz Streamable. Si cree que debe dividirla en interfaces genéricas más pequeñas porque su diseño inicial es muy complejo, hágalo, con el objetivo de cumplir con el cuarto principio SOLID Interface segregation.
+La solución diseñada consta de tres archivos principales:
 
-#### Solución:
+- app.ts: Archivo principal de la aplicación. En él se definen los comandos y opciones de los mismos, así como los manejadores asociados a cada uno de ellos.
+- coleccionista.ts: Archivo que contiene la clase coleccionista que representa a un usuario de la aplicación.
+- funko.ts: Archivo que contiene la clase funko que representa a un Funko.
 
-Este código define tres interfaces: Searchable, Collectable y Streamable.
-
-Estas interfaces pueden ser utilizadas por otras clases para implementar sus propias propiedades y métodos de acuerdo a estas especificaciones, lo que proporciona una forma estándar de definir las funcionalidades de diferentes componentes en una plataforma de vídeo en streaming.
-
-```typescript
-// Definición de las interfaces
-
-export interface Searchable {
-  searchByYear(year: number): Streamable[];
-  searchByName(name: string): Streamable[];
-}
-
-export interface Collectable {
-  addToCollection(streamable: Streamable): void;
-  removeFromCollection(streamable: Streamable): void;
-}
-
-export interface Streamable {
-  id: string;
-  title: string;
-  description: string;
-  genre: string[];
-  rating: number;
-  releaseYear: number;
-  getDuration(): number;
-}
-```
-
-Las interfaces se definen con más detaññe a continuación:
-
-- Searchable es una interfaz que define dos métodos, searchByYear y searchByName, que toman un argumento de tipo number y string, respectivamente, y devuelven un array de elementos de tipo Streamable. Esto significa que cualquier clase que implemente la interfaz Searchable debe proporcionar una implementación de estos métodos.
-
-- Collectable es una interfaz que define dos métodos, addToCollection y removeFromCollection, que toman un argumento de tipo Streamable y no devuelven nada. Esto significa que cualquier clase que implemente la interfaz Collectable debe proporcionar una implementación de estos métodos.
-
-- Streamable es una interfaz que define seis propiedades y un método. Las propiedades son id, title, description, genre, rating y releaseYear, todas de tipos primitivos o arrays de tipos primitivos. El método getDuration() no toma argumentos y devuelve un número. Esto significa que cualquier clase que implemente la interfaz Streamable debe proporcionar una implementación de este método.
-
-A cintinuación, definimos la clase abstracta BasicStreamableCollection que implementa las interfaces Searchable y Collectable:
-
-```typescript
-// Clase abstracta BasicStreamableCollection
-
-export abstract class BasicStreamableCollection
-  implements Searchable, Collectable
-{
-  private collection: Streamable[];
-
-  constructor() {
-    this.collection = [];
-  }
-
-  searchByYear(year: number): Streamable[] {
-    return this.collection.filter(
-      (streamable) => streamable.releaseYear === year
-    );
-  }
-
-  searchByName(name: string): Streamable[] {
-    return this.collection.filter((streamable) =>
-      streamable.title.toLowerCase().includes(name.toLowerCase())
-    );
-  }
-
-  addToCollection(streamable: Streamable): void {
-    this.collection.push(streamable);
-  }
-
-  removeFromCollection(streamable: Streamable): void {
-    const index = this.collection.findIndex(
-      (item) => item.id === streamable.id
-    );
-    if (index !== -1) {
-      this.collection.splice(index, 1);
-    }
-  }
-}
-```
-
-La clase tiene una propiedad privada collection que es un arreglo de objetos Streamable.
-
-Los métodos searchByYear y searchByName buscan en el arreglo de objetos Streamable de la colección según el año de lanzamiento y el nombre de título respectivamente, y retornan un arreglo con los objetos Streamable encontrados. addToCollection agrega un objeto Streamable a la colección, mientras que removeFromCollection elimina un objeto Streamable de la colección si existe.
-
-Al ser una clase abstracta, no se puede instanciar directamente, sino que debe ser extendida por otras clases que implementen los métodos abstractos que quedan pendientes para cada caso particular. Por ejemplo, Series, Movies y Documentaries son subclases que extienden de BasicStreamableCollection.
-
-Por último, se definen las subclases Series, Movies y Documentaries que extienden de BasicStreamableCollection:
-
-```typescript
-// Subclases que extienden BasicStreamableCollection
-
-export class Series extends BasicStreamableCollection {
-  private episodes: Streamable[];
-
-  constructor() {
-    super();
-    this.episodes = [];
-  }
-}
-
-export class Movies extends BasicStreamableCollection {
-  private duration: number;
-
-  constructor() {
-    super();
-    this.duration = 0;
-  }
-}
-
-export class Documentaries extends BasicStreamableCollection {
-  private topics: string[];
-
-  constructor() {
-    super();
-    this.topics = [];
-  }
-}
-```
-
-Se definen tres clases que extienden la clase abstracta BasicStreamableCollection. Cada una de ellas tiene sus propias propiedades y métodos que las diferencian entre sí.
-
-- La clase Series tiene una propiedad privada llamada episodes que es un arreglo de objetos de tipo Streamable. El constructor de la clase llama al constructor de su clase base BasicStreamableCollection y luego inicializa la propiedad episodes como un arreglo vacío.
-
-- La clase Movies tiene una propiedad privada llamada duration que es un número que representa la duración total de las películas en la colección. El constructor de la clase también llama al constructor de su clase base y luego inicializa la propiedad duration en cero.
-
-- La clase Documentaries tiene una propiedad privada llamada topics que es un arreglo de cadenas que representa los temas que abordan los documentales en la colección. El constructor de la clase también llama al constructor de su clase base y luego inicializa la propiedad topics como un arreglo vacío.
-
-Todas estas clases implementan las interfaces Searchable y Collectable, lo que significa que heredan los métodos definidos en la clase BasicStreamableCollection. Esto les permite realizar búsquedas por año y por nombre, agregar y eliminar elementos de la colección. Además, pueden definir sus propios métodos y propiedades específicos para cada subclase.
-
-#### Test:
-
-Se han realizado tests para comprobar que las clases Series, Movies y Documentaries, que extienden la clase abstracta BasicStreamableCollection, funcionan correctamente y cumplen con las especificaciones de su interfaz. En concreto, los tests comprueban que las instancias de estas clases pueden añadir y eliminar elementos de sus respectivas colecciones, y que las búsquedas por nombre y año de publicación funcionan correctamente.
-
-Para ello, cada test realiza una serie de acciones sobre una instancia de la clase que está siendo probada (por ejemplo, añadir un elemento a la colección) y después comprueba que el resultado de una búsqueda realizada sobre esa instancia es el esperado (por ejemplo, que la búsqueda por nombre devuelve un array con un solo elemento). En caso de que el resultado esperado no se cumpla, el test falla.
-
-```typescript
-import { describe, it } from "mocha";
-import { expect } from "chai";
-import * as Prompt from "prompt-sync";
-import {
-  BasicStreamableCollection,
-  Series,
-  Movies,
-  Documentaries,
-} from "../src/ejercicio01/ejercicio01";
-
-describe("Series", () => {
-  let series: Series;
-
-  beforeEach(() => {
-    series = new Series();
-  });
-
-  it("should be able to add and remove series", () => {
-    const streamable = {
-      id: "1",
-      title: "Stranger Things",
-      description: "A love letter to the supernatural classics of the 80s",
-      genre: ["Drama", "Fantasy", "Horror"],
-      rating: 8.7,
-      releaseYear: 2016,
-      getDuration: () => 60,
-    };
-    series.addToCollection(streamable);
-    expect(series.searchByName("stranger")).to.have.lengthOf(1);
-    expect(series.searchByName("things")).to.have.lengthOf(1);
-    series.removeFromCollection(streamable);
-    expect(series.searchByName("stranger")).to.have.lengthOf(0);
-    expect(series.searchByName("things")).to.have.lengthOf(0);
-  });
-});
-
-describe("Movies", () => {
-  let movies: Movies;
-
-  beforeEach(() => {
-    movies = new Movies();
-  });
-
-  it("should be able to add and remove movies", () => {
-    const streamable = {
-      id: "1",
-      title: "The Shawshank Redemption",
-      description:
-        "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-      genre: ["Drama"],
-      rating: 9.3,
-      releaseYear: 1994,
-      getDuration: () => 142,
-    };
-    movies.addToCollection(streamable);
-    expect(movies.searchByName("shawshank")).to.have.lengthOf(1);
-    expect(movies.searchByYear(1994)).to.have.lengthOf(1);
-    movies.removeFromCollection(streamable);
-    expect(movies.searchByName("shawshank")).to.have.lengthOf(0);
-    expect(movies.searchByYear(1994)).to.have.lengthOf(0);
-  });
-});
-
-describe("Documentaries", () => {
-  let documentaries: Documentaries;
-
-  beforeEach(() => {
-    documentaries = new Documentaries();
-  });
-
-  it("should be able to add and remove documentaries", () => {
-    const streamable = {
-      id: "1",
-      title: "The Social Dilemma",
-      description:
-        "Explores the dangerous human impact of social networking, with tech experts sounding the alarm on their own creations.",
-      genre: ["Documentary"],
-      rating: 7.6,
-      releaseYear: 2020,
-      getDuration: () => 94,
-    };
-    documentaries.addToCollection(streamable);
-    expect(documentaries.searchByName("social dilemma")).to.have.lengthOf(1);
-    expect(documentaries.searchByYear(2020)).to.have.lengthOf(1);
-    documentaries.removeFromCollection(streamable);
-    expect(documentaries.searchByName("social dilemma")).to.have.lengthOf(0);
-    expect(documentaries.searchByYear(2020)).to.have.lengthOf(0);
-  });
-});
-```
-
-En este código hay tres bloques de tests, cada uno para una de las subclases de la clase abstracta BasicStreamableCollection: Series, Movies y Documentaries. Cada bloque de tests tiene una función beforeEach que se ejecuta antes de cada test, y que crea una instancia nueva de la subclase correspondiente, de manera que los tests sean independientes unos de otros.
-
-Cada bloque de tests tiene un único test, llamado should be able to add and remove {nombre de la subclase} (por ejemplo, "should be able to add and remove series"). Este test tiene tres partes:
-
-1. Crear un objeto streamable con los datos de una serie, película o documental.
-2. Añadir ese objeto a la colección de la subclase correspondiente.
-3. Comprobar que se puede buscar la serie, película o documental por su nombre o su año de lanzamiento, y que se encuentra en la colección. Luego, eliminar el objeto de la colección y comprobar que ya no se encuentra.
-
-Cada parte se hace con las funciones addToCollection, searchByName, searchByYear y removeFromCollection, definidas en la clase BasicStreamableCollection. Para comprobar que las funciones funcionan correctamente, se utilizan las funciones expect y to de la biblioteca chai, que permiten comparar valores y propiedades de objetos.
-
-Por ejemplo, en el primer bloque de tests (para la clase Series), se crea un objeto streamable con los datos de la serie "Stranger Things". Luego se añade ese objeto a la colección de series (series.addToCollection(streamable)). A continuación, se comprueba que se puede buscar la serie por su nombre (series.searchByName('stranger')) y por parte de su nombre (series.searchByName('things')), y que en ambos casos se encuentra en la colección (to.have.lengthOf(1)). Finalmente, se elimina la serie de la colección (series.removeFromCollection(streamable)) y se comprueba que ya no se encuentra (to.have.lengthOf(0)).
-
-#### Cumplimiento de los principios SOLID:
-
-El código parece cumplir con algunos principios SOLID, pero no todos.
-
-- **Principio de Responsabilidad Única (SRP)**: La clase BasicStreamableCollection parece tener una sola responsabilidad: definir métodos comunes a todas las colecciones de contenido transmitible, como agregar o eliminar elementos de la colección y buscar elementos por nombre o año de lanzamiento. Cada una de las subclases también se ocupa de una sola responsabilidad: mantener una colección de episodios, películas o documentales, respectivamente. Por lo tanto, el principio SRP parece cumplirse en este código.
-
-- **Principio Abierto/Cerrado (OCP)**: El código no parece cumplir con el principio OCP porque no se ha diseñado para que sea fácil agregar nuevas funcionalidades sin tener que modificar las clases existentes. Por ejemplo, si quisiéramos agregar una nueva subclase llamada StandUpComedySpecials, deberíamos crear una nueva clase que extienda BasicStreamableCollection, como hicimos con las otras subclases. Sin embargo, también tendríamos que modificar la clase BasicStreamableCollection para agregar un método searchByComedian que permita buscar especiales de comedia por comediante. Por lo tanto, el principio OCP no se cumple en este código.
-
-- **Principio de Sustitución de Liskov (LSP)**: El código parece cumplir con el principio LSP porque cada subclase de BasicStreamableCollection puede ser utilizada en lugar de su clase padre sin afectar el comportamiento del programa. Es decir, si tenemos un método que acepta una instancia de BasicStreamableCollection, podemos pasarle una instancia de cualquier subclase de BasicStreamableCollection sin preocuparnos por errores o comportamientos inesperados.
-
-- **Principio de Segregación de Interfaz (ISP)**: El código parece cumplir con el principio ISP porque los métodos definidos en la interfaz Searchable y la interfaz Collectable son relevantes y necesarios para las clases que implementan esas interfaces. Por lo tanto, no hay métodos innecesarios en las interfaces, lo que evita que las clases que las implementan tengan que proporcionar una implementación vacía o no relevante de algún método.
-
-- **Principio de Inversión de Dependencia (DIP)**: El código no parece cumplir con el principio DIP porque las subclases dependen directamente de la clase BasicStreamableCollection. Si se hace una modificación en BasicStreamableCollection, puede haber un impacto en las subclases. Por lo tanto, las subclases dependen de una implementación concreta en lugar de una abstracción. Una solución podría ser definir una interfaz o una clase abstracta que defina los métodos comunes que necesitan las subclases y hacer que BasicStreamableCollection implemente esa interfaz o extienda esa clase abstracta.
-
-### Ejercicio 2 - Implementación de una lista y sus operaciones <a name="ejercicio-2"></a>
-
+### Clase Funko <a name="funko"></a>
 > [Volver al índice](#índice)
 
-> En este ejercicio tendrá que implementar una clase genérica que modele una lista de elementos de cualquier tipo y sus operaciones sin hacer uso de ninguna de las funcionlidades proporcionadas por Array.prototype. Se permite, sin embargo, el uso de [].
+> La clase Funko representa a objeto un Funko, que se utiliza para almacenar información sobre los Funkos. 
 
-> Deberá incluir, al menos, las siguientes operaciones para trabajar con su lista:
+La clase tiene las siguientes propiedades privadas:
 
-> - Método append, el cual, dadas dos listas, permite añadir al final de la primera los elementos de la segunda.
-> - Método concatenate, que dado un número variable de listas, combina todos sus elementos en una única lista que retorna.
-> - Método filter, que dada una lista y un predicado lógico retorna una lista con todos los elementos de la lista inicial para los cuales el predicado lógico es verdadero.
-> - Método length, que devuelve el número de elementos de la lista.
-> - Método map, que dada una lista y una función, retorna la lista resultante de aplicar a cada elemento de la lista inicial la función.
-> - Método reduce, que dada una lista, una función y un acumulador inicial, reduce cada elemento al acumulador utilizando la función.
-> - Método reverse, el cual dada una lista, retorna una lista con los elementos originales pero en orden inverso.
-> - Método forEach, que dada una lista y una función, permite iterar en los elementos de la lista e invocar la función con cada uno de ellos.
-
-> Instancie diferentes listas que contengan elementos de diferentes tipos y lleve a cabo pruebas suficientes con cada una de las listas definidas para comprobar la generalidad de la clase diseñada.
-
-A continuación, se muestra la clase `Lista` implementada:
-
-#### Solución:
+- id: un número que representa el ID del Funko.
+- name: una cadena que representa el nombre del Funko.
+- description: una cadena que representa la descripción del Funko.
+- type: un valor del enumerado FunkoType que representa el tipo del Funko.
+- genre: un valor del enumerado FunkoGenre que representa el género del Funko.
+- franchise: una cadena que representa la franquicia del Funko.
+- number: un número que representa el número del Funko.
+- exclusive: un booleano que indica si el Funko es exclusivo o no.
+- specialFeatures: una cadena que representa las características especiales del Funko.
+- marketValue: un número que representa el valor de mercado del Funko.
 
 ```typescript
-/**
- * Clase Lista
- * @template T Tipo de los elementos de la lista
- * @example
- * const lista = new Lista<number>(1, 2, 3, 4, 5);
- * const lista2 = new Lista<string>('a', 'b', 'c');
- * const lista3 = new Lista<boolean>(true, false, true);
- */
-export class Lista<T> {
-  /**
-   * Longitud de la lista
-   *
-   */
-  private length: number = 0;
-  /**
-   * Datos de la lista
-   */
-  private data: { [index: number]: T } = {};
 
-  /**
-   * Constructor de la clase Lista
-   * @param items Elementos iniciales de la lista
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const lista2 = new Lista<string>('a', 'b', 'c');
-   * const lista3 = new Lista<boolean>(true, false, true);
-   */
-  constructor(...items: T[]) {
-    items.forEach((item) => this.appendItem(item));
-  }
-
-  /**
-   * Obtener los elementos de la lista
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const listaData = lista.getData(); // [1, 2, 3, 4, 5]
-   */
-  getData(): T[] {
-    return Object.values(this.data);
-  }
-
-  /**
-   * Añadir un elemento al final de la lista
-   * @param item Elemento a añadir
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * lista.appendItem(6); // [1, 2, 3, 4, 5, 6]
-   */
-  appendItem(item: T): void {
-    this.data[this.length] = item;
-    this.length++;
-  }
-
-  /**
-   * Añadir varias listas a la actual
-   * @param list Lista a añadir
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const lista2 = new Lista<number>(6, 7, 8, 9, 10);
-   * lista.appendList(lista2); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-   */
-  appendList(list: Lista<T>): void {
-    for (let i = 0; i < list.length; i++) {
-      this.appendItem(list.data[i]);
-    }
-  }
-
-  /**
-   * Hace que la lista sea la lista vacía
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * lista.clear(); // []
-   * lista.getLength(); // 0
-   */
-  clear(): void {
-    this.data = {};
-    this.length = 0;
-  }
-
-  /**
-   * Concatenar varias listas en una sola
-   * @param lists Listas a concatenar
-   * @example
-   * const lista = new Lista<number>(1, 2);
-   * const lista2 = new Lista<number>(3, 4);
-   * const lista3 = new Lista<number>(5, 6);
-   * lista.concatenate(lista2, lista3); // [1, 2, 3, 4, 5, 6]
-   */
-  concatenate(...lists: Lista<T>[]): void {
-    lists.forEach((list) => {
-      this.appendList(list);
-    });
-  }
-
-  /**
-   * Filtrar la lista utilizando un predicado lógico
-   * @param predicate Predicado lógico
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const listaFiltrada = lista.filter((item) => item % 2 === 0); // [2, 4]
-   * const listaFiltrada2 = lista.filter((item) => item > 3); // [4, 5]
-   */
-  filter(predicate: (item: T) => boolean): Lista<T> {
-    const result = new Lista<T>();
-    for (let i = 0; i < this.length; i++) {
-      const item = this.data[i];
-      if (predicate(item)) {
-        result.appendItem(item);
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Obtener la longitud de la lista
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * lista.getLength(); // 5
-   */
-  getLength(): number {
-    return this.length;
-  }
-
-  /**
-   * Aplicar una función a cada elemento de la lista
-   * @param mapper Función a aplicar
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const listaMapeada = lista.map((item) => item * 2); // [2, 4, 6, 8, 10]
-   */
-  map<U>(mapper: (item: T) => U): Lista<U> {
-    const result = new Lista<U>();
-    for (let i = 0; i < this.length; i++) {
-      result.appendItem(mapper(this.data[i]));
-    }
-    return result;
-  }
-
-  /**
-   * Reducir la lista a un único valor utilizando una función y un acumulador inicial
-   * @param reducer Función a aplicar
-   * @param initialValue Valor inicial del acumulador
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const suma = lista.reduce((acc, item) => acc + item, 0); // 15
-   * const producto = lista.reduce((acc, item) => acc * item, 1); // 120
-   */
-  reduce<U>(reducer: (accumulator: U, item: T) => U, initialValue: U): U {
-    let accumulator = initialValue;
-    for (let i = 0; i < this.length; i++) {
-      accumulator = reducer(accumulator, this.data[i]);
-    }
-    return accumulator;
-  }
-
-  /**
-   * Obtener una lista con los elementos en orden inverso
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * const listaInvertida = lista.reverse(); // [5, 4, 3, 2, 1]
-   */
-  reverse(): Lista<T> {
-    const result = new Lista<T>();
-    for (let i = this.length - 1; i >= 0; i--) {
-      result.appendItem(this.data[i]);
-    }
-    return result;
-  }
-
-  /**
-   * Iterar en los elementos de la lista y ejecutar una función con cada uno de ellos
-   * @param callback Función a ejecutar
-   * @example
-   * const lista = new Lista<number>(1, 2, 3, 4, 5);
-   * lista.forEach((item) => console.log(item)); // 1 2 3 4 5
-   * lista.forEach((item) => console.log(item * 2)); // 2 4 6 8 10
-   */
-  forEach(callback: (item: T) => void): void {
-    for (let i = 0; i < this.length; i++) {
-      callback(this.data[i]);
-    }
-  }
+export enum FunkoType {
+  POP = "Pop!",
+  POP_RIDES = "Pop! Rides",
+  VINYL_SODA = "Vinyl Soda",
+  VINYL_GOLD = "Vinyl Gold",
 }
-```
 
-El código muestra la implementación de una clase genérica Lista en TypeScript, que puede contener elementos de cualquier tipo. La clase Lista tiene varios métodos que permiten realizar operaciones sobre una lista de elementos.
-
-El constructor de la clase toma un número variable de elementos de tipo T y los agrega a la lista mediante el método appendItem(). La clase Lista tiene un atributo privado "data" que es un objeto que mapea índices numéricos a elementos de tipo T. El método getData() devuelve un arreglo de todos los elementos de la lista.
-
-- El método appendItem() agrega un elemento al final de la lista, aumentando el valor del atributo privado "length" en 1.
-
-- El método appendList() agrega varios elementos a la lista actual mediante el método appendItem().
-
-- El método clear() vacía la lista, es decir, establece el objeto "data" en un objeto vacío y establece el valor del atributo "length" en 0.
-
-- El método concatenate() concatena varias listas en una sola lista. Toma un número variable de objetos Lista y agrega sus elementos a la lista actual mediante el método appendList().
-
-- El método filter() filtra los elementos de la lista utilizando un predicado lógico que toma un elemento de la lista y devuelve un valor booleano. El método devuelve una nueva lista que contiene solo los elementos que cumplen con el predicado.
-
-- El método getLength() devuelve el número de elementos en la lista.
-
-- El método map() aplica una función a cada elemento de la lista y devuelve una nueva lista que contiene los resultados. La función debe tomar un elemento de la lista como entrada y devolver un nuevo valor de tipo U.
-
-La clase Lista utiliza la sintaxis de plantilla de TypeScript para especificar el tipo de los elementos de la lista. Esto significa que se puede crear una instancia de la clase Lista para cualquier tipo de datos. Por ejemplo, se pueden crear listas de números, cadenas, objetos, etc.
-
-#### Tests:
-
-Los tests que se han desarrollado para este ejercicio son los que siguen:
-
-```typescript
-import { describe, it } from "mocha";
-import { expect } from "chai";
-import { Lista } from "../src/ejercicio02/ejercicio02";
-
-describe("Lista", () => {
-  // Crear una lista de números para las pruebas
-  const listaNumeros = new Lista<number>();
-
-  beforeEach(() => {
-    listaNumeros.appendItem(1);
-    listaNumeros.appendItem(2);
-    listaNumeros.appendItem(3);
-  });
-
-  afterEach(() => {
-    listaNumeros.clear();
-  });
-
-  describe("Constructor de la clase", () => {
-    it("La lista se crea correctamente", () => {
-      expect(new Lista<number>(1, 2, 3, 4, 5)).to.be.instanceOf(Lista);
-      expect(new Lista<number>(1, 2, 3, 4, 5).getData()).to.deep.equal([
-        1, 2, 3, 4, 5,
-      ]);
-    });
-
-    it("Puedo crear lista de strings", () => {
-      expect(new Lista<string>("a", "b", "c", "d", "e")).to.be.instanceOf(
-        Lista
-      );
-      expect(
-        new Lista<string>("a", "b", "c", "d", "e").getData()
-      ).to.deep.equal(["a", "b", "c", "d", "e"]);
-    });
-
-    it("Puedo crear lista de booleanos", () => {
-      expect(new Lista<boolean>(true, false, true, false)).to.be.instanceOf(
-        Lista
-      );
-      expect(
-        new Lista<boolean>(true, false, true, false).getData()
-      ).to.deep.equal([true, false, true, false]);
-    });
-  });
-
-  describe("#getData()", () => {
-    it("El getter de los datos funciona", () => {
-      let listaNumeros_1 = new Lista<number>(1, 2, 3, 4);
-      expect(listaNumeros_1.getData()).to.deep.equal([1, 2, 3, 4]);
-    });
-  });
-
-  describe("#appendItem()", () => {
-    it("debe agregar elementos a la lista", () => {
-      listaNumeros.appendItem(4);
-      expect(listaNumeros.getLength()).to.equal(4);
-    });
-  });
-
-  describe("#appendList()", () => {
-    let listaNumeros_1 = new Lista<number>(1, 2, 3, 4);
-    let listaNumeros_2 = new Lista<number>(1, 2, 3, 4);
-    listaNumeros_1.appendList(listaNumeros_2);
-    it("debe agragar una lista a la actual", () => {
-      expect(listaNumeros_1.getData()).to.deep.equal([1, 2, 3, 4, 1, 2, 3, 4]);
-    });
-  });
-
-  describe("#concatenate()", () => {
-    describe("debe concatenar varias listas en una sola", () => {
-      const listaNumeros1 = new Lista<number>(4, 5);
-      const listaNumeros2 = new Lista<number>(6, 7);
-      const listaNumeros3 = new Lista<number>(8, 9, 10);
-      listaNumeros1.concatenate(listaNumeros2, listaNumeros3);
-      it("El tamaño es el correcto", () => {
-        expect(listaNumeros1.getLength()).to.equal(7);
-      });
-      it("Los elementos coinciden", () => {
-        expect(listaNumeros1.getData()).to.deep.equal([4, 5, 6, 7, 8, 9, 10]);
-      });
-    });
-  });
-
-  describe("#filter()", () => {
-    it("debe filtrar la lista utilizando un predicado lógico", () => {
-      const listaPares = listaNumeros.filter((num) => num % 2 === 0);
-      expect(listaPares.getData()).to.deep.equal([2]);
-    });
-  });
-
-  describe("#getLength()", () => {
-    it("debe obtener la longitud de la lista", () => {
-      expect(listaNumeros.getLength()).to.equal(3);
-    });
-  });
-
-  describe("#map()", () => {
-    it("debe aplicar una función a cada elemento de la lista", () => {
-      const listaDobles = listaNumeros.map((num) => num * 2);
-      expect(listaDobles.getData()).to.deep.equal([2, 4, 6]);
-    });
-  });
-
-  describe("#reduce()", () => {
-    it("debe reducir la lista a un único valor utilizando una función y un acumulador inicial", () => {
-      const resultado = listaNumeros.reduce(
-        (accumulator, num) => accumulator + num,
-        0
-      );
-      expect(resultado).to.equal(6);
-    });
-  });
-
-  describe("#reverse()", () => {
-    it("debe obtener una lista con los elementos en orden inverso", () => {
-      const listaInvertida = listaNumeros.reverse();
-      expect(listaInvertida.getData()).to.deep.equal([3, 2, 1]);
-    });
-  });
-
-  describe("#forEach()", () => {
-    it("debe iterar en los elementos de la lista y ejecutar una función con cada uno de ellos", () => {
-      let suma = 0;
-      listaNumeros.forEach((num) => (suma += num));
-      expect(suma).to.equal(6);
-    });
-  });
-});
-```
-
-Aquí se explican algunas de las pruebas realizadas en este ejercicio:
-
-- Constructor de la clase: Prueba la creación de una lista utilizando diferentes tipos de datos, asegurándose de que se crea correctamente y de que sus datos iniciales son los esperados.
-
-- #getData(): Prueba el método getData() de la clase, que devuelve los datos almacenados en la lista. Se crea una lista de prueba y se verifica que el método devuelve los datos esperados.
-
-- #appendItem(): Prueba el método appendItem() de la clase, que agrega un elemento a la lista. Se crea una lista de prueba y se agrega un elemento, luego se verifica que la longitud de la lista es la esperada.
-
-- #appendList(): Prueba el método appendList() de la clase, que agrega una lista entera a la lista actual. Se crean dos listas de prueba y se agrega una a la otra, luego se verifica que la lista resultante es la esperada.
-
-- #concatenate(): Prueba el método concatenate() de la clase, que concatena varias listas en una sola. Se crean tres listas de prueba y se concatenan, luego se verifica que la longitud y los datos de la lista resultante son los esperados.
-
-- #filter(): Prueba el método filter() de la clase, que filtra los elementos de la lista utilizando un predicado lógico. Se crea una lista de prueba y se filtran los elementos pares, luego se verifica que la lista resultante contiene los elementos esperados.
-
-- #getLength(): Prueba el método getLength() de la clase, que devuelve la longitud de la lista. Se crea una lista de prueba y se verifica que su longitud es la esperada.
-
-- #map(): Prueba el método map() de la clase, que aplica una función a cada elemento de la lista. Se crea una lista de prueba y se aplica una función que duplica cada elemento, luego se verifica que la lista resultante contiene los elementos esperados.
-
-- #reduce(): Prueba el método reduce() de la clase, que reduce la lista a un único valor utilizando una función y un acumulador inicial. Se crea una lista de prueba y se reduce sumando todos sus elementos, luego se verifica que el resultado es el esperado.
-
-- #reverse(): Prueba el método reverse() de la clase, que devuelve una lista con los elementos en orden inverso. Se crea una lista de prueba y se verifica que la lista invertida contiene los elementos esperados.
-
-- #forEach(): Prueba el método forEach() de la clase, que itera en los elementos de la lista y ejecuta una función con cada uno de ellos. Se crea una lista de prueba y se itera en sus elementos sumándolos, luego se verifica que la suma resultante es la esperada.
-
-#### Cumplimiento de los principios SOLID:
-
-Esta clase `Lista` cumple los principios SOLID con la siguiente justificación:
-
-- **Single responsibility (SRP)**: la clase `Lista` tiene una única responsabilidad, que es la de modelar una lista de elementos de cualquier tipo. No tiene ninguna otra responsabilidad, como, por ejemplo, la de modelar una cola o una pila.
-
-- **Open/Closed Principle (OCP)**: La clase `Lista` está abierta para la extensión (por ejemplo, a través del método `concatenate()`) y cerrada para la modificación. Esto significa que la funcionalidad existente de la clase no se modifica cuando se agregan nuevas características.
-
-- **Liskov Substitution Principle (LSP)**: La clase `Lista` es un buen ejemplo de una abstracción que se puede utilizar de forma intercambiable con sus implementaciones concretas. Por ejemplo, si tuviéramos una clase `MiLista` que hereda de `Lista`, se podría usar `MiLista` en lugar de `Lista` sin cambiar el comportamiento esperado del código que utiliza la clase.
-
-- **Interface Segregation Principle (ISP)**: La clase `Lista` proporciona un conjunto coherente de métodos que representan las operaciones comunes en una lista, y cada método tiene una única responsabilidad. No hay un método "monolítico" que haga demasiadas cosas diferentes.
-
-- **Dependency Inversion Principle (DIP)**: La clase `Lista` utiliza inyección de dependencias implícita, ya que no depende directamente de otras clases. En su lugar, los métodos aceptan objetos de tipo `T`, que pueden ser cualquier clase que implemente la interfaz esperada. Además, la clase `Lista` se puede extender a través de la herencia, lo que permite una mayor flexibilidad en el diseño del código.
-
-### Ejercicio 3 - Ampliando la biblioteca musical <a name="ejercicio-3"></a>
-
-> [Volver al índice](#índice)
-
-> Teniendo en cuenta el ejercicio de la biblioteca musical implementado en la práctica 5, mejore su diseño tratando de cumplir todos los principios SOLID si es que aún no los cumple.
->
-> Luego, trate de introducir las siguientes modificaciones a su diseño:
->
-> Ahora, la discografía de un artista podrá estar formada por una colección de discos o de singles. Por lo tanto, tendrá que contemplar la nueva entidad single. Generalmente, un single se diferencia de un disco en que el single contiene una única canción o varias versiones de la misma canción.
->
-> Además, ahora deberá hacer que la discografía sea una clase genérica. En algún punto de su código deberá concretar esta clase genérica indicando que la discografía puede ser una colección de discos, una colección de singles o una colección de discos y singles.
-
-#### Solución:
-
-Dado que el ejercicio de la biblioteca musical ya cumple con los principios SOLID, no es necesario realizar ninguna modificación a este respecto.
-
-**Interfaz `Artist`**
-
-Artist es una interfaz, no una clase en sí misma. En TypeScript, una interfaz es una estructura que describe la forma de un objeto, es decir, qué propiedades y métodos tiene el objeto, pero no implementa ninguna funcionalidad en sí misma.
-
-La interfaz "Artist" define un objeto que tiene tres propiedades:
-
-- "name": una cadena de texto que representa el nombre del artista.
-- "monthlyListeners": un número entero que representa el número de oyentes mensuales del artista.
-- "discography": un array de objetos "Album" que representa la discografía del artista.
-
-```typescript
-interface Artist {
-  name: string;
-  monthlyListeners: number;
-  discography: Album[];
+export enum FunkoGenre {
+  ANIMATION = "Animation",
+  MOVIES_AND_TV = "Movies and TV",
+  VIDEOGAMES = "Video games",
+  SPORTS = "Sports",
+  MUSIC = "Music",
+  ANIME = "Anime",
 }
-```
 
-**Clase `Album`**
+export class Funko {
+  private id: number;
+  private name: string;
+  private description: string;
+  private type: FunkoType;
+  private genre: FunkoGenre;
+  private franchise: string;
+  private number: number;
+  private exclusive: boolean;
+  private specialFeatures: string;
+  private marketValue: number;
 
-La clase Album es una representación de un álbum musical. Tiene tres propiedades: name, que es el nombre del álbum, year, que es el año en que se lanzó el álbum, y songs, que es un array de objetos Song que representan las canciones en el álbum.
-
-El constructor de la clase Album toma tres argumentos y los utiliza para inicializar las propiedades name, year y songs.
-
-La clase también tiene tres métodos:
-
-- getNumSongs(): este método devuelve el número de canciones en el álbum. Esto se hace simplemente devolviendo la longitud del array songs.
-
-- getDuration(): este método devuelve la duración total del álbum en segundos. Esto se hace iterando sobre el array songs y sumando las duraciones de cada canción.
-
-- getNumReproductions(): este método devuelve el número total de reproducciones del álbum. Esto se hace iterando sobre el array songs y sumando el número de reproducciones de cada canción.
-
-```typescript
-class Album {
-  constructor(public name: string, public year: number, public songs: Song[]) {}
-
-  getNumSongs(): number {
-    return this.songs.length;
-  }
-
-  getDuration(): number {
-    let duration = 0;
-    for (const song of this.songs) {
-      duration += song.duration;
-    }
-    return duration;
-  }
-
-  getNumReproductions(): number {
-    let numReproductions = 0;
-    for (const song of this.songs) {
-      numReproductions += song.numReproductions;
-    }
-    return numReproductions;
-  }
-}
-```
-
-**Clase `Song`**
-
-La clase Song representa una canción en un álbum de música. Tiene cinco propiedades:
-
-- name: una cadena que representa el nombre de la canción.
-- duration: un número que representa la duración de la canción en segundos.
-- genres: un vector de cadenas que representa los géneros de la canción.
-- isSingle: un valor booleano que indica si la canción es un sencillo (es decir, una canción independiente que no forma parte de un álbum).
-- numReproductions: un número que indica la cantidad de veces que la canción ha sido reproducida.
-
-La clase también tiene un constructor que acepta valores para todas las propiedades y los asigna a las propiedades correspondientes de la instancia.
-
-```typescript
-class Song {
   constructor(
-    public name: string,
-    public duration: number,
-    public genres: string[],
-    public isSingle: boolean,
-    public numReproductions: number
-  ) {}
+    id: number,
+    name: string,
+    description: string,
+    type: FunkoType,
+    genre: FunkoGenre,
+    franchise: string,
+    number: number,
+    exclusive: boolean,
+    specialFeatures: string,
+    marketValue: number
+  ) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.type = type;
+    this.genre = genre;
+    this.franchise = franchise;
+    this.number = number;
+    this.exclusive = exclusive;
+    this.specialFeatures = specialFeatures;
+    this.marketValue = marketValue;
+  }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+
+  public getType(): FunkoType {
+    return this.type;
+  }
+
+  public getGenre(): FunkoGenre {
+    return this.genre;
+  }
+
+  public getFranchise(): string {
+    return this.franchise;
+  }
+
+  public getNumber(): number {
+    return this.number;
+  }
+
+  public isExclusive(): boolean {
+    return this.exclusive;
+  }
+
+  public getSpecialFeatures(): string {
+    return this.specialFeatures;
+  }
+
+  public getMarketValue(): number {
+    return this.marketValue;
+  }
 }
+
+exports.module = Funko;
 ```
 
-No hay métodos adicionales en la clase Song, pero se pueden utilizar las propiedades públicas de la clase en conjunto con otras clases para realizar diversas operaciones relacionadas con la música. Por ejemplo, la propiedad duration de la clase Song se utiliza en el método getDuration() de la clase Album para calcular la duración total de un álbum.
+La clase también tiene un constructor que acepta todos estos parámetros y los asigna a las propiedades correspondientes de la instancia de Funko.
 
-**Clase `MusicLibrary`**
+La clase también tiene varios métodos públicos que se utilizan para acceder a las propiedades privadas del Funko, como getId(), getName(), getDescription(), getType(), getGenre(), getFranchise(), getNumber(), isExclusive(), getSpecialFeatures() y getMarketValue().
 
-El código presentado es una implementación de una biblioteca musical en TypeScript. Comienza importando las clases Album, Song y Artist desde los archivos './album', './song' y './artist', respectivamente. Luego, importa la biblioteca 'prompt-sync' y establece tres constantes de color para su uso posterior en la consola.
+Además, la clase tiene dos enumerados FunkoType y FunkoGenre que se utilizan para representar los diferentes tipos y géneros de Funko. Los valores de estos enumerados son cadenas que describen el tipo o género del Funko.
+
+#### Cumplimiento de los principios SOLID en la clase Funko:
+
+La clase `Funko` sigue algunos de los principios SOLID, pero hay algunos aspectos que se pueden mejorar para lograr una mayor cohesión y reducir la dependencia entre los módulos.
+
+- **Single responsibility (SRP)**: La clase Funko tiene una única responsabilidad, que es representar un Funko y proporcionar métodos para obtener información sobre sus atributos.
+
+- **Open/Closed Principle (OCP)**: La clase Funko no parece seguir este principio, ya que no proporciona una forma fácil de extender su funcionalidad sin modificar la clase existente. Por ejemplo, si quisiéramos agregar un nuevo atributo, tendríamos que modificar la clase Funko y las partes del código que lo utilizan.
+
+- **Liskov Substitution Principle (LSP)**: Como la clase Funko no tiene subclases, no hay necesidad de preocuparse por este principio.
+
+- **Interface Segregation Principle (ISP)**: La clase Funko no implementa ninguna interfaz, por lo que no se aplica este principio.
+
+- **Dependency Inversion Principle (DIP)**: La clase Funko depende directamente de los enumerados FunkoType y FunkoGenre.ç
+
+### Clase Coleccionista <a name="coleccionista"></a>
+> [Volver al índice](#índice)
+
+> La clase Coleccionista representa a un coleccionista de Funkos.
+
+La clase Coleccionista es una clase que representa a un coleccionista de Funkos, con métodos para agregar, modificar y eliminar Funkos en su colección. También tiene métodos para guardar y cargar su colección desde un archivo JSON en su sistema de archivos.
+
+Los atributos de esta clase son:
+
+- id: un número que identifica al coleccionista.
+- nombre: una cadena de texto con el nombre del coleccionista.
+- coleccion: un array de objetos Funko que representa la colección del coleccionista.
 
 ```typescript
-import { Album } from "./album";
-import { Song } from "./song";
-import { Artist } from "./artist";
+const fs = require("fs");
+import * as path from  "path";
+//import chalk from "chalk";
+import * as chalk from "chalk";
 
-import * as Prompt from "prompt-sync";
+import { Funko } from "./funko";
 
-const RESET = "\u001b[0m";
-const BOLD = "\u001b[1m";
-const GREEN = "\u001b[32m";
-const prompt = Prompt();
 
-// Biblioteca musical
-export class MusicLibrary {
-  private artists: Artist[];
+export class Coleccionista {
+  private id: number;
+  private nombre: string;
+  private coleccion: Funko[]; // Array de Funkos
 
-  constructor() {
-    this.artists = [];
+  constructor(id: number, nombre: string, coleccion: Funko[]) {
+    this.id = id;
+    this.nombre = nombre;
+    this.coleccion = coleccion;
   }
 
-  public addArtist(artist: Artist): void {
-    this.artists.push(artist);
+  public getId(): number {
+    return this.id;
+  }
+  public getNombre(): string {
+    return this.nombre;
   }
 
-  public displayLibrary(): void {
-    console.table(
-      this.artists.flatMap((artist) =>
-        artist.discography.flatMap((album) =>
-          album.songs.map((song) => ({
-            artist: artist.name,
-            "Monthly Listeners": artist.monthlyListeners,
-            Album: album.name,
-            Year: album.year,
-            Name: song.name,
-            Duration: song.duration,
-            Genres: song.genres,
-            Single: song.isSingle,
-            Reproductions: song.numReproductions,
-          }))
-        )
-      )
-    );
+  public getColeccion(): Funko[] {
+    return this.coleccion;
   }
 
-  public search(query: string): void {
-    const artistResults: { artist: Artist; albums: string[] }[] = [];
-    const albumResults: Album[] = [];
-    const songResults: Song[] = [];
-
-    for (const artist of this.artists) {
-      if (artist.name.toLowerCase().includes(query.toLowerCase())) {
-        artistResults.push({
-          artist,
-          albums: artist.discography.map((album) => album.name),
-        });
-      } else {
-        for (const album of artist.discography) {
-          if (album.name.toLowerCase().includes(query.toLowerCase())) {
-            albumResults.push(album);
-          } else {
-            for (const song of album.songs) {
-              if (song.name.toLowerCase().includes(query.toLowerCase())) {
-                songResults.push(song);
-              }
-            }
-          }
-        }
-      }
+  public guardarColeccion(): void {
+    const userDir = path.join(__dirname, "../database/", this.nombre);
+    if (!fs.existsSync(userDir)) {
+      fs.mkdirSync(userDir);
     }
 
-    if (artistResults.length > 0) {
-      console.log("Artists:");
-      console.table(
-        artistResults.flatMap(({ artist, albums }) => {
-          return albums.map((album) => ({
-            Artist: artist.name,
-            Album: album,
-            "Monthly Listeners": artist.monthlyListeners,
-          }));
-        })
+    this.coleccion.forEach((funko: Funko) => {
+      const filePath = path.join(userDir, `${funko.getId()}.json`);
+      const jsonData = JSON.stringify(funko, null, 2);
+      fs.writeFileSync(filePath, jsonData);
+    });
+  }
+
+  public cargarColeccion(): void {
+    const userDir = path.join(__dirname, "../database/", this.nombre);
+    if (!fs.existsSync(userDir)) {
+      return undefined;
+    }
+
+    //const files = fs.readdirSync(userDir);
+    const files = fs.readdirSync(userDir)
+                .filter(file => fs.statSync(path.join(userDir, file)).isFile());
+
+    const coleccion = files.map((file: string) => {
+      const filePath = userDir + "/" + file;
+      if (fs.statSync(filePath).isDirectory()) {
+        throw new Error("No se puede leer un directorio");
+      }
+      const jsonData = fs.readFileSync(filePath, "utf-8");
+      const funkoData = JSON.parse(jsonData);
+      return new Funko(
+        funkoData.id,
+        funkoData.name,
+        funkoData.description,
+        funkoData.type,
+        funkoData.genre,
+        funkoData.franchise,
+        funkoData.number,
+        funkoData.exclusive,
+        funkoData.specialFeatures,
+        funkoData.marketValue
+      );
+    });
+    this.coleccion = coleccion;
+  }
+
+  public addFunko(funko: Funko): void {
+    const encontrado = this.coleccion.some((f: Funko) => {
+      if (f.getId() === funko.getId()) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    
+    if (encontrado) {
+      console.error(
+        `El Funko con ID ${funko.getId()} ya existe en la colección.`
+      );
+    } else {
+      this.coleccion.push(funko);
+      console.log(
+        `El Funko con ID ${funko.getId()} ha sido añadido a la colección.`
       );
     }
-    if (albumResults.length > 0) {
-      console.log("Albums:");
-      console.table(albumResults);
-    }
-    if (songResults.length > 0) {
-      console.log("Songs:");
-      console.table(songResults);
-    }
+    this.guardarColeccion();
   }
 
-  public countSongs(albumName: string): number {
-    for (const artist of this.artists) {
-      for (const album of artist.discography) {
-        if (album.name.toLowerCase() === albumName.toLowerCase()) {
-          return album.songs.length;
-        }
+  public modificarFunko(funkoModificado: Funko): void {
+    //this.cargarColeccion();
+    const index = this.coleccion.findIndex(
+      function(f: Funko) {
+        console.log("funko f: ", f.getId());
+        console.log("funkoModificado: ", funkoModificado.getId());
+        return f.getId() === funkoModificado.getId();
+      }
+    );
+    console.log("index: ", index);
+    if (index === -1) {
+      console.error(
+        `No se encontró ningún Funko con ID ${funkoModificado.getId()}`
+      );
+      return;
+    }
+    this.coleccion[index] = funkoModificado;
+    console.log(`Funko con ID ${funkoModificado.getId()} ha sido modificado`);
+    this.guardarColeccion();
+  }
+
+  public eliminarFunko(id: number): void {
+    //this.cargarColeccion();
+    //const index = this.coleccion.findIndex((funko: Funko) => funko.getId() === id);
+  
+    let index = -1;
+    for (let i = 0; i < this.coleccion.length; i++) {
+      if (this.coleccion[i].getId() === id) {
+        index = i;
+        break;
       }
     }
-    return 0;
-  }
 
-  public calculateDuration(albumName: string): number {
-    for (const artist of this.artists) {
-      for (const album of artist.discography) {
-        if (album.name.toLowerCase() === albumName.toLowerCase()) {
-          let duration = 0;
-          for (const song of album.songs) {
-            duration += song.duration;
-          }
-          return duration;
-        }
+    console.log("index: ", index)
+
+    if (index === -1) {
+      console.log(`No se ha encontrado un Funko con el ID ${id}.`);
+    } else {
+      console.log("coleccion antes de eliminar: " + this.coleccion);
+      const funko = this.coleccion[index];
+      console.log("funko: " + funko);
+      this.coleccion.splice(index, 1);
+      console.log("coleccion despues de eliminar: " + this.coleccion);
+      console.log(`Se ha eliminado el Funko con el ID ${id}.`);
+      
+      const userFunko = path.join(__dirname, "../database/", this.nombre, id + ".json");
+      try {
+        fs.unlinkSync(userFunko); // elimina el archivo
+        console.log(`Se ha eliminado el archivo asociado al Funko con el ID ${id}.`);
+      } catch (error) {
+        console.error(`No se ha podido eliminar el archivo asociado al Funko con el ID ${id}: ${error.message}`);
       }
     }
-    return 0;
+  
+    this.guardarColeccion();
   }
 
-  public calculateReproductions(albumName: string): number {
-    for (const artist of this.artists) {
-      for (const album of artist.discography) {
-        if (album.name.toLowerCase() === albumName.toLowerCase()) {
-          let reproductions = 0;
-          for (const song of album.songs) {
-            reproductions += song.numReproductions;
-          }
-          return reproductions;
-        }
+  public listarColeccion(): void {
+    this.cargarColeccion();
+
+    const RANGO_1 = 50;
+    const RANGO_2 = 100;
+    const RANGO_3 = 200;
+    const RANGO_4 = 500;
+
+    console.log(chalk.bold("Lista de Funkos:"));
+    console.log();
+
+    this.coleccion.forEach((funko: Funko) => {
+      let valorColor = chalk.red(funko.getMarketValue());
+
+      if (
+        funko.getMarketValue() >= RANGO_1 &&
+        funko.getMarketValue() < RANGO_2
+      ) {
+        valorColor = chalk.yellow(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_2 &&
+        funko.getMarketValue() < RANGO_3
+      ) {
+        valorColor = chalk.green(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_3 &&
+        funko.getMarketValue() < RANGO_4
+      ) {
+        valorColor = chalk.blue(funko.getMarketValue());
+      } else if (funko.getMarketValue() >= RANGO_4) {
+        valorColor = chalk.magenta(funko.getMarketValue());
       }
-    }
-    return 0;
+
+      console.log(chalk.bold(funko.getName()));
+      console.log(`ID: ${funko.getId()}`);
+      console.log(`Descripción: ${funko.getDescription()}`);
+      console.log(`Tipo: ${funko.getType()}`);
+      console.log(`Género: ${funko.getGenre()}`);
+      console.log(`Franquicia: ${funko.getFranchise()}`);
+      console.log(`Número: ${funko.getNumber()}`);
+      console.log(`Exclusivo: ${funko.isExclusive()}`);
+      console.log(`Características especiales: ${funko.getSpecialFeatures()}`);
+      console.log(`Valor de mercado: ${valorColor}`);
+      console.log();
+    });
   }
 
-  public printMenu(): void {
-    console.log("==== Music Library ====");
-    console.log("1. Add artist");
-    console.log("2. Display library");
-    console.log("3. Search");
-    console.log("4. Count songs in an album");
-    console.log("5. Calculate duration of an album");
-    console.log("6. Calculate number of reproductions of an album");
-    console.log("0. Exit");
-  }
+  public mostrarFunko(id: number): void {
+    this.cargarColeccion();
 
-  public run(): void {
-    let exit = false;
-    let the_query, the_album;
-    while (!exit) {
-      this.printMenu();
-      const option = prompt("Select an option (0-6): ");
-      switch (option) {
-        case "0":
-          exit = true;
-          break;
-        case "1":
-          const song1 = new Song("Song A", 180, ["Rock"], true, 100);
-          const song2 = new Song("Song B", 240, ["Pop", "R&B"], false, 50);
-          const song3 = new Song("Song C", 230, ["Disco", "R&B"], false, 50);
-          const album1 = new Album("Album A", 2022, [song1, song2]);
-          const album2 = new Album("Album A", 2021, [song2, song3]);
-          const artista_ej: Artist = {
-            name: "Artist A",
-            monthlyListeners: 10000,
-            discography: [album1],
-          };
-          const artist_otro: Artist = {
-            name: "Artist B",
-            monthlyListeners: 5000,
-            discography: [album1, album2],
-          };
-          this.addArtist(artista_ej);
-          break;
-        case "2":
-          this.displayLibrary();
-          break;
-        case "3":
-          // Pedir un query
-          do {
-            the_query = prompt(`Enter a query: `);
-          } while (typeof the_query !== "string");
-          this.search(the_query);
-          break;
-        case "4":
-          // Pedir el nombre del album
-          do {
-            the_album = prompt(`Enter an album name: `);
-          } while (typeof the_album !== "string");
-          console.log(
-            `${BOLD}${GREEN}Number of songs in ${the_album}: ${this.countSongs(
-              the_album
-            )}${RESET}`
-          );
-          break;
-        case "5":
-          // Pedir el nombre del album
-          do {
-            the_album = prompt(`Enter an album name: `);
-          } while (typeof the_album !== "string");
-          console.log(
-            `${BOLD}${GREEN}Duration of ${the_album}: ${this.calculateDuration(
-              the_album
-            )}${RESET}`
-          );
-          break;
-        case "6":
-          // Pedir el nombre del album
-          do {
-            the_album = prompt(`Enter an album name: `);
-          } while (typeof the_album !== "string");
-          console.log(
-            `${BOLD}${GREEN}Reproductions of ${the_album}: ${this.calculateReproductions(
-              the_album
-            )}${RESET}`
-          );
-          break;
-        default:
-          console.log("Invalid option. Try again.");
-          break;
+    const RANGO_1 = 50;
+    const RANGO_2 = 100;
+    const RANGO_3 = 200;
+    const RANGO_4 = 500;
+
+    const funko = this.coleccion.find((f: Funko) => f.getId() === id);
+    if (funko) {
+
+      let valorColor = chalk.red(funko.getMarketValue());
+
+      if (
+        funko.getMarketValue() >= RANGO_1 &&
+        funko.getMarketValue() < RANGO_2
+      ) {
+        valorColor = chalk.yellow(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_2 &&
+        funko.getMarketValue() < RANGO_3
+      ) {
+        valorColor = chalk.green(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_3 &&
+        funko.getMarketValue() < RANGO_4
+      ) {
+        valorColor = chalk.blue(funko.getMarketValue());
+      } else if (funko.getMarketValue() >= RANGO_4) {
+        valorColor = chalk.magenta(funko.getMarketValue());
       }
+
+      console.log(chalk.bold(`Información del Funko con ID ${id}:`));
+      console.log(`ID: ${funko.getId()}`);
+      console.log(`Descripción: ${funko.getDescription()}`);
+      console.log(`Tipo: ${funko.getType()}`);
+      console.log(`Género: ${funko.getGenre()}`);
+      console.log(`Franquicia: ${funko.getFranchise()}`);
+      console.log(`Número: ${funko.getNumber()}`);
+      console.log(`Exclusivo: ${funko.isExclusive()}`);
+      console.log(`Características especiales: ${funko.getSpecialFeatures()}`);
+      console.log((`Valor de mercado: ${valorColor}`));
+    } else {
+      console.log(chalk.red(`Error: No existe un Funko con ID ${id}.`));
     }
   }
 }
+
+exports.module = Coleccionista;
 ```
 
-La clase MusicLibrary es la base de la biblioteca musical y contiene un array privado de artistas en su constructor. Los métodos públicos de esta clase incluyen:
+Los métodos que tiene esta clase son:
 
-- addArtist(artist: Artist): añade un objeto de artista al array de artistas.
-- displayLibrary(): muestra una tabla en la consola que enumera todos los artistas, álbumes y canciones en la biblioteca.
-- search(query: string): busca en la biblioteca los artistas, álbumes y canciones que contengan la cadena de consulta pasada como parámetro. Si se encuentra un artista, se muestra el nombre del artista, el nombre del álbum y el número mensual de oyentes. Si se encuentra un álbum, se muestra el nombre del álbum, el nombre del artista y el año de lanzamiento. Si se encuentra una canción, se muestra el nombre de la canción, el nombre del álbum, el nombre del artista, el número de oyentes mensuales, la duración de la canción, los géneros, si es una canción individual y el número de reproducciones.
-- countSongs(albumName: string): devuelve el número de canciones en un álbum dado.
-- calculateDuration(albumName: string): devuelve la duración total de todas las canciones en un álbum dado.
-- calculateReproductions(albumName: string): devuelve el número total de reproducciones de todas las canciones en un álbum dado.
-- printMenu(): muestra un menú de opciones disponibles para el usuario.
-- run(): comienza un bucle que muestra el menú al usuario y procesa las opciones seleccionadas hasta que el usuario elige salir (seleccionando 0).
+- getId(): un método que devuelve el ID del coleccionista.
+- getNombre(): un método que devuelve el nombre del coleccionista.
+- getColeccion(): un método que devuelve la colección de Funkos del coleccionista.
+- guardarColeccion(): un método que guarda la colección de Funkos del coleccionista en un archivo JSON en su sistema de archivos.
+- cargarColeccion(): un método que carga la colección de Funkos del coleccionista desde un archivo JSON en su sistema de archivos.
+- addFunko(funko: Funko): un método que agrega un objeto Funko a la colección del coleccionista. Si el Funko ya existe en la colección, se muestra un mensaje de error.
+- modificarFunko(funkoModificado: Funko): un método que modifica un objeto Funko en la colección del coleccionista. Si no se encuentra un Funko con el ID proporcionado, se muestra un mensaje de error.
+- eliminarFunko(id: number): un método que elimina un objeto Funko de la colección del coleccionista. Si no se encuentra un Funko con el ID proporcionado, se muestra un mensaje de error. Si se encuentra el Funko y se elimina, también se elimina su archivo JSON asociado en el sistema de archivos del coleccionista.
 
-En el método run(), se realiza una serie de acciones basadas en la opción seleccionada por el usuario en el menú, que se lee utilizando el objeto prompt. La opción 1 agrega un ejemplo de artista con un álbum y dos canciones. La opción 2 muestra una tabla que enumera todos los artistas, álbumes y canciones en la biblioteca. La opción 3 solicita una cadena de consulta al usuario y luego enumera los artistas, álbumes y canciones que contienen la cadena de consulta. Las opciones 4 a 6 solicitan al usuario el nombre de un álbum y luego muestran el número de canciones, la duración total y el número total de reproducciones de ese álbum. La opción 0 termina la ejecución del programa.
+Además, la clase utiliza los módulos fs y path para interactuar con el sistema de archivos del usuario y el módulo chalk para imprimir mensajes en diferentes colores en la consola. También importa la clase Funko de otro archivo.
 
-**Clase `Library`**
+#### Cumplimiento de los principios SOLID en la clase Coleccionista:
 
-La clase Library tiene una propiedad musicLibrary que es una instancia de la clase MusicLibrary. La clase MusicLibrary tiene una propiedad artists que es una matriz de objetos de la clase Artist.
+Esta clase `Coleccionista` cumple los principios SOLID con la siguiente justificación:
 
-El constructor de la clase Library crea cuatro álbumes de muestra y los agrega a la biblioteca musical. Cada álbum contiene varias canciones de muestra. Las canciones tienen información sobre su nombre, duración, géneros, si son un single y el número de reproducciones.
+- **Single responsibility (SRP)**: La clase Coleccionista tiene una única responsabilidad, que es gestionar una colección de Funkos, sin mezclarla con otras responsabilidades, como por ejemplo interactuar con una interfaz de usuario.
 
-El código también importa cuatro módulos que definen las clases utilizadas en la biblioteca (Album, Song, Artist, MusicLibrary) y el módulo Prompt-sync que permite leer la entrada del usuario desde la consola. Finalmente, la clase Library se exporta para que pueda ser utilizada por otros módulos.
+- **Open/Closed Principle (OCP)**: La clase Coleccionista está abierta a la extensión, ya que se puede añadir funcionalidad a través de la herencia de la clase, pero cerrada a la modificación, ya que los métodos existentes no necesitan ser modificados para añadir nuevas funcionalidades.
+
+- **Liskov Substitution Principle (LSP)**: La clase Coleccionista no tiene ninguna subclase, pero los objetos que devuelve a través de su método getColeccion() cumplen con el contrato definido en la clase Funko.
+
+- **Interface Segregation Principle (ISP)**: La clase Coleccionista no implementa ninguna interfaz, por lo que este principio no se aplica directamente a ella.
+
+- **Dependency Inversion Principle (DIP)**: La clase Coleccionista depende de la clase Funko, pero no de ninguna implementación concreta de ella, por lo que este principio se cumple. Además, el método guardarColeccion() utiliza el módulo fs y la clase path a través de su interfaz pública, en lugar de depender de la implementación concreta de dichos módulos, lo que cumple con el principio de Inversión de Dependencia.
+
+
+### Programa principal <a name="principal"></a>
+> [Volver al índice](#índice)
+
+> El programa principal se encuentra en el archivo `app.ts`. Este programa es una aplicación de línea de comandos escrita en TypeScript que se encarga de gestionar una base de datos de Funkos y coleccionistas. Utiliza el paquete yargs para procesar los argumentos que se pasan al programa, chalk para colorear la salida de la consola, fs para trabajar con el sistema de archivos y path para trabajar con rutas de archivos.
+
+Este programa es una aplicación de línea de comandos escrita en TypeScript que se encarga de gestionar una base de datos de Funkos y coleccionistas. Utiliza el paquete yargs para procesar los argumentos que se pasan al programa, chalk para colorear la salida de la consola, fs para trabajar con el sistema de archivos y path para trabajar con rutas de archivos.
+
+La aplicación gestiona la información de una serie de Funkos, que tienen un identificador, un nombre, una descripción, un tipo, un género, una franquicia, un número de serie, un valor de mercado y una serie de características especiales. También gestiona información sobre los coleccionistas, que tienen un identificador, un nombre y una lista de Funkos que poseen.
 
 ```typescript
-import * as Prompt from "prompt-sync";
+import yargs from "yargs";
+import { hideBin } from 'yargs/helpers.js';
+import * as chalk from "chalk";
+import { Funko } from "./funko";
+import { Coleccionista } from "./coleccionista.js";
+import * as fs from "fs";
+import * as path from  "path";
 
-import { Album } from "./album";
-import { Song } from "./song";
-import { Artist } from "./artist";
-import { MusicLibrary } from "./library";
+// List of registered users
+const directorio = './src/database'; // Directorio de la base de datos
+const usuarios: string[] = []; // Lista de usuarios registrados
 
-/**
- * Clase que representa una biblioteca musical.
- * @class Library
- * @property {MusicLibrary} musicLibrary - Biblioteca musical.
- */
-export class Library {
-  private musicLibrary: MusicLibrary;
+let usu = new Coleccionista(0, "", []);
 
-  constructor() {
-    // Añado un par de albumes de muestra
-    // Creamos un array de canciones para el primer album
-    const songs1: Song[] = [
-      new Song("Canción 1_1", 200, ["Rock"], true, 100),
-      new Song("Canción 1_2", 180, ["Pop"], true, 50),
-      new Song("Canción 1_3", 240, ["Jazz"], false, 20),
-    ];
-
-    // Creamos el primer album
-    const album1 = new Album("Album 1", 2022, songs1);
-    // Creamos un array de canciones para el segundo album
-    const songs2: Song[] = [
-      new Song("Canción 2_1", 180, ["Pop"], true, 50),
-      new Song("Canción 2_2", 220, ["Rock"], true, 80),
-      new Song("Canción 2_3", 240, ["Jazz"], false, 20),
-      new Song("Canción 2_4", 190, ["Hip Hop"], true, 120),
-    ];
-
-    // Creamos el segundo album
-    const album2 = new Album("Album 2", 2021, songs2);
-    // Creamos un array de canciones para el tercer album
-    const songs3: Song[] = [
-      new Song("Canción 3_1", 190, ["Pop"], true, 70),
-      new Song("Canción 3_2", 210, ["Rock"], true, 60),
-      new Song("Canción 3_3", 230, ["Jazz"], false, 10),
-      new Song("Canción 3_4", 200, ["Hip Hop"], true, 100),
-      new Song("Canción 3_5", 170, ["Electronic"], false, 30),
-    ];
-
-    // Creamos el tercer album
-    const album3 = new Album("Album 3", 2023, songs3);
-    // Creamos un array de canciones para el cuarto album
-    const songs4: Song[] = [
-      new Song("Canción 4_1", 210, ["Rock"], true, 90),
-      new Song("Canción 4_2", 190, ["Pop"], true, 60),
-      new Song("Canción 4_3", 230, ["Jazz"], false, 20),
-      new Song("Canción 4_4", 200, ["Hip Hop"], true, 110),
-      new Song("Canción 4_5", 180, ["Electronic"], false, 40),
-      new Song("Canción 4_6", 220, ["Funk"], false, 15),
-    ];
-
-    // Creamos el cuarto album
-    const album4 = new Album("Album 4", 2020, songs4);
-
-    // Creamos un array de canciones para el quinto album
-    const songs5: Song[] = [
-      new Song("Canción 5_1", 220, ["Rock"], true, 120),
-      new Song("Canción 5_2", 180, ["Pop"], true, 40),
-      new Song("Canción 5_3", 230, ["Jazz"], false, 15),
-      new Song("Canción 5_4", 210, ["Hip Hop"], true, 90),
-      new Song("Canción 5_5", 190, ["Electronic"], false, 50),
-      new Song("Canción 5_6", 240, ["Funk"], false, 30),
-    ];
-
-    // Creamos el quinto album
-    const album5 = new Album("Album 5", 1995, songs5);
-
-    // Añado un par de artistas de muestra
-    const artista_1: Artist = {
-      name: "Artist 1",
-      monthlyListeners: 10000,
-      discography: [album1, album2],
-    };
-    const artista_2: Artist = {
-      name: "Artist 2",
-      monthlyListeners: 12340,
-      discography: [album3],
-    };
-    const artista_3: Artist = {
-      name: "Artist 3",
-      monthlyListeners: 88968,
-      discography: [album4, album5],
-    };
-
-    this.musicLibrary = new MusicLibrary();
-    this.musicLibrary.addArtist(artista_1);
-    this.musicLibrary.addArtist(artista_2);
-    this.musicLibrary.addArtist(artista_3);
-
-    this.musicLibrary.run();
+fs.readdirSync(directorio).forEach((nombreArchivo: string) => {
+  const rutaArchivo = `${directorio}/${nombreArchivo}`;
+  if (fs.lstatSync(rutaArchivo).isDirectory()) {
+    usuarios.push(nombreArchivo);
   }
-}
-
-const the_library = new Library();
-```
-
-#### Tests:
-
-Los tests que hemos realizado para comprobar el correcto funcionamiento de la biblioteca son los siguientes:
-
-```typescript
-import { describe, it } from "mocha";
-import { expect } from "chai";
-import * as Prompt from "prompt-sync";
-import { Song } from "../src/ejercicio01/song";
-import { Album } from "../src/ejercicio01/album";
-import { Artist } from "../src/ejercicio01/artist";
-import { MusicLibrary } from "../src/ejercicio01/library";
-
-describe("MusicLibrary", () => {
-  describe("addArtist", () => {
-    it("should add an artist to the library", () => {
-      const library = new MusicLibrary();
-      const artist: Artist = {
-        name: "Queen",
-        monthlyListeners: 1000000,
-        discography: [
-          new Album("A Night at the Opera", 1975, [
-            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
-            new Song(
-              "Love of My Life",
-              3.39,
-              ["Rock", "Ballad"],
-              false,
-              500000
-            ),
-            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
-          ]),
-        ],
-      };
-      library.addArtist(artist);
-      expect(library.artists).to.deep.equal([artist]);
-    });
-  });
-
-  describe("countSongs", () => {
-    it("should count the number of songs in an album", () => {
-      const library = new MusicLibrary();
-      const artist: Artist = {
-        name: "Queen",
-        monthlyListeners: 1000000,
-        discography: [
-          new Album("A Night at the Opera", 1975, [
-            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
-            new Song(
-              "Love of My Life",
-              3.39,
-              ["Rock", "Ballad"],
-              false,
-              500000
-            ),
-            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
-          ]),
-        ],
-      };
-      library.addArtist(artist);
-      library.countSongs("A Night at the Opera");
-      const expectedCount = 3;
-      const actualCount = artist.discography[0].songs.length;
-      expect(actualCount).to.equal(expectedCount);
-    });
-  });
-
-  describe("calculateDuration", () => {
-    it("should count the duration of the album", () => {
-      const library = new MusicLibrary();
-      const artist: Artist = {
-        name: "Queen",
-        monthlyListeners: 1000000,
-        discography: [
-          new Album("A Night at the Opera", 1975, [
-            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
-            new Song(
-              "Love of My Life",
-              3.39,
-              ["Rock", "Ballad"],
-              false,
-              500000
-            ),
-            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
-          ]),
-        ],
-      };
-      library.addArtist(artist);
-      let actualCount = 0;
-      const expectedCount = 11.98;
-      actualCount = library.calculateDuration("A Night at the Opera");
-      expect(actualCount).to.equal(expectedCount);
-    });
-  });
-
-  describe("calculateReproductions", () => {
-    it("should count the reproductions of the album", () => {
-      const library = new MusicLibrary();
-      const artist: Artist = {
-        name: "Queen",
-        monthlyListeners: 1000000,
-        discography: [
-          new Album("A Night at the Opera", 1975, [
-            new Song("Bohemian Rhapsody", 6.07, ["Rock"], false, 1000000),
-            new Song(
-              "Love of My Life",
-              3.39,
-              ["Rock", "Ballad"],
-              false,
-              500000
-            ),
-            new Song("You're My Best Friend", 2.52, ["Rock"], true, 750000),
-          ]),
-        ],
-      };
-      library.addArtist(artist);
-      let actualCount = 0;
-      const expectedCount = 2250000;
-      actualCount = library.calculateReproductions("A Night at the Opera");
-      expect(actualCount).to.equal(expectedCount);
-    });
-  });
 });
+
+//console.log("Usuarios: ", usuarios);
+
+const command = process.argv[2];
+let id, user, name, desc, type, genre, franchise, number, exclusive, special, value;
+
+yargs(hideBin(process.argv))
+  .command("add", "Add a new Funko to a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to add the Funko to",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to add",
+    },
+    name: {
+      demandOption: true,
+      type: "string",
+      describe: "The name of the Funko to add",
+    },
+    desc: {
+      demandOption: true,
+      type: "string",
+      describe: "The description of the Funko to add",
+    },
+    type: {
+      demandOption: true,
+      type: "string",
+      describe: "The type of the Funko to add",
+    },
+    genre: {
+      demandOption: true,
+      type: "string",
+      describe: "The genre of the Funko to add",
+    },
+    franchise: {
+      demandOption: false,
+      type: "string",
+      describe: "The franchise of the Funko to add",
+    },
+    number: {
+      demandOption: true,
+      type: "number",
+      describe: "The number of the Funko to add",
+    },
+    exclusive: {
+      demandOption: true,
+      type: "boolean",
+      describe: "The exclusive of the Funko to add",
+    },
+    special: {
+      demandOption: true,
+      type: "string",
+      describe: "The special features of the Funko to add",
+    },
+    value: {
+      demandOption: true,
+      type: "number",
+      describe: "The market value of the Funko to add",
+    },
+  },  (argv) => {
+    id = argv.id;
+    user = argv.user;
+    name = argv.name;
+    desc = argv.desc;
+    type = argv.type;
+    genre = argv.genre;
+    franchise = argv.franchise;
+    number = argv.number;
+    exclusive = argv.exclusive;
+    special = argv.special;
+    value = argv.value;
+  })
+  .command("list", "List all Funkos from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to list the Funkos from",
+    },
+  }, (argv) => {
+    user = argv.user;
+  })
+  .command("update", "Update a Funko from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to add the Funko to",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to add",
+    },
+    name: {
+      demandOption: true,
+      type: "string",
+      describe: "The name of the Funko to add",
+    },
+    desc: {
+      demandOption: true,
+      type: "string",
+      describe: "The description of the Funko to add",
+    },
+    type: {
+      demandOption: true,
+      type: "string",
+      describe: "The type of the Funko to add",
+    },
+    genre: {
+      demandOption: true,
+      type: "string",
+      describe: "The genre of the Funko to add",
+    },
+    franchise: {
+      demandOption: false,
+      type: "string",
+      describe: "The franchise of the Funko to add",
+    },
+    number: {
+      demandOption: true,
+      type: "number",
+      describe: "The number of the Funko to add",
+    },
+    exclusive: {
+      demandOption: true,
+      type: "boolean",
+      describe: "The exclusive of the Funko to add",
+    },
+    special: {
+      demandOption: false,
+      type: "string",
+      describe: "The special features of the Funko to add",
+    },
+    marketValue: {
+      demandOption: false,
+      type: "number",
+      describe: "The market value of the Funko to add",
+    },
+  }, (argv) => {
+    id = argv.id;
+    user = argv.user;
+    name = argv.name;
+    desc = argv.desc;
+    type = argv.type;
+    genre = argv.genre;
+    franchise = argv.franchise;
+    number = argv.number;
+    exclusive = argv.exclusive;
+    special = argv.special;
+    value = argv.value;
+  })
+  .command("read", "Read a Funko from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to read the Funko from",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to read",
+    },
+  } ,  (argv) => {
+    id = argv.id;
+    user = argv.user;
+  })
+  .command("remove", "Delete a Funko from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to delete the Funko from",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to delete",
+    },
+  }, (argv) => {
+    id = argv.id;
+    user = argv.user;
+  })
+  .help().argv;
+
+usu = load();
+
+switch (command) {
+  case "add":
+    const newFunko = new Funko(
+      id,
+      name,
+      desc,
+      type,
+      genre,
+      franchise,
+      number,
+      exclusive,
+      special,
+      value
+    );
+    usu.addFunko(newFunko);
+    break;
+  case "update":
+    const updatedFunko = new Funko(
+        id,
+        name,
+        desc,
+        type,
+        genre,
+        franchise,
+        number,
+        exclusive,
+        special,
+        value
+    );
+    usu.modificarFunko(updatedFunko);
+    break;
+  case "remove":
+    usu.eliminarFunko(id);
+    break;
+  case "read":
+    usu.mostrarFunko(id);
+    break;
+  case "list":
+    usu.listarColeccion();
+    break;
+  default:
+    console.log(chalk.red("Command not recognized"));
+}
+
+function load() : Coleccionista {
+  let usu2 : Coleccionista = new Coleccionista(0, "", []);
+  let existe = false;
+  // Busco el usuario en la base de datos
+  for (let nombre of usuarios) {
+    if (nombre === user) { // Cargar la información del usuario
+      usu2 = new Coleccionista(0, nombre, []);
+      usu2.cargarColeccion(); // Carga la colección del usuario
+      existe = true;
+      break;
+    }
+  }
+  if (!existe) { // Crear el usuario en la base de datos
+    const userDir = path.join(__dirname, "../database/", user);
+    fs.mkdirSync(userDir);
+    usu2 = new Coleccionista(0, user, []);
+  }
+  return usu2;
+}
 ```
 
-Donde se prueban los siguientes métodos:
+El programa se divide en varios comandos que se pueden ejecutar mediante la línea de comandos:
 
-1. addArtist(): se prueba si se puede agregar un artista a la biblioteca y se espera que la lista de artistas de la biblioteca sea igual al artista que se acaba de agregar.
+- El comando "add" se utiliza para añadir un nuevo Funko a la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario, el ID del Funko, su nombre, descripción, tipo, género, franquicia, número de serie, si es exclusivo y sus características especiales.
 
-2. countSongs(): se prueba si se puede contar el número de canciones en un álbum específico y se espera que el recuento sea el mismo que el número real de canciones en el álbum.
+- El comando "update" se utiliza para modificar un Funko de la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario, el ID del Funko, su nombre, descripción, tipo, género, franquicia, número de serie, si es exclusivo y sus características especiales.
 
-3. calculateDuration(): se prueba si se puede calcular la duración de un álbum específico y se espera que la duración calculada sea la misma que la duración real del álbum.
+- El comando "remove" se utiliza para eliminar un Funko de la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario y el ID del Funko.
+- El comando "read" se utiliza para leer la información de un Funko en la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario y el ID del Funko.
+- El comando "list" se utiliza para listar todos los Funkos de un usuario. El parámetro que se puede pasar es el nombre de usuario.
 
-4. calculateReproductions(): se prueba si se puede calcular el número total de reproducciones de un álbum específico y se espera que el número de reproducciones calculado sea el mismo que el número real de reproducciones del álbum.
+### Base de datos <a name="database"></a>
+> [Volver al índice](#índice)
 
-#### Cumplimiento de los principios SOLID:
+El programa utiliza un sistema de archivos para almacenar la información de los coleccionistas y los Funkos en una carpeta llamada "database". Cada coleccionista tiene una carpeta con su nombre de usuario en la que se guardan los Funkos que posee en un archivo JSON con su información.
 
-##### Clase `Album`:
+Se utiliza el módulo fs para acceder y manipular la base de datos de usuarios y sus colecciones de figuras Funko.
 
-La clase `Album` cumple con los principios SOLID. Específicamente, cumple con el **principio SRP (Principio de responsabilidad única)** porque tiene una única responsabilidad que es representar un álbum de música y proporcionar información relacionada con el álbum. También cumple con el **principio OCP (Principio abierto/cerrado)** ya que es fácil agregar nuevas funcionalidades o características a la clase sin modificar el código existente. La clase utiliza la inyección de dependencia a través del constructor para recibir la información necesaria y trabajar con ella, lo que es un buen ejemplo del **principio de inversión de dependencia**.
+Primero, se define una variable directorio que apunta al directorio donde se encuentra la base de datos. Luego, se crea un array usuarios que almacenará los nombres de las carpetas de cada usuario, que en este caso representan las colecciones de figuras Funko.
 
-##### Interfaz `Artist`:
+A continuación, se utiliza el método readdirSync() del módulo fs para leer el contenido del directorio. Este método devuelve un array con los nombres de los archivos y carpetas que se encuentran en el directorio. Se recorre este array utilizando el método forEach(), y por cada archivo o carpeta se comprueba si es una carpeta utilizando el método lstatSync(), que devuelve información acerca de un archivo o carpeta, incluyendo su tipo. Si el archivo es una carpeta, se añade su nombre al array usuarios.
 
-Esta interfaz cumple con los principios SOLID, ya que se enfoca en definir la estructura y los datos que deben tener los objetos que representan a un artista, sin incluir métodos que puedan generar acoplamiento innecesario. Además, cumple con el **principio de Responsabilidad Única** al definir la estructura de un artista sin tener que preocuparse por otros aspectos que no le corresponden.
+De esta forma, el array usuarios queda con los nombres de todas las carpetas de usuario que se encuentran en la base de datos. Este proceso permite obtener un listado de todos los usuarios registrados y sus respectivas colecciones de figuras Funko.
 
-##### Clase `MusicLibrary`:
+Luego, se utiliza el módulo fs nuevamente para leer y escribir archivos, a través de las funciones readFileSync() y writeFileSync(). Estas funciones permiten leer y escribir archivos de manera sincrónica, lo que significa que la ejecución del programa se detiene hasta que la operación de lectura o escritura se complete.
 
-- **Single Responsibility Principle (SRP)**: La clase `MusicLibrary` se encarga únicamente de la gestión de una biblioteca musical, y tiene como única razón de cambio las actualizaciones en la biblioteca musical. Además, cada método de la clase tiene una única responsabilidad específica y acotada.
-
-- **Open/Closed Principle (OCP)**: La clase `MusicLibrary` está abierta a la extensión mediante la adición de nuevos artistas, álbumes o canciones, y cerrada a la modificación. Esto se evidencia en que la funcionalidad principal de la clase no se ve afectada por la adición de nuevos objetos en la biblioteca musical.
-
-- **Liskov Substitution Principle (LSP)**: La clase `MusicLibrary` no hereda de ninguna otra clase, y no se utiliza en la definición de ningún tipo de subclase. Por lo tanto, no hay necesidad de verificar la sustituibilidad de objetos en esta clase.
-
-- **Interface Segregation Principle (ISP)**: La clase `MusicLibrary` no implementa interfaces, por lo que no hay necesidad de aplicar este principio.
-
-- **Dependency Inversion Principle (DIP)**: La clase `MusicLibrary` no depende de ninguna otra clase concreta, sino que se apoya en interfaces (`Album`, `Song`, `Artist`) para interactuar con otros objetos. Esto permite que la clase `MusicLibrary` pueda ser fácilmente adaptada a cualquier implementación de estas interfaces, sin afectar su funcionalidad principal.
-
-##### Clase `Song`:
-
-La clase `Song` es simple y cohesiva, con una única responsabilidad de representar una canción de música. Además, utiliza el principio de encapsulación al ocultar su implementación interna detrás de una interfaz pública consistente. Además, se podrían añadir nuevas funcionalidades a la clase sin modificar el código ya existente.
+En este caso, se utiliza readFileSync() para leer el contenido de un archivo que representa la colección de un usuario, y writeFileSync() para escribir la información actualizada de la colección de figuras Funko de un usuario en su archivo correspondiente.
 
 ### Conclusiones <a name="conclusiones"></a>
-
 > [Volver al índice](#índice)
 
-La función table puede ser muy útil para depurar objetos complejos y visualizarlos de una manera más estructurada y legible. Es especialmente útil cuando se está tratando con datos tabulares o cuando se necesita comparar varias instancias de un mismo objeto.
+Trabajar con el módulo fs en Node.js puede ser muy útil para manejar archivos y directorios en el sistema de archivos del sistema operativo. Con fs, puedes crear, leer, actualizar y eliminar archivos, así como crear, leer y eliminar directorios.
 
-Por otro lado el uso de clases e interfaces nos posibilita la creación de objetos con propiedades y métodos que nos permiten modelar el comportamiento de los mismos. Esto nos permite crear objetos que se comporten de una manera determinada y que nos permitan realizar operaciones sobre ellos de una manera más sencilla y ordenada, incluso si son objetos complejos.
+En la mayoría de los casos, fs proporciona una forma fácil y eficiente de trabajar con el sistema de archivos de tu sistema operativo. Sin embargo, también puede ser peligroso si no se maneja adecuadamente. Es importante tener cuidado al manipular archivos y directorios para evitar sobrescribir o eliminar accidentalmente archivos importantes.
+
+En resumen, fs es una herramienta muy útil para trabajar con archivos y directorios en Node.js, pero debes tener precaución al utilizarla para evitar errores y problemas en tu aplicación.
 
 ### Referencias <a name="referencias"></a>
-
 > [Volver al índice](#índice)
 
 1. [Entrada de texto](https://www.npmjs.com/package/prompt-sync)
 2. [Formato de escape ANSI](https://es.wikipedia.org/wiki/C%C3%B3digo_escape_ANSI#:~:text=Los%20c%C3%B3digos%20de%20escape%20ANSI,color%20o%20moviendo%20el%20cursor.)
+3. [Módulo fs](https://nodejs.org/docs/latest-v16.x/api/fs.html)
+4. [Módulo path](https://nodejs.org/docs/latest-v16.x/api/path.html)
+5. [Módulo chalk](https://www.npmjs.com/package/chalk)
+6. [Módulo prompt-sync](https://www.npmjs.com/package/prompt-sync)
+7. [Stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+8. [Parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
