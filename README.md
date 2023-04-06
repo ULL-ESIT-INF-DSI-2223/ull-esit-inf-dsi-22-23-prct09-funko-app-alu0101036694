@@ -1,188 +1,830 @@
-# [PRÁCTICA 7. DESTRAVATE](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct07-destravate-datamodel-grupof.git). 
+# [PRÁCTICA 9. DESTRAVATE](https://github.com/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct09-funko-app-alu0101036694.git). 
 
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct09-funko-app-alu0101036694.git/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2223/ull-esit-inf-dsi-22-23-prct06-generics-solid-alu0101036694?branch=main)
 
-## Carla Oval Torres, Jairo Alonso Abreu, Gabi Vacaru
+## Carla Oval Torres
 
 ## Índice <a name="índice"></a>
 1. [Introducción](#introducción)
-2. [Descripción de los requisitos del sistema](#requisitos)
-3. [Funcionamiento](#funcionamiento)
-    1. [Tipos de datos (rutas, retos, usuarios y grupos)](#tipos)
-    2. [Colecciones de datos (schemas)](#colecciones)
-    3. [Base de datos](#database)
-    4. [Programa principal](#principal)
-3. [Conclusiones](#conclusiones)
-4. [Referencias](#referencias)
+2. [Descripción de los requisitos del sistema y funcionamiento esperado](#requisitos)
+3. [Descripción de la solución diseñada](#solución)
+    1. [Clase funko](#funko)
+    2. [Clase coleccionista](#coleccionista)
+    3. [Programa principal](#principal)
+    4. [Base de datos](#database)
+4. [Conclusiones](#conclusiones)
+5. [Referencias](#referencias)
 
 ## Introducción <a name="introducción"></a>
 > [Volver al índice](#índice)
 
-En esta práctica, la primera grupal de la asignatura, tendrá que llevar a cabo un diseño orientado a objetos del modelo de datos de un sistema de información que permita almacenar registros de actividades deportivas.
+En esta práctica, tendrá que implementar una aplicación que permita almacenar información de los Funko Pops pertenecientes a la colección de un usuario. En concreto, el sistema permitirá añadir, modificar, eliminar, listar y leer la información asociada a un Funko. La información de cada Funko se almacenará como un JSON en el sistema de ficheros de la máquina donde se ejecute la aplicación. Además, solo se podrá interactuar con la aplicación desde la línea de comandos (no existirá un menú interactivo).
 
-Todo el código desarrollado deberá estar alojado en el repositorio generado tras la aceptación de la asignación grupal de GitHub Classroom. En ese sentido, utilice en dicho repositorio una estructura de proyecto similar a la que hemos visto en clase.
+Todo el código desarrollado deberá estar alojado en el repositorio generado tras la aceptación de la asignación de GitHub Classroom. En ese sentido, utilice en dicho repositorio una estructura de proyecto similar a la que hemos visto en clase.
 
-Trate de respetar los principios SOLID de diseño orientado a objetos. Recuerde hacer uso durante su desarrollo de todas las herramientas relacionadas con el cubrimiento del código (Coveralls), integración contínua (Github Actions) y calidad del código (Sonar Cloud).
+Por último, tendrá que comentar en un informe la solución diseñada, haciendo hincapié en las decisiones de diseño que ha tomado.
 
-Por último, tendrá que comentar en un informe la solución diseñada, haciendo hincapié en las decisiones de diseño que ha implementado.
-
-## Descripción de los requisitos del sistema <a name="requisitos"></a>
+## Descripción de los requisitos del sistema  funcionamiento esperado<a name="requisitos"></a>
 > [Volver al índice](#índice)
-
-> Rutas
 > 
-> Para cada ruta incluida dentro del sistema, se debe almacenar la información siguiente:
-> 1. ID único de la ruta.
-> 2. Nombre de la ruta.
-> 3. Geolocalización del inicio (coordenadas).
-> 4. Geolocalización del final de la ruta (coordenadas).
-> 5. Longitud de la ruta en kilómetros.
-> 6. Desnivel medio de la ruta.
-> 7. Usuarios que han realizado la ruta (IDs).
-> 8. Tipo de actividad: Indicador si la ruta se puede realizar en bicicleta o corriendo.
-> 9. Calificación media de la ruta.
-
-> Usuarios
+> Los requisitos que debe cumplir la aplicación son los siguientes:
 > 
-> Dentro del sistema, necesitamos la siguiente información de los usuarios:
-> 1. ID único del usuario (puede ser un username creado por el usuario en el registro o un valor generado automáticamente por el sistema).
-> 2. Nombre del usuario.
-> 3. Actividades que realiza: Correr o bicicleta.
-> 4. Amigos en la aplicación: Colleción de IDs de usuarios con los que interacciona.
-> 5. Grupos de amigos: Diferentes colecciones de IDs de usuarios con los que suele realizar rutas.
-> 6. Estadísticas de entrenamiento: Cantidad de km y desnivel total acumulados en la semana, mes y año.
-> 7. Rutas favoritas: IDs de las rutas que el usuario ha realizado con mayor frecuencia.
-> 8. Retos activos: IDs de los retos que el usuario está realizando actualmente.
-> 9. Histórico de rutas: Los usuarios deben almacenar el historial de rutas realizadas desde que se registraron en el sistema. La información almacenada en esta estructura de datos deberá contener la información de la fecha y el ID de la ruta realizada. Nótese que un usuario puede realizar más de una ruta al día y está decisión puede afectar al tipo de estructura en el que se almacena la información.
-
-> Grupos
+> La aplicación deberá permitir que múltiples usuarios interactúen con ella, pero no simultáneamente.
 > 
-> Un grupo de usuarios engloba la información de los usuarios que se unen para realizar rutas juntos.
-> 1. ID único del grupo.
-> 2. Nombre del grupo.
-> 3. Participantes: IDs de los miembros del grupo.
-> 4. Estadísticas de entrenamiento grupal: Cantidad de km y desnivel total acumulados de manera grupal en la semana, mes y año
-> 5. Clasificación de los usuarios: Ranking de los usuarios que más entrenamientos han realizado históricamente dentro del grupo, es decir, ordenar los usuarios por la cantidad de km totales o desnivel total que han acumulado.
-> 6. Rutas favoritas del grupo: Rutas que los usuarios del grupo han realizado con mayor frecuencia en sus salidas conjuntas.
-> 7. Histórico de rutas realizadas por el grupo: Información similar que almacenan los usuarios pero en este caso referente a los grupos. Nótese que un usuario puede realizar rutas con un grupo y/o de manera individual el mismo día. Es decir, a modo de simplificación, asumimos que todos los usuarios de un grupo realizan la actividad cuando se planifica. Aunque, también pueden realizar otras actividades de manera individual.
-
-> Retos
+> En concreto, un Funko vendrá descrito por los siguientes elementos mínimos de información que deberán ser almacenados:
+> 1. ID. Debe ser un identificador único del Funko.
+> 2. Nombre. Debe ser una cadena de caracteres.
+> 3. Descripción. Debe ser una cadena de caracteres.
+> 4. Tipo. Debe ser un enumerado con valores como, por ejemplo, Pop!, Pop! Rides, Vynil Soda o Vynil Gold, entre otros.
+> 5. Género. Debe ser un enumerado con valores como, por ejemplo, Animación, Películas y TV, Videojuegos, Deportes, Música o Ánime, entre otras.
+> 6. Franquicia. Debe ser una cadena de caracteres como, por ejemplo, The Big Bang Theory, Game of Thrones, Sonic The Hedgehog o Marvel: Guardians of the Galaxy, entre otras.
+> 7. Número. Debe ser el número identificativo del Funko dentro de la franquicia correspondiente.
+> 8. Exclusivo. Debe ser un valor booleano, esto es, verdadero en el caso de que el Funko sea exclusivo o falso en caso contrario.
+> 9. Características especiales. Debe ser una cadena de caracteres que indique las característica especiales del Funko como, por ejemplo, si brilla en la oscuridad o si su cabeza balancea.
+> 10. Valor de mercado. Debe ser un valor numérico positivo.
 > 
-> Los retos serán otra entidad dentro del sistema. Esta entidad deberá contener toda la información asociada a objetivos de entrenamientos:
-1. ID único del reto.
-2. Nombre del reto.
-3. Rutas que forman parte del reto.
-4. Tipo de actividad del reto: bicicleta o correr.
-5. Km totales a realizar (como la suma de los kms de las rutas que lo engloban)
-6. Usuarios que están realizando el reto.
-
-
-### Funcionamiento <a name="funcionamiento"></a>
-> [Volver al índice](#índice)
-
-> Para comprobar el funcionamiento de su diseño deberá crear:
-> 1. Al menos 10 rutas distintas.
-> 2. Incluir al menos 20 usuarios distintos.
-> 3. Un mínimo de 5 grupos.
-> 4. Al menos 3 retos.
+> Cada usuario tendrá su propia lista de Funko Pops, con la que podrá llevar a cabo las siguientes operaciones:
+> - Añadir un Funko a la lista. Antes de añadir un Funko a la lista se debe comprobar si ya existe un Funko con el mismo ID. En caso de que así fuera, deberá mostrarse un mensaje de error por la consola. En caso contrario, se añadirá el nuevo Funko a la lista y se mostrará un mensaje informativo por la consola.
+> - Modificar un Funko de la lista. Antes de modificar un Funko, previamente se debe comprobar si ya existe un Funko con el ID del Funko a modificar en la lista. Si existe, se procede a su modificación y se emite un mensaje informativo por la consola. En caso contrario, debe mostrarse un mensaje de error por la consola.
+> - Eliminar un Funko de la lista. Antes de eliminar un Funko, previamente se debe comprobar si existe un Funko con el ID del Funko a eliminar en la lista. Si existe, se procede a su eliminación y se emite un mensaje informativo por la consola. En caso contrario, debe mostrarse un mensaje de error por la consola.
+> - Listar los Funkos existentes en una lista. En este caso, deberá mostrarse la información asociada a cada Funko existente en la lista por la consola. Además, deberá utilizar el paquete chalk para ello. Primero, deberá establecer rangos de valor de mercado. Luego, el valor de mercado de cada Funko deberá mostrarse con colores diferentes. Por ejemplo, para aquellos Funko con un valor de mercado elevado, dicho valor deberá mostrarse en color verde, mientras que para los de menor valor de mercado, dicho valor se mostrará con color rojo. Establezca, al menos, cuatro rangos de valor de mercado diferentes.
+> - Mostrar la información de un Funko concreto existente en la lista. Antes de mostrar la información del Funko, se debe comprobar que en la lista existe un Funko cuyo ID sea el del Funko a mostrar. Si existe, se mostrará toda su información, incluyendo el color de su valor de mercado. Para ello, use el paquete chalk. En caso contrario, se mostrará un mensaje de error por la consola.
 >
-> En este punto, deberá hacer uso del módulo Inquirer.js para la gestión de una línea de comandos interactiva. De este modo, su aplicación deberá permitir añadir, borrar y modificar rutas, usuarios, grupos y retos. Para ello, le recomendamos que lea el Capítulo 1 del libro Essential TypeScript: From Beginner to Pro, dado que se describe un ejemplo detallado de su uso, incluyendo cómo podría hacer para que toda la información introducida persista mediante el uso del paquete Lowdb. Recuerde hacer uso de las versiones de los paquetes utilizadas en el libro.
-> 
-> En cuanto a la gestión avanzada de rutas, usuarios, grupos y retos, simplemente se requiere poder navegar la información asociada a estás entidades. Para cada tipo de información se podrá mostrar la información correspondiente de la siguiente manera:
-> 
-> Rutas:
-> - Alfabéticamente por nombre de la ruta, ascendente y descendente.
-> - Cantidad de usuarios que realizan las rutas, ascendente y descendente.
-> - Por longitud de la ruta, ascendente y descendente.
-> - Por la calificación media de la ruta, ascendente y descendente.
-> - Ordenar por actividad: correr o ciclismo.
-> 
-> Usuarios:
-> - Alfabéticamente por nombre del usuario, ascendente y descendente.
-> - Por cantidad de KM realizados (ascendente y descendentemente) en función de la semana actual, mes o año.
-> 
-> Grupos:
-> - Alfabéticamente por nombre de la grupo, ascendente y descendente.
-> - Por cantidad de KM realizados conjuntamente (ascendente y descendentemente) en función de la semana actual, mes o año.
-> - Por la cantidad de miembros que lo componen, ascendente y descendente.
-> 
-> Retos:
-> Alfabéticamente por nombre del reto, ascendente y descendente.
-> Por cantidad de KM que se deben realizar, ascendente y descendente.
-> Por la cantidad de usuarios que lo están realizando, ascendente y descendente.
+>Todos los mensajes informativos se mostrarán con color verde, mientras que los mensajes de error se mostrarán con color rojo. Use el paquete chalk para ello.
+>
+>Hacer persistente la lista de Funko de cada usuario. Aquí es donde entra en juego el uso de la API síncrona de Node.js para trabajar con el sistema de ficheros:
+> - Guardar cada Funko de la lista en un fichero independiente con formato JSON. Los ficheros JSON correspondientes a los Funko de un usuario concreto deberán almacenarse en un directorio con el nombre de dicho usuario.
+> - Cargar los Funko desde los diferentes ficheros con formato JSON almacenados en el directorio del usuario correspondiente.
+>
+> Un usuario solo puede interactuar con la aplicación a través de la línea de comandos. Los diferentes comandos, opciones de los mismos, así como manejadores asociados a cada uno de ellos deben gestionarse mediante el uso del paquete yargs.
 
-> #### Clase Gestor
-> Por último, deberá crear una clase Gestor que permita gestionar el tratamiento de la información del sistema.
-> 
-> Para el funcionamiento de la clase Gestor, también necesitará hacer uso de Inquirer.js. En concreto, un usuario podrá:
-> Registrarse en el sistema. Un usuario que se conecte por primera vez al sistema deberá poder incluir su información para ser almacenada en el sistema. Asimismo, un usuario podrá visualizar el listado de usuarios existentes dentro del sistema y añadir/borrar amigos.
-> Visualizar todas las rutas existentes dentro del sistema. En este apartado se deben poder consultar el listado de rutas así como acceder a la información completa de cada una de ellas.
-> Unirse a un grupo existente. Este apartado considera la opción de un usuario que desea incluirse dentro de un grupo ya existente en el sistema.
-> Visualizar, crear y borrar grupos. Un usuario podrá borrar un grupo, pero solo si esta ha sido creado por él, es decir, no se podrá borrar un grupo pre-cargado en el sistema. Por otro lado, los grupos se podrán guardar usando el mismo sistema empleado para guardar la información cargada en el sistema. Por último, considere que en posteriores conexiones al sistema, el usuario podrá desear borrar un grupo que haya creado anteriormente. Debido a esto, se deberá distinguir entre los grupos creados por el usuario y los creados por el sistema con el objetivo de evitar borrar información sin permiso.
-
-
-### Tipos de datos (rutas, retos, usuarios y grupos) <a name="tipos"></a>
+## Descripción de la solución diseñada <a name="solución"></a>
 > [Volver al índice](#índice)
 
-> Descripcion de la clase
+La solución diseñada consta de tres archivos principales:
 
-Explicacion
+- app.ts: Archivo principal de la aplicación. En él se definen los comandos y opciones de los mismos, así como los manejadores asociados a cada uno de ellos.
+- coleccionista.ts: Archivo que contiene la clase coleccionista que representa a un usuario de la aplicación.
+- funko.ts: Archivo que contiene la clase funko que representa a un Funko.
 
-#### Clase X:
+### Clase Funko <a name="funko"></a>
+> [Volver al índice](#índice)
+
+> La clase Funko representa a objeto un Funko, que se utiliza para almacenar información sobre los Funkos. 
+
+La clase tiene las siguientes propiedades privadas:
+
+- id: un número que representa el ID del Funko.
+- name: una cadena que representa el nombre del Funko.
+- description: una cadena que representa la descripción del Funko.
+- type: un valor del enumerado FunkoType que representa el tipo del Funko.
+- genre: un valor del enumerado FunkoGenre que representa el género del Funko.
+- franchise: una cadena que representa la franquicia del Funko.
+- number: un número que representa el número del Funko.
+- exclusive: un booleano que indica si el Funko es exclusivo o no.
+- specialFeatures: una cadena que representa las características especiales del Funko.
+- marketValue: un número que representa el valor de mercado del Funko.
 
 ```typescript
 
+export enum FunkoType {
+  POP = "Pop!",
+  POP_RIDES = "Pop! Rides",
+  VINYL_SODA = "Vinyl Soda",
+  VINYL_GOLD = "Vinyl Gold",
+}
+
+export enum FunkoGenre {
+  ANIMATION = "Animation",
+  MOVIES_AND_TV = "Movies and TV",
+  VIDEOGAMES = "Video games",
+  SPORTS = "Sports",
+  MUSIC = "Music",
+  ANIME = "Anime",
+}
+
+export class Funko {
+  private id: number;
+  private name: string;
+  private description: string;
+  private type: FunkoType;
+  private genre: FunkoGenre;
+  private franchise: string;
+  private number: number;
+  private exclusive: boolean;
+  private specialFeatures: string;
+  private marketValue: number;
+
+  constructor(
+    id: number,
+    name: string,
+    description: string,
+    type: FunkoType,
+    genre: FunkoGenre,
+    franchise: string,
+    number: number,
+    exclusive: boolean,
+    specialFeatures: string,
+    marketValue: number
+  ) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.type = type;
+    this.genre = genre;
+    this.franchise = franchise;
+    this.number = number;
+    this.exclusive = exclusive;
+    this.specialFeatures = specialFeatures;
+    this.marketValue = marketValue;
+  }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+
+  public getType(): FunkoType {
+    return this.type;
+  }
+
+  public getGenre(): FunkoGenre {
+    return this.genre;
+  }
+
+  public getFranchise(): string {
+    return this.franchise;
+  }
+
+  public getNumber(): number {
+    return this.number;
+  }
+
+  public isExclusive(): boolean {
+    return this.exclusive;
+  }
+
+  public getSpecialFeatures(): string {
+    return this.specialFeatures;
+  }
+
+  public getMarketValue(): number {
+    return this.marketValue;
+  }
+}
+
+exports.module = Funko;
 ```
 
-Explicación
+La clase también tiene un constructor que acepta todos estos parámetros y los asigna a las propiedades correspondientes de la instancia de Funko.
 
+La clase también tiene varios métodos públicos que se utilizan para acceder a las propiedades privadas del Funko, como getId(), getName(), getDescription(), getType(), getGenre(), getFranchise(), getNumber(), isExclusive(), getSpecialFeatures() y getMarketValue().
 
-#### Tests:
+Además, la clase tiene dos enumerados FunkoType y FunkoGenre que se utilizan para representar los diferentes tipos y géneros de Funko. Los valores de estos enumerados son cadenas que describen el tipo o género del Funko.
 
-Explicación
+#### Cumplimiento de los principios SOLID en la clase Funko:
 
-```typescript
+La clase `Funko` sigue algunos de los principios SOLID, pero hay algunos aspectos que se pueden mejorar para lograr una mayor cohesión y reducir la dependencia entre los módulos.
 
-```
+- **Single responsibility (SRP)**: La clase Funko tiene una única responsabilidad, que es representar un Funko y proporcionar métodos para obtener información sobre sus atributos.
 
-Explicación
+- **Open/Closed Principle (OCP)**: La clase Funko no parece seguir este principio, ya que no proporciona una forma fácil de extender su funcionalidad sin modificar la clase existente. Por ejemplo, si quisiéramos agregar un nuevo atributo, tendríamos que modificar la clase Funko y las partes del código que lo utilizan.
 
-```typescript
+- **Liskov Substitution Principle (LSP)**: Como la clase Funko no tiene subclases, no hay necesidad de preocuparse por este principio.
 
-```
+- **Interface Segregation Principle (ISP)**: La clase Funko no implementa ninguna interfaz, por lo que no se aplica este principio.
 
-#### Cumplimiento de los principios SOLID en la clase X:
+- **Dependency Inversion Principle (DIP)**: La clase Funko depende directamente de los enumerados FunkoType y FunkoGenre.ç
 
-Esta clase `X` cumple los principios SOLID con la siguiente justificación:
-
-- **Single responsibility (SRP)**: 
-
-- **Open/Closed Principle (OCP)**: 
-
-- **Liskov Substitution Principle (LSP)**: 
-
-- **Interface Segregation Principle (ISP)**: 
-
-- **Dependency Inversion Principle (DIP)**: 
-
-
-### Colecciones de datos (schemas) <a name="colecciones"></a>
+### Clase Coleccionista <a name="coleccionista"></a>
 > [Volver al índice](#índice)
 
-### Base de datos <a name="database"></a>
-> [Volver al índice](#índice)
+> La clase Coleccionista representa a un coleccionista de Funkos.
+
+La clase Coleccionista es una clase que representa a un coleccionista de Funkos, con métodos para agregar, modificar y eliminar Funkos en su colección. También tiene métodos para guardar y cargar su colección desde un archivo JSON en su sistema de archivos.
+
+Los atributos de esta clase son:
+
+- id: un número que identifica al coleccionista.
+- nombre: una cadena de texto con el nombre del coleccionista.
+- coleccion: un array de objetos Funko que representa la colección del coleccionista.
+
+```typescript
+const fs = require("fs");
+import * as path from  "path";
+//import chalk from "chalk";
+import * as chalk from "chalk";
+
+import { Funko } from "./funko";
+
+
+export class Coleccionista {
+  private id: number;
+  private nombre: string;
+  private coleccion: Funko[]; // Array de Funkos
+
+  constructor(id: number, nombre: string, coleccion: Funko[]) {
+    this.id = id;
+    this.nombre = nombre;
+    this.coleccion = coleccion;
+  }
+
+  public getId(): number {
+    return this.id;
+  }
+  public getNombre(): string {
+    return this.nombre;
+  }
+
+  public getColeccion(): Funko[] {
+    return this.coleccion;
+  }
+
+  public guardarColeccion(): void {
+    const userDir = path.join(__dirname, "../database/", this.nombre);
+    if (!fs.existsSync(userDir)) {
+      fs.mkdirSync(userDir);
+    }
+
+    this.coleccion.forEach((funko: Funko) => {
+      const filePath = path.join(userDir, `${funko.getId()}.json`);
+      const jsonData = JSON.stringify(funko, null, 2);
+      fs.writeFileSync(filePath, jsonData);
+    });
+  }
+
+  public cargarColeccion(): void {
+    const userDir = path.join(__dirname, "../database/", this.nombre);
+    if (!fs.existsSync(userDir)) {
+      return undefined;
+    }
+
+    //const files = fs.readdirSync(userDir);
+    const files = fs.readdirSync(userDir)
+                .filter(file => fs.statSync(path.join(userDir, file)).isFile());
+
+    const coleccion = files.map((file: string) => {
+      const filePath = userDir + "/" + file;
+      if (fs.statSync(filePath).isDirectory()) {
+        throw new Error("No se puede leer un directorio");
+      }
+      const jsonData = fs.readFileSync(filePath, "utf-8");
+      const funkoData = JSON.parse(jsonData);
+      return new Funko(
+        funkoData.id,
+        funkoData.name,
+        funkoData.description,
+        funkoData.type,
+        funkoData.genre,
+        funkoData.franchise,
+        funkoData.number,
+        funkoData.exclusive,
+        funkoData.specialFeatures,
+        funkoData.marketValue
+      );
+    });
+    this.coleccion = coleccion;
+  }
+
+  public addFunko(funko: Funko): void {
+    const encontrado = this.coleccion.some((f: Funko) => {
+      if (f.getId() === funko.getId()) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    
+    if (encontrado) {
+      console.error(
+        `El Funko con ID ${funko.getId()} ya existe en la colección.`
+      );
+    } else {
+      this.coleccion.push(funko);
+      console.log(
+        `El Funko con ID ${funko.getId()} ha sido añadido a la colección.`
+      );
+    }
+    this.guardarColeccion();
+  }
+
+  public modificarFunko(funkoModificado: Funko): void {
+    //this.cargarColeccion();
+    const index = this.coleccion.findIndex(
+      function(f: Funko) {
+        console.log("funko f: ", f.getId());
+        console.log("funkoModificado: ", funkoModificado.getId());
+        return f.getId() === funkoModificado.getId();
+      }
+    );
+    console.log("index: ", index);
+    if (index === -1) {
+      console.error(
+        `No se encontró ningún Funko con ID ${funkoModificado.getId()}`
+      );
+      return;
+    }
+    this.coleccion[index] = funkoModificado;
+    console.log(`Funko con ID ${funkoModificado.getId()} ha sido modificado`);
+    this.guardarColeccion();
+  }
+
+  public eliminarFunko(id: number): void {
+    //this.cargarColeccion();
+    //const index = this.coleccion.findIndex((funko: Funko) => funko.getId() === id);
+  
+    let index = -1;
+    for (let i = 0; i < this.coleccion.length; i++) {
+      if (this.coleccion[i].getId() === id) {
+        index = i;
+        break;
+      }
+    }
+
+    console.log("index: ", index)
+
+    if (index === -1) {
+      console.log(`No se ha encontrado un Funko con el ID ${id}.`);
+    } else {
+      console.log("coleccion antes de eliminar: " + this.coleccion);
+      const funko = this.coleccion[index];
+      console.log("funko: " + funko);
+      this.coleccion.splice(index, 1);
+      console.log("coleccion despues de eliminar: " + this.coleccion);
+      console.log(`Se ha eliminado el Funko con el ID ${id}.`);
+      
+      const userFunko = path.join(__dirname, "../database/", this.nombre, id + ".json");
+      try {
+        fs.unlinkSync(userFunko); // elimina el archivo
+        console.log(`Se ha eliminado el archivo asociado al Funko con el ID ${id}.`);
+      } catch (error) {
+        console.error(`No se ha podido eliminar el archivo asociado al Funko con el ID ${id}: ${error.message}`);
+      }
+    }
+  
+    this.guardarColeccion();
+  }
+
+  public listarColeccion(): void {
+    this.cargarColeccion();
+
+    const RANGO_1 = 50;
+    const RANGO_2 = 100;
+    const RANGO_3 = 200;
+    const RANGO_4 = 500;
+
+    console.log(chalk.bold("Lista de Funkos:"));
+    console.log();
+
+    this.coleccion.forEach((funko: Funko) => {
+      let valorColor = chalk.red(funko.getMarketValue());
+
+      if (
+        funko.getMarketValue() >= RANGO_1 &&
+        funko.getMarketValue() < RANGO_2
+      ) {
+        valorColor = chalk.yellow(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_2 &&
+        funko.getMarketValue() < RANGO_3
+      ) {
+        valorColor = chalk.green(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_3 &&
+        funko.getMarketValue() < RANGO_4
+      ) {
+        valorColor = chalk.blue(funko.getMarketValue());
+      } else if (funko.getMarketValue() >= RANGO_4) {
+        valorColor = chalk.magenta(funko.getMarketValue());
+      }
+
+      console.log(chalk.bold(funko.getName()));
+      console.log(`ID: ${funko.getId()}`);
+      console.log(`Descripción: ${funko.getDescription()}`);
+      console.log(`Tipo: ${funko.getType()}`);
+      console.log(`Género: ${funko.getGenre()}`);
+      console.log(`Franquicia: ${funko.getFranchise()}`);
+      console.log(`Número: ${funko.getNumber()}`);
+      console.log(`Exclusivo: ${funko.isExclusive()}`);
+      console.log(`Características especiales: ${funko.getSpecialFeatures()}`);
+      console.log(`Valor de mercado: ${valorColor}`);
+      console.log();
+    });
+  }
+
+  public mostrarFunko(id: number): void {
+    this.cargarColeccion();
+
+    const RANGO_1 = 50;
+    const RANGO_2 = 100;
+    const RANGO_3 = 200;
+    const RANGO_4 = 500;
+
+    const funko = this.coleccion.find((f: Funko) => f.getId() === id);
+    if (funko) {
+
+      let valorColor = chalk.red(funko.getMarketValue());
+
+      if (
+        funko.getMarketValue() >= RANGO_1 &&
+        funko.getMarketValue() < RANGO_2
+      ) {
+        valorColor = chalk.yellow(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_2 &&
+        funko.getMarketValue() < RANGO_3
+      ) {
+        valorColor = chalk.green(funko.getMarketValue());
+      } else if (
+        funko.getMarketValue() >= RANGO_3 &&
+        funko.getMarketValue() < RANGO_4
+      ) {
+        valorColor = chalk.blue(funko.getMarketValue());
+      } else if (funko.getMarketValue() >= RANGO_4) {
+        valorColor = chalk.magenta(funko.getMarketValue());
+      }
+
+      console.log(chalk.bold(`Información del Funko con ID ${id}:`));
+      console.log(`ID: ${funko.getId()}`);
+      console.log(`Descripción: ${funko.getDescription()}`);
+      console.log(`Tipo: ${funko.getType()}`);
+      console.log(`Género: ${funko.getGenre()}`);
+      console.log(`Franquicia: ${funko.getFranchise()}`);
+      console.log(`Número: ${funko.getNumber()}`);
+      console.log(`Exclusivo: ${funko.isExclusive()}`);
+      console.log(`Características especiales: ${funko.getSpecialFeatures()}`);
+      console.log((`Valor de mercado: ${valorColor}`));
+    } else {
+      console.log(chalk.red(`Error: No existe un Funko con ID ${id}.`));
+    }
+  }
+}
+
+exports.module = Coleccionista;
+```
+
+Los métodos que tiene esta clase son:
+
+- getId(): un método que devuelve el ID del coleccionista.
+- getNombre(): un método que devuelve el nombre del coleccionista.
+- getColeccion(): un método que devuelve la colección de Funkos del coleccionista.
+- guardarColeccion(): un método que guarda la colección de Funkos del coleccionista en un archivo JSON en su sistema de archivos.
+- cargarColeccion(): un método que carga la colección de Funkos del coleccionista desde un archivo JSON en su sistema de archivos.
+- addFunko(funko: Funko): un método que agrega un objeto Funko a la colección del coleccionista. Si el Funko ya existe en la colección, se muestra un mensaje de error.
+- modificarFunko(funkoModificado: Funko): un método que modifica un objeto Funko en la colección del coleccionista. Si no se encuentra un Funko con el ID proporcionado, se muestra un mensaje de error.
+- eliminarFunko(id: number): un método que elimina un objeto Funko de la colección del coleccionista. Si no se encuentra un Funko con el ID proporcionado, se muestra un mensaje de error. Si se encuentra el Funko y se elimina, también se elimina su archivo JSON asociado en el sistema de archivos del coleccionista.
+
+Además, la clase utiliza los módulos fs y path para interactuar con el sistema de archivos del usuario y el módulo chalk para imprimir mensajes en diferentes colores en la consola. También importa la clase Funko de otro archivo.
+
+#### Cumplimiento de los principios SOLID en la clase Coleccionista:
+
+Esta clase `Coleccionista` cumple los principios SOLID con la siguiente justificación:
+
+- **Single responsibility (SRP)**: La clase Coleccionista tiene una única responsabilidad, que es gestionar una colección de Funkos, sin mezclarla con otras responsabilidades, como por ejemplo interactuar con una interfaz de usuario.
+
+- **Open/Closed Principle (OCP)**: La clase Coleccionista está abierta a la extensión, ya que se puede añadir funcionalidad a través de la herencia de la clase, pero cerrada a la modificación, ya que los métodos existentes no necesitan ser modificados para añadir nuevas funcionalidades.
+
+- **Liskov Substitution Principle (LSP)**: La clase Coleccionista no tiene ninguna subclase, pero los objetos que devuelve a través de su método getColeccion() cumplen con el contrato definido en la clase Funko.
+
+- **Interface Segregation Principle (ISP)**: La clase Coleccionista no implementa ninguna interfaz, por lo que este principio no se aplica directamente a ella.
+
+- **Dependency Inversion Principle (DIP)**: La clase Coleccionista depende de la clase Funko, pero no de ninguna implementación concreta de ella, por lo que este principio se cumple. Además, el método guardarColeccion() utiliza el módulo fs y la clase path a través de su interfaz pública, en lugar de depender de la implementación concreta de dichos módulos, lo que cumple con el principio de Inversión de Dependencia.
+
 
 ### Programa principal <a name="principal"></a>
 > [Volver al índice](#índice)
 
+> El programa principal se encuentra en el archivo `app.ts`. Este programa es una aplicación de línea de comandos escrita en TypeScript que se encarga de gestionar una base de datos de Funkos y coleccionistas. Utiliza el paquete yargs para procesar los argumentos que se pasan al programa, chalk para colorear la salida de la consola, fs para trabajar con el sistema de archivos y path para trabajar con rutas de archivos.
+
+Este programa es una aplicación de línea de comandos escrita en TypeScript que se encarga de gestionar una base de datos de Funkos y coleccionistas. Utiliza el paquete yargs para procesar los argumentos que se pasan al programa, chalk para colorear la salida de la consola, fs para trabajar con el sistema de archivos y path para trabajar con rutas de archivos.
+
+La aplicación gestiona la información de una serie de Funkos, que tienen un identificador, un nombre, una descripción, un tipo, un género, una franquicia, un número de serie, un valor de mercado y una serie de características especiales. También gestiona información sobre los coleccionistas, que tienen un identificador, un nombre y una lista de Funkos que poseen.
+
+```typescript
+import yargs from "yargs";
+import { hideBin } from 'yargs/helpers.js';
+import * as chalk from "chalk";
+import { Funko } from "./funko";
+import { Coleccionista } from "./coleccionista.js";
+import * as fs from "fs";
+import * as path from  "path";
+
+// List of registered users
+const directorio = './src/database'; // Directorio de la base de datos
+const usuarios: string[] = []; // Lista de usuarios registrados
+
+let usu = new Coleccionista(0, "", []);
+
+fs.readdirSync(directorio).forEach((nombreArchivo: string) => {
+  const rutaArchivo = `${directorio}/${nombreArchivo}`;
+  if (fs.lstatSync(rutaArchivo).isDirectory()) {
+    usuarios.push(nombreArchivo);
+  }
+});
+
+//console.log("Usuarios: ", usuarios);
+
+const command = process.argv[2];
+let id, user, name, desc, type, genre, franchise, number, exclusive, special, value;
+
+yargs(hideBin(process.argv))
+  .command("add", "Add a new Funko to a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to add the Funko to",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to add",
+    },
+    name: {
+      demandOption: true,
+      type: "string",
+      describe: "The name of the Funko to add",
+    },
+    desc: {
+      demandOption: true,
+      type: "string",
+      describe: "The description of the Funko to add",
+    },
+    type: {
+      demandOption: true,
+      type: "string",
+      describe: "The type of the Funko to add",
+    },
+    genre: {
+      demandOption: true,
+      type: "string",
+      describe: "The genre of the Funko to add",
+    },
+    franchise: {
+      demandOption: false,
+      type: "string",
+      describe: "The franchise of the Funko to add",
+    },
+    number: {
+      demandOption: true,
+      type: "number",
+      describe: "The number of the Funko to add",
+    },
+    exclusive: {
+      demandOption: true,
+      type: "boolean",
+      describe: "The exclusive of the Funko to add",
+    },
+    special: {
+      demandOption: true,
+      type: "string",
+      describe: "The special features of the Funko to add",
+    },
+    value: {
+      demandOption: true,
+      type: "number",
+      describe: "The market value of the Funko to add",
+    },
+  },  (argv) => {
+    id = argv.id;
+    user = argv.user;
+    name = argv.name;
+    desc = argv.desc;
+    type = argv.type;
+    genre = argv.genre;
+    franchise = argv.franchise;
+    number = argv.number;
+    exclusive = argv.exclusive;
+    special = argv.special;
+    value = argv.value;
+  })
+  .command("list", "List all Funkos from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to list the Funkos from",
+    },
+  }, (argv) => {
+    user = argv.user;
+  })
+  .command("update", "Update a Funko from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to add the Funko to",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to add",
+    },
+    name: {
+      demandOption: true,
+      type: "string",
+      describe: "The name of the Funko to add",
+    },
+    desc: {
+      demandOption: true,
+      type: "string",
+      describe: "The description of the Funko to add",
+    },
+    type: {
+      demandOption: true,
+      type: "string",
+      describe: "The type of the Funko to add",
+    },
+    genre: {
+      demandOption: true,
+      type: "string",
+      describe: "The genre of the Funko to add",
+    },
+    franchise: {
+      demandOption: false,
+      type: "string",
+      describe: "The franchise of the Funko to add",
+    },
+    number: {
+      demandOption: true,
+      type: "number",
+      describe: "The number of the Funko to add",
+    },
+    exclusive: {
+      demandOption: true,
+      type: "boolean",
+      describe: "The exclusive of the Funko to add",
+    },
+    special: {
+      demandOption: false,
+      type: "string",
+      describe: "The special features of the Funko to add",
+    },
+    marketValue: {
+      demandOption: false,
+      type: "number",
+      describe: "The market value of the Funko to add",
+    },
+  }, (argv) => {
+    id = argv.id;
+    user = argv.user;
+    name = argv.name;
+    desc = argv.desc;
+    type = argv.type;
+    genre = argv.genre;
+    franchise = argv.franchise;
+    number = argv.number;
+    exclusive = argv.exclusive;
+    special = argv.special;
+    value = argv.value;
+  })
+  .command("read", "Read a Funko from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to read the Funko from",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to read",
+    },
+  } ,  (argv) => {
+    id = argv.id;
+    user = argv.user;
+  })
+  .command("remove", "Delete a Funko from a user collection", {
+    user: {
+      demandOption: true,
+      type: "string",
+      describe: "The username of the user to delete the Funko from",
+    },
+    id: {
+      demandOption: true,
+      type: "number",
+      describe: "The ID of the Funko to delete",
+    },
+  }, (argv) => {
+    id = argv.id;
+    user = argv.user;
+  })
+  .help().argv;
+
+usu = load();
+
+switch (command) {
+  case "add":
+    const newFunko = new Funko(
+      id,
+      name,
+      desc,
+      type,
+      genre,
+      franchise,
+      number,
+      exclusive,
+      special,
+      value
+    );
+    usu.addFunko(newFunko);
+    break;
+  case "update":
+    const updatedFunko = new Funko(
+        id,
+        name,
+        desc,
+        type,
+        genre,
+        franchise,
+        number,
+        exclusive,
+        special,
+        value
+    );
+    usu.modificarFunko(updatedFunko);
+    break;
+  case "remove":
+    usu.eliminarFunko(id);
+    break;
+  case "read":
+    usu.mostrarFunko(id);
+    break;
+  case "list":
+    usu.listarColeccion();
+    break;
+  default:
+    console.log(chalk.red("Command not recognized"));
+}
+
+function load() : Coleccionista {
+  let usu2 : Coleccionista = new Coleccionista(0, "", []);
+  let existe = false;
+  // Busco el usuario en la base de datos
+  for (let nombre of usuarios) {
+    if (nombre === user) { // Cargar la información del usuario
+      usu2 = new Coleccionista(0, nombre, []);
+      usu2.cargarColeccion(); // Carga la colección del usuario
+      existe = true;
+      break;
+    }
+  }
+  if (!existe) { // Crear el usuario en la base de datos
+    const userDir = path.join(__dirname, "../database/", user);
+    fs.mkdirSync(userDir);
+    usu2 = new Coleccionista(0, user, []);
+  }
+  return usu2;
+}
+```
+
+El programa se divide en varios comandos que se pueden ejecutar mediante la línea de comandos:
+
+- El comando "add" se utiliza para añadir un nuevo Funko a la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario, el ID del Funko, su nombre, descripción, tipo, género, franquicia, número de serie, si es exclusivo y sus características especiales.
+
+- El comando "update" se utiliza para modificar un Funko de la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario, el ID del Funko, su nombre, descripción, tipo, género, franquicia, número de serie, si es exclusivo y sus características especiales.
+
+- El comando "remove" se utiliza para eliminar un Funko de la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario y el ID del Funko.
+- El comando "read" se utiliza para leer la información de un Funko en la colección de un usuario. Los parámetros que se pueden pasar son el nombre de usuario y el ID del Funko.
+- El comando "list" se utiliza para listar todos los Funkos de un usuario. El parámetro que se puede pasar es el nombre de usuario.
+
+### Base de datos <a name="database"></a>
+> [Volver al índice](#índice)
+
+El programa utiliza un sistema de archivos para almacenar la información de los coleccionistas y los Funkos en una carpeta llamada "database". Cada coleccionista tiene una carpeta con su nombre de usuario en la que se guardan los Funkos que posee en un archivo JSON con su información.
+
+Se utiliza el módulo fs para acceder y manipular la base de datos de usuarios y sus colecciones de figuras Funko.
+
+Primero, se define una variable directorio que apunta al directorio donde se encuentra la base de datos. Luego, se crea un array usuarios que almacenará los nombres de las carpetas de cada usuario, que en este caso representan las colecciones de figuras Funko.
+
+A continuación, se utiliza el método readdirSync() del módulo fs para leer el contenido del directorio. Este método devuelve un array con los nombres de los archivos y carpetas que se encuentran en el directorio. Se recorre este array utilizando el método forEach(), y por cada archivo o carpeta se comprueba si es una carpeta utilizando el método lstatSync(), que devuelve información acerca de un archivo o carpeta, incluyendo su tipo. Si el archivo es una carpeta, se añade su nombre al array usuarios.
+
+De esta forma, el array usuarios queda con los nombres de todas las carpetas de usuario que se encuentran en la base de datos. Este proceso permite obtener un listado de todos los usuarios registrados y sus respectivas colecciones de figuras Funko.
+
+Luego, se utiliza el módulo fs nuevamente para leer y escribir archivos, a través de las funciones readFileSync() y writeFileSync(). Estas funciones permiten leer y escribir archivos de manera sincrónica, lo que significa que la ejecución del programa se detiene hasta que la operación de lectura o escritura se complete.
+
+En este caso, se utiliza readFileSync() para leer el contenido de un archivo que representa la colección de un usuario, y writeFileSync() para escribir la información actualizada de la colección de figuras Funko de un usuario en su archivo correspondiente.
+
 ### Conclusiones <a name="conclusiones"></a>
 > [Volver al índice](#índice)
 
-Explicacion
+Trabajar con el módulo fs en Node.js puede ser muy útil para manejar archivos y directorios en el sistema de archivos del sistema operativo. Con fs, puedes crear, leer, actualizar y eliminar archivos, así como crear, leer y eliminar directorios.
+
+En la mayoría de los casos, fs proporciona una forma fácil y eficiente de trabajar con el sistema de archivos de tu sistema operativo. Sin embargo, también puede ser peligroso si no se maneja adecuadamente. Es importante tener cuidado al manipular archivos y directorios para evitar sobrescribir o eliminar accidentalmente archivos importantes.
+
+En resumen, fs es una herramienta muy útil para trabajar con archivos y directorios en Node.js, pero debes tener precaución al utilizarla para evitar errores y problemas en tu aplicación.
 
 ### Referencias <a name="referencias"></a>
 > [Volver al índice](#índice)
 
 1. [Entrada de texto](https://www.npmjs.com/package/prompt-sync)
 2. [Formato de escape ANSI](https://es.wikipedia.org/wiki/C%C3%B3digo_escape_ANSI#:~:text=Los%20c%C3%B3digos%20de%20escape%20ANSI,color%20o%20moviendo%20el%20cursor.)
-
+3. [Módulo fs](https://nodejs.org/docs/latest-v16.x/api/fs.html)
+4. [Módulo path](https://nodejs.org/docs/latest-v16.x/api/path.html)
+5. [Módulo chalk](https://www.npmjs.com/package/chalk)
+6. [Módulo prompt-sync](https://www.npmjs.com/package/prompt-sync)
+7. [Stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+8. [Parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
