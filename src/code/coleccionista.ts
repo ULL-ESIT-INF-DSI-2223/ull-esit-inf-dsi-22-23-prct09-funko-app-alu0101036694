@@ -337,5 +337,5 @@ export class Coleccionista {
   }
 }
 
-//exports.module = Coleccionista;
+exports.module = Coleccionista;
 

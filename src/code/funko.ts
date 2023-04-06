@@ -164,4 +164,4 @@ export class Funko {
   }
 }
 
-//exports.module = Funko;
+exports.module = Funko;
