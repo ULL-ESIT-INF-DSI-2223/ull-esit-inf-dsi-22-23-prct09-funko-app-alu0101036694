@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc src/code/app.ts",
+    "server": "tsc src/client-server/server.ts",
+    "client": "tsc src/client-server/client.ts",
     "add": "node src/code/app.js add --user \"carla\" --id 1 --name \"Classic Sonic\" --desc \"The best Sonic Funko ever\" --type \"Pop!\" --genre \"Games\" --franchise \"A\" --number 1 --exclusive 0 --special \"C\" --value 10",
     "update": "node src/code/app.js update --user \"carla\" --id 1 --name \"Classic Sonic 2\" --desc \"The best Sonic Funko ever\" --type \"Pop!\" --genre \"Games\" --franchise \"A\" --number 1 --exclusive 0 --special \"C\" --value 20",
     "read": "node src/code/app.js read --user \"carla\" --id 1",
@@ -24,6 +26,7 @@
     "@types/chai": "^4.3.4",
     "@types/lowdb": "^1.0.11",
     "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.11",
     "@types/prompt-sync": "^4.2.0",
     "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
